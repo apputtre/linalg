@@ -260,6 +260,28 @@ void SuiteVecCopyConstruction(TestEnvironment& tenv)
         tenv.assert(v1 == v2, "Vector copy assignment failed");
     }
 
+    {
+        tenv.beginTest("Vector copy dependence 1");
+
+        vec<3, float> v1(1, 2.5, -3);
+        vec<3, float> v2(v1);
+
+        v1[1] = 137;
+
+        tenv.assert(v2[1] == 2.5, "Vector copy dependence");
+    }
+
+    {
+        tenv.beginTest("Vector copy dependence 2");
+
+        vec<2, int> v1(1, 2);
+        vec<2, int> v2(v1);
+
+        v2[0] = 14;
+
+        tenv.assert(v1[0] == 1, "Vector copy dependence");
+    }
+
 }
 
 void SuiteVecCopyConstructionDifferentTypes(TestEnvironment& tenv)
