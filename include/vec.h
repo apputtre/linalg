@@ -25,17 +25,23 @@ namespace linalg
 			: elems {static_cast<value_type>(vals)...}
 		{}
 
+		vec(const vec<L, T>& other)
+		{
+			for (size_t i = 0; i < this->length; ++i)
+				(*this)[i] = other[i];
+		}
+
 		template<typename TOther> requires std::convertible_to<TOther, value_type>
 		vec(const vec<L, TOther>& other)
 		{
 			for (size_t i = 0; i < this->length; ++i)
-				*this[i] = other[i];
+				(*this)[i] = other[i];
 		}
 
 		vec& operator=(const vec<L, T>& other)
 		{
 			for (size_t i = 0; i < this->length; ++i)
-				*this[i] = other[i];
+				(*this)[i] = other[i];
 		}
 
 		value_type& operator[](size_t idx) const

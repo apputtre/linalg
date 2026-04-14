@@ -229,6 +229,70 @@ void SuiteVecListInitialization(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecCopyConstruction(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector copy construction");
+
+    {
+        tenv.beginTest();
+
+        vec<3, float> v1(1, 2.5, -3);
+        vec<3, float> v2(v1);
+
+        tenv.assert(v1 == v2, "Vector copy construction failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<2, double> v1(2.5, -300);
+        vec<2, double> v2(v1);
+
+        tenv.assert(v1 == v2, "Vector copy construction failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<5, std::string> v1("a", "b", "c", "d", "e");
+        vec<5, std::string> v2(v1);
+
+        tenv.assert(v1 == v2, "Vector copy assignment failed");
+    }
+}
+
+void SuiteVecCopyConstructionDifferentTypes(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector copy construction - different types");
+
+    {
+        tenv.beginTest("vec3f -> vec3i");
+
+        vec<3, float> v1(1, 2.5, -3);
+        vec<3, int> v2(v1);
+
+        tenv.assert(v2 == vec<3, int>(1, 2, -3), "Vector copy construction failed");
+    }
+
+    {
+        tenv.beginTest("vec2i -> vec2f");
+
+        vec<2, int> v1(137, 25000);
+        vec<2, float> v2(v1);
+
+        tenv.assert(v2 == vec<2, float>(137.0f, 25000.0f), "Vector copy construction failed");
+    }
+
+    {
+        tenv.beginTest("vec<4, int> -> vec<4, char>");
+
+        vec<4, int> v1(65, 66, 67, 68);
+        vec<4, char> v2(v1);
+
+        tenv.assert(v2 == vec<4, char>('A', 'B', 'C', 'D'), "Vector copy construction failed");
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -238,6 +302,8 @@ int main()
     SuiteVecElementMutability(tenv);
     SuiteVecComparison(tenv);
     SuiteVecListInitialization(tenv);
+    SuiteVecCopyConstruction(tenv);
+    SuiteVecCopyConstructionDifferentTypes(tenv);
 
     std::cout << tenv.getSummary();
 
