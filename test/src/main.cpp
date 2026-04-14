@@ -1,9 +1,6 @@
 #include <iostream>
 
 #include "vec.h"
-#include "vec2.h"
-#include "vec3.h"
-#include "vec4.h"
 #include "vec_ops.h"
 
 #include "TestEnvironment.h"
