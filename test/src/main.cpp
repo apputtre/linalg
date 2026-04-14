@@ -130,7 +130,7 @@ int main()
     }
 
     {
-        tenv.beginTest("Unequal vector comparison (int-int)");
+        tenv.beginTest("Unequal vector comparison (double-double)");
 
         vec<4, double> v1(1, 2.5, -3, 137);
         vec<4, double> v2(1, 3, 7.5, 9);
