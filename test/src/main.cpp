@@ -324,7 +324,9 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
         tenv.beginTest();
 
         vec<3, float> v1(1, 2.5, -3);
-        vec<3, float> v2 = v1;
+        vec<3, float> v2(4, 5.5, -6);
+
+        v2 = v1;
 
         tenv.assert(v1 == v2, "Vector copy assignment failed");
     }
@@ -333,7 +335,9 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
         tenv.beginTest();
 
         vec<5, int> v1(2, 4, 6, 8, 10);
-        vec<5, int> v2 = v1;
+        vec<5, int> v2;
+
+        v2 = v1;
 
         tenv.assert(v1 == v2, "Vector copy assignment failed");
     }
@@ -342,7 +346,9 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
         tenv.beginTest();
 
         vec<2, float> v1(2.5, -5);
-        vec<2, float> v2 = v1;
+        vec<2, float> v2;
+
+        v2 = v1;
 
         tenv.assert(v1 == v2, "Vector copy assignment failed");
     }
@@ -351,7 +357,9 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
         tenv.beginTest("Copy independence 1");
 
         vec<3, float> v1(1, 2.5, -3);
-        vec<3, float> v2 = v1;
+        vec<3, float> v2;
+
+        v2 = v1;
 
         v2[0] = 13;
 
@@ -362,20 +370,22 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
         tenv.beginTest("Copy independence 2");
 
         vec<2, int> v1(1, 2);
-        vec<2, int> v2 = v1;
+        vec<2, int> v2;
+
+        v2 = v1;
 
         v1[1] = 32;
 
         tenv.assert(v2[1] == 2, "Vector copy dependence");
     }
 
-    tenv.beginSuite("Vector copy assignment - different types");
-
     {
         tenv.beginTest();
 
         vec<3, float> v1(1, 2.5, -3);
-        vec<3, int> v2 = v1;
+        vec<3, int> v2;
+
+        v2 = v1;
 
         tenv.assert(v2 == vec<3, int>(1, 2, -3), "Vector copy assignment failed");
     }
@@ -384,7 +394,9 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
         tenv.beginTest();
 
         vec<6, int> v1(1, 3, 5, 7, 9);
-        vec<6, double> v2 = v1;
+        vec<6, double> v2;
+
+        v2 = v1;
 
         tenv.assert(v2 == vec<6, double>(1, 3, 5, 7, 9), "Vector copy assignment failed");
     }
