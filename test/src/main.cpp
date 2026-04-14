@@ -4,7 +4,14 @@
 
 int main()
 {
-    std::cout << "Test output\n";
+    TestEnvironment tenv;
+
+    tenv.beginSuite("Vector construction");
+    {
+        tenv.beginTest();
+    }
+
+    std::cout << tenv.getSummary();
 
     return 0;
 }
