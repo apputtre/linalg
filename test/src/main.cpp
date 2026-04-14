@@ -81,6 +81,40 @@ void SuiteVecElemAccessConstruction(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecElementMutability(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector element mutability");
+
+    {
+        tenv.beginTest();
+
+        vec<3, float> v(1, 2.5, -3);
+        v[2] += 5;
+
+        tenv.assert(v[2] == 2, "Vector element not mutable");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<4, int> v(1, 2, 4, 8);
+        v[0] -= 4;
+        v[2] += 3;
+
+        tenv.assert(v[0] == -3 && v[2] == 7, "Vector elements not mutable");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<2, double> v(2.5, 4);
+        v[0] *= 2;
+        v[1] *= 1.5;
+
+        tenv.assert(v[0] == 5 && v[1] == 6, "Vector elements not mutable");
+    }
+}
+
 void SuiteVecComparison(TestEnvironment& tenv)
 {
     tenv.beginSuite("Vector comparison");
@@ -174,6 +208,7 @@ int main()
     TestEnvironment tenv;
 
     SuiteVecElemAccessConstruction(tenv);
+    SuiteVecElementMutability(tenv);
     SuiteVecComparison(tenv);
     SuiteVecListInitialization(tenv);
 
