@@ -394,6 +394,35 @@ void SuiteVecCopyAssignmentDifferentTypes(TestEnvironment& tenv)
 
 }
 
+void SuiteVecScalarConstruction(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector scalar value construction");
+
+    {
+        tenv.beginTest();
+
+        vec<4, double> v(2.7);
+
+        tenv.assert(v == vec<4, double>(2.7, 2.7, 2.7, 2.7), "Vector scalar construction failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<2, int> v(13);
+
+        tenv.assert(v == vec<2, int>(13, 13), "Vector scalar construction failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<3, std::string> v("abc");
+
+        tenv.assert(v == vec<3, std::string>("abc", "abc", "abc"), "Vector scalar construction failed");
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -402,6 +431,7 @@ int main()
     SuiteVecSize(tenv);
     SuiteVecElementMutability(tenv);
     SuiteVecComparison(tenv);
+    SuiteVecScalarConstruction(tenv);
     SuiteVecListInitialization(tenv);
     SuiteVecCopyConstruction(tenv);
     SuiteVecCopyConstructionDifferentTypes(tenv);
