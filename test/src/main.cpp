@@ -10,10 +10,8 @@
 
 using namespace linalg;
 
-int main()
+void SuiteVecElemAccessConstruction(TestEnvironment& tenv)
 {
-    TestEnvironment tenv;
-
     tenv.beginSuite("Vector element access and construction");
 
     {
@@ -81,7 +79,10 @@ int main()
 
         tenv.assert(error_caught, "Invalid access allowed");
     }
+}
 
+void SuiteVecComparison(TestEnvironment& tenv)
+{
     tenv.beginSuite("Vector comparison");
 
     {
@@ -137,6 +138,14 @@ int main()
 
         tenv.assert(v1 != v2, "Unequal vectors considered equal");
     }
+}
+
+int main()
+{
+    TestEnvironment tenv;
+
+    SuiteVecElemAccessConstruction(tenv);
+    SuiteVecComparison(tenv);
 
     std::cout << tenv.getSummary();
 
