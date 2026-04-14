@@ -481,7 +481,7 @@ void SuiteVecScalarComparison(TestEnvironment& tenv)
 
         vec<3, float> v(2.4, 2.4, 2.4);
 
-        tenv.assert(v == 2.4, "Vector scalar comparison failed");
+        tenv.assert(v == 2.4f, "Vector scalar comparison failed");
     }
 
     {
@@ -495,17 +495,17 @@ void SuiteVecScalarComparison(TestEnvironment& tenv)
     {
         tenv.beginTest();
 
-        vec<3, int> v(-3, -3, -3);
+        vec<2, std::string> v("hello world", "hello world");
 
-        tenv.assert(!(v == -3.5), "Vector scalar comparison failed");
+        tenv.assert(v == std::string("hello world"), "Vector scalar comparison failed");
     }
 
     {
         tenv.beginTest();
 
-        vec<2, std::string> v("hello world", "hello world");
+        vec<3, double> v(1, 2.5, -3);
 
-        tenv.assert(v == "hello world", "Vector scalar comparison failed");
+        tenv.assert(!(v == 2.5), "Vector scalar comparison failed");
     }
 }
 
