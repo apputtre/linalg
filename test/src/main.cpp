@@ -472,6 +472,43 @@ void SuiteVecScalarAssignment(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecScalarComparison(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector scalar comparison");
+
+    {
+        tenv.beginTest();
+
+        vec<3, float> v(2.4, 2.4, 2.4);
+
+        tenv.assert(v == 2.4, "Vector scalar comparison failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<2, int> v(13, 13);
+
+        tenv.assert(v == 13, "Vector scalar comparison failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<3, int> v(-3, -3, -3);
+
+        tenv.assert(!(v == -3.5), "Vector scalar comparison failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<2, std::string> v("hello world", "hello world");
+
+        tenv.assert(v == "hello world", "Vector scalar comparison failed");
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -481,6 +518,7 @@ int main()
     SuiteVecElementMutability(tenv);
     SuiteVecComparison(tenv);
     SuiteVecScalarConstruction(tenv);
+    SuiteVecScalarComparison(tenv);
     SuiteVecListInitialization(tenv);
     SuiteVecCopyConstruction(tenv);
     SuiteVecCopyConstructionDifferentTypes(tenv);
