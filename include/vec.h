@@ -50,7 +50,18 @@ namespace linalg
 		vec& operator=(const vec<L, T>& other)
 		{
 			for (size_t i = 0; i < this->length; ++i)
-				(*this)[i] = other[i];
+				(*this)[i] = static_cast<value_type>(other[i]);
+			
+			return *this;
+		}
+
+		template<typename TOther>
+		vec& operator=(const vec<L, TOther>& other)
+		{
+			for (size_t i = 0; i < this->length; ++i)
+				(*this)[i] = static_cast<value_type>(other[i]);
+			
+			return *this;
 		}
 
 		vec& operator=(const value_type& scalar)
