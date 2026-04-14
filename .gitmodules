@@ -1,0 +1,3 @@
+[submodule "xUnitCpp"]
+	path = test/xUnitCpp
+	url = git@github.com:apputtre/xUnitCpp.git
