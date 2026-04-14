@@ -368,10 +368,7 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
 
         tenv.assert(v2[1] == 2, "Vector copy dependence");
     }
-}
 
-void SuiteVecCopyAssignmentDifferentTypes(TestEnvironment& tenv)
-{
     tenv.beginSuite("Vector copy assignment - different types");
 
     {
@@ -391,7 +388,6 @@ void SuiteVecCopyAssignmentDifferentTypes(TestEnvironment& tenv)
 
         tenv.assert(v2 == vec<6, double>(1, 3, 5, 7, 9), "Vector copy assignment failed");
     }
-
 }
 
 void SuiteVecScalarConstruction(TestEnvironment& tenv)
@@ -477,7 +473,6 @@ int main()
     SuiteVecCopyConstruction(tenv);
     SuiteVecCopyConstructionDifferentTypes(tenv);
     SuiteVecCopyAssignment(tenv);
-    SuiteVecCopyAssignmentDifferentTypes(tenv);
     SuiteVecScalarAssignment(tenv);
 
     std::cout << tenv.getSummary();
