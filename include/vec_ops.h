@@ -56,6 +56,12 @@ namespace linalg
 	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
 	vec<L, T> operator/(const U& val, const vec<L, T>& v);
 
+	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
+	bool operator==(const vec<L, T>& v1, const vec<L, T>& v2);
+
+	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
+	bool operator!=(const vec<L, T>& v1, const vec<L, T>& v2);
+
 	template<size_t L, typename T>
 	std::ostream& operator<<(std::ostream& os, const linalg::vec<L, T>& v);
 

@@ -1,3 +1,5 @@
+#include <concepts>
+
 #include "vec_initializer.h"
 
 namespace linalg
@@ -44,7 +46,7 @@ namespace linalg
 			return (value_type&)w;
 			break;
 		default:
-			throw new std::exception("Index out of bounds");
+			throw std::runtime_error("Index out of bounds");
 			break;
 		}
 	}

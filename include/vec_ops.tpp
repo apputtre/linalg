@@ -128,6 +128,25 @@ namespace linalg
 		return new_vec;
 	}
 
+	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
+	bool operator==(const vec<L, T>& v1, const vec<L, U>& v2)
+	{
+		if (v1.length != v2.length)
+			return false;
+
+		for (size_t i = 0; i < v1.length; ++i)
+			if (v1[i] != v2[i])
+				return false;
+
+		return true;
+	}
+
+	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
+	bool operator!=(vec<L, T>& v1, const vec<L, U>& v2)
+	{
+		return !(v1 == v2);
+	}
+
 	template<size_t L, typename T>
 	std::ostream& operator<<(std::ostream& os, const linalg::vec<L, T>& v)
 	{

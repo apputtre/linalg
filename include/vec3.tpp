@@ -41,8 +41,7 @@ namespace linalg
 			return (value_type&)z;
 			break;
 		default:
-			throw new std::exception("Index out of bounds");
-			break;
+			throw std::runtime_error("Index out of bounds");
 		}
 	}
 }

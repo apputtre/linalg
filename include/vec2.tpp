@@ -43,7 +43,7 @@ namespace linalg
 			return (value_type&)y;
 			break;
 		default:
-			throw new std::exception("Index out of bounds");
+			throw std::runtime_error("Index out of bounds");
 			break;
 		}
 	}
