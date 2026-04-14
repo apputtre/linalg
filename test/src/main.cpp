@@ -293,6 +293,61 @@ void SuiteVecCopyConstructionDifferentTypes(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecCopyAssignment(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector copy assignment");
+
+    {
+        tenv.beginTest();
+
+        vec<3, float> v1(1, 2.5, -3);
+        vec<3, float> v2 = v1;
+
+        tenv.assert(v1 == v2, "Vector copy assignment failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<5, int> v1(2, 4, 6, 8, 10);
+        vec<5, int> v2 = v1;
+
+        tenv.assert(v1 == v2, "Vector copy assignment failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<2, float> v1(2.5, -5);
+        vec<2, float> v2 = v1;
+
+        tenv.assert(v1 == v2, "Vector copy assignment failed");
+    }
+}
+
+void SuiteVecCopyAssignmentDifferentTypes(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector copy assignment - different types");
+
+    {
+        tenv.beginTest();
+
+        vec<3, float> v1(1, 2.5, -3);
+        vec<3, int> v2 = v1;
+
+        tenv.assert(v2 == vec<3, int>(1, 2, -3), "Vector copy assignment failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<6, int> v1(1, 3, 5, 7, 9);
+        vec<6, double> v2 = v1;
+
+        tenv.assert(v2 == vec<6, double>(1, 3, 5, 7, 9), "Vector copy assignment failed");
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -304,6 +359,8 @@ int main()
     SuiteVecListInitialization(tenv);
     SuiteVecCopyConstruction(tenv);
     SuiteVecCopyConstructionDifferentTypes(tenv);
+    SuiteVecCopyAssignment(tenv);
+    SuiteVecCopyAssignmentDifferentTypes(tenv);
 
     std::cout << tenv.getSummary();
 
