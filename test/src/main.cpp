@@ -140,12 +140,42 @@ void SuiteVecComparison(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecListInitialization(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector list initialization");
+
+    {
+        tenv.beginTest("vec3f initialization");
+
+        vec<3, float> v {4, 5.25, -6};
+
+        tenv.assert(v[0] == 4 && v[1] == 5.25 && v[2] == -6, "Vector list intialization failed");
+    }
+
+    {
+        tenv.beginTest("vec2i initialization");
+
+        vec<2, int> v {1, 2};
+
+        tenv.assert(v[0] == 1 && v[1] == 2, "Vector list initialization failed");
+    }
+
+    {
+        tenv.beginTest("vec4d initialization");
+
+        vec<4, double> v {3.25, 7.5, 1.2, 3.0};
+
+        tenv.assert(v[0] == 3.25 && v[1] == 7.5 && v[2] == 1.2 && v[3] == 3.0, "Vector list initialization failed");
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
 
     SuiteVecElemAccessConstruction(tenv);
     SuiteVecComparison(tenv);
+    SuiteVecListInitialization(tenv);
 
     std::cout << tenv.getSummary();
 
