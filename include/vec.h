@@ -31,11 +31,11 @@ namespace linalg
 				(*this)[i] = other[i];
 		}
 
-		template<typename TOther> requires std::convertible_to<TOther, value_type>
+		template<typename TOther>
 		vec(const vec<L, TOther>& other)
 		{
 			for (size_t i = 0; i < this->length; ++i)
-				(*this)[i] = other[i];
+				(*this)[i] = static_cast<value_type>(other[i]);
 		}
 
 		vec& operator=(const vec<L, T>& other)

@@ -259,6 +259,7 @@ void SuiteVecCopyConstruction(TestEnvironment& tenv)
 
         tenv.assert(v1 == v2, "Vector copy assignment failed");
     }
+
 }
 
 void SuiteVecCopyConstructionDifferentTypes(TestEnvironment& tenv)
@@ -323,6 +324,28 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
 
         tenv.assert(v1 == v2, "Vector copy assignment failed");
     }
+
+    {
+        tenv.beginTest("Copy independence 1");
+
+        vec<3, float> v1(1, 2.5, -3);
+        vec<3, float> v2 = v1;
+
+        v2[0] = 13;
+
+        tenv.assert(v1[0] == 1, "Vector copy dependence");
+    }
+
+    {
+        tenv.beginTest("Copy independence 2");
+
+        vec<2, int> v1(1, 2);
+        vec<2, int> v2 = v1;
+
+        v1[1] = 32;
+
+        tenv.assert(v2[1] == 2, "Vector copy dependence");
+    }
 }
 
 void SuiteVecCopyAssignmentDifferentTypes(TestEnvironment& tenv)
@@ -346,6 +369,7 @@ void SuiteVecCopyAssignmentDifferentTypes(TestEnvironment& tenv)
 
         tenv.assert(v2 == vec<6, double>(1, 3, 5, 7, 9), "Vector copy assignment failed");
     }
+
 }
 
 int main()
