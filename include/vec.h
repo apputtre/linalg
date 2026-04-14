@@ -8,7 +8,7 @@
 
 namespace linalg
 {
-	template<size_t L, typename T>
+	template<size_t L, typename T> requires (L > 0)
 	class vec
 	{
 	private:
