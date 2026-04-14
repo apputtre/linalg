@@ -53,6 +53,14 @@ namespace linalg
 				(*this)[i] = other[i];
 		}
 
+		vec& operator=(const value_type& scalar)
+		{
+			for (size_t i = 0; i < length; ++i)
+				(*this)[i] = scalar;
+			
+			return *this;
+		}
+
 		vec& operator=(vec<L, T>&& other) = delete;
 
 		value_type& operator[](size_t idx) const

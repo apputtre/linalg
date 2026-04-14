@@ -423,6 +423,47 @@ void SuiteVecScalarConstruction(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecScalarAssignment(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector scalar assignment");
+
+    {
+        tenv.beginTest();
+
+        vec<3, float> v;
+        v = 1.3;
+
+        tenv.assert(v == vec<3, float>(1.3, 1.3, 1.3), "Vector scalar assignment failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<2, std::string> v;
+        v = std::string("hello world");
+
+        tenv.assert(v == vec<2, std::string>("hello world", "hello world"), "Vector scalar assignment failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<4, int> v(1, 2, 3, 4);
+        v = 14;
+
+        tenv.assert(v == vec<4, int>(14, 14, 14, 14), "Vector scalar assignment failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<3, int> v(15, 16, 17);
+        v = 2.5;
+
+        tenv.assert(v == vec<3, int>(2, 2, 2), "Vector scalar assignment failed");
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -437,6 +478,7 @@ int main()
     SuiteVecCopyConstructionDifferentTypes(tenv);
     SuiteVecCopyAssignment(tenv);
     SuiteVecCopyAssignmentDifferentTypes(tenv);
+    SuiteVecScalarAssignment(tenv);
 
     std::cout << tenv.getSummary();
 
