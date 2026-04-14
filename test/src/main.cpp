@@ -115,6 +115,35 @@ void SuiteVecElementMutability(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecSize(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector size");
+
+    {
+        tenv.beginTest("vec3f size");
+
+        vec<3, float> v(1, 2.5, -3);
+
+        tenv.assert(sizeof(v) == sizeof(float) * 3, "Vector not expected size");
+    }
+
+    {
+        tenv.beginTest("vec2d size");
+
+        vec<2, double> v(3.5, 14);
+
+        tenv.assert(sizeof(v) == sizeof(double) * 2, "Vector not expected size");
+    }
+
+    {
+        tenv.beginTest("vec4i size");
+
+        vec<4, int> v(1, 2, 3, 4);
+
+        tenv.assert(sizeof(v) == sizeof(int) * 4, "Vector not expected size");
+    }
+}
+
 void SuiteVecComparison(TestEnvironment& tenv)
 {
     tenv.beginSuite("Vector comparison");
@@ -208,6 +237,7 @@ int main()
     TestEnvironment tenv;
 
     SuiteVecElemAccessConstruction(tenv);
+    SuiteVecSize(tenv);
     SuiteVecElementMutability(tenv);
     SuiteVecComparison(tenv);
     SuiteVecListInitialization(tenv);
