@@ -9,13 +9,6 @@ namespace linalg
 	}
 
 	template<typename T>
-	vec<2, T>::vec(const vec_initializer<2, T>& init)
-	{
-		for (size_t i = 0; i < init.size(); ++i)
-			(*this)[i] = init[i];
-	}
-
-	template<typename T>
 	vec<2, T>& vec<2, T>::operator=(const vec<2, T>& other)
 	{
 		for (size_t i = 0; i < this->length; ++i)

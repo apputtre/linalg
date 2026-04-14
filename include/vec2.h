@@ -1,8 +1,6 @@
 #ifndef VEC2_H
 #define VEC2_H
 
-#include "vec_initializer.h"
-
 namespace linalg
 {
 	template<typename T>
@@ -26,8 +24,6 @@ namespace linalg
 
 		template<typename U> requires std::convertible_to<U, T>
 		vec(const vec<2, U>& other);
-
-		vec(const vec_initializer<2, T>& init);
 
 		vec& operator=(const vec<2, T>& other);
 

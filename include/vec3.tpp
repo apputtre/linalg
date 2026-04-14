@@ -1,5 +1,3 @@
-#include "vec_initializer.h"
-
 namespace linalg
 {
 	template<typename T>
@@ -8,13 +6,6 @@ namespace linalg
 	{
 		for (size_t i = 0; i < this->length; ++i)
 			(*this)[i] = other[i];
-	}
-
-	template<typename T>
-	vec<3, T>::vec(const vec_initializer<3, T>& init)
-	{
-		for (size_t i = 0; i < init.size(); ++i)
-			(*this)[i] = init[i];
 	}
 
 	template<typename T>
