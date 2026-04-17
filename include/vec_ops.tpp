@@ -28,10 +28,11 @@ namespace linalg
 		return v1;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator+(const vec<L, T>& v1, const vec<L, U>& v2)
+	template<size_t L, typename T1, typename T2>
+		requires requires (T1 x, T2 y) {x + y;}
+	vec<L, AdditionResult<T1, T2>> operator+(const vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
-		vec<L, T> new_vec(v1);
+		vec<L, AdditionResult<T1, T2>> new_vec(v1);
 		new_vec += v2;
 		return new_vec;
 	}

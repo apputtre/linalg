@@ -5,6 +5,9 @@
 
 namespace linalg
 {
+	template<typename T1, typename T2>
+	using AdditionResult = decltype(std::declval<T1>() + std::declval<T2>());
+
 	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
 	vec<L, T>& operator+=(vec<L, T>& v, const U& val);
 
@@ -17,8 +20,9 @@ namespace linalg
 	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
 	vec<L, T>& operator+=(vec<L, T>& v1, const vec<L, U>& v2);
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator+(const vec<L, T>& v1, const vec<L, U>& v2);
+	template<size_t L, typename T1, typename T2>
+		requires requires (T1 x, T2 y) {x + y;}
+	vec<L, AdditionResult<T1, T2>> operator+(const vec<L, T1>& v1, const vec<L, T2>& v2);
 
 	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
 	vec<L, T>& operator-=(vec<L, T>& v, const U& val);
