@@ -162,19 +162,19 @@ namespace linalg
 	{
 		if (v.length == 0)
 		{
-			std::cout << "<>";
+			os << "<>";
 			return os;
 		}
 
-		std::cout << "<";
+		os << "<";
 		for (size_t i = 0; i < v.length; ++i)
 		{
-			std::cout << v[i];
+			os << v[i];
 
 			if (i != v.length - 1)
-				std::cout << ", ";
+				os << ", ";
 		}
-		std::cout << ">";
+		os << ">";
 
 		return os;
 	};
