@@ -160,7 +160,7 @@ namespace linalg
 	template<size_t L, typename T>
 	std::ostream& operator<<(std::ostream& os, const linalg::vec<L, T>& v)
 	{
-		for (int i = 0; i < v.length; ++i)
+		for (size_t i = 0; i < v.length; ++i)
 			std::cout << v[i] << "\t";
 
 		return os;
