@@ -507,6 +507,28 @@ void SuiteVecScalarComparison(TestEnvironment& tenv)
 
         tenv.assert(!(v == 2.5), "Vector scalar comparison failed");
     }
+
+    {
+        tenv.beginTest();
+
+        vec<3, float> v(2, 2.5, -3);
+
+        tenv.assert(v != 7.0f, "Vector scalar comparison failed");
+    }
+
+    {
+        tenv.beginTest();
+
+        vec<2, int> v(1, 1);
+
+        tenv.assert(v != 0, "Vector scalar comparison failed");
+    }
+
+    tenv.beginTest();
+
+    vec<4, double> v(2.5, 2.5, 2.5, 2.5);
+
+    tenv.assert(!(v != 2.5), "Vector scalar comparison failed");
 }
 
 int main()
