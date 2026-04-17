@@ -531,6 +531,54 @@ void SuiteVecScalarComparison(TestEnvironment& tenv)
     tenv.assert(!(v != 2.5), "Vector scalar comparison failed");
 }
 
+void SuiteVecAddition(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector-vector addition");
+
+    {
+        tenv.beginTest("Vector-vector addition - same types 1");
+
+        vec<3, int> v1 {1, -2, 3};
+        vec<3, int> v2 {3, 5, 7};
+
+        tenv.assertEq(v1 + v2, vec<3, int>{4, 3, 10});
+
+        vec<3, int> v1_old = v1;
+        v1 += v2;
+
+        tenv.assertEq(v1, v1_old + v2);
+    }
+
+    {
+        tenv.beginTest("Vector-vector addition - same types 2");
+
+        vec<2, float> v1 {2.5, 3.7};
+        vec<2, float> v2 {-1.5, 3};
+
+        tenv.assertEq(v1 + v2, vec<2, float>{1, 6.7});
+
+        vec<2, float> v1_old = v1;
+        v1 += v2;
+
+        tenv.assertEq(v1, v1_old + v2);
+    }
+
+    {
+        tenv.beginTest("Vector-vector addition same types 3");
+
+        vec<1, std::string> v1 {"Race"};
+        vec<1, std::string> v2 {"car"};
+
+        tenv.assertEq(v1 + v2, vec<1, std::string>{"Racecar"});
+
+        vec<1, std::string> v1_old = v1;
+        v1 += v2;
+
+        tenv.assertEq(v1, v1_old + v2);
+    }
+
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -546,6 +594,7 @@ int main()
     SuiteVecCopyConstructionDifferentTypes(tenv);
     SuiteVecCopyAssignment(tenv);
     SuiteVecScalarAssignment(tenv);
+    SuiteVecAddition(tenv);
 
     std::cout << tenv.getSummary();
 
