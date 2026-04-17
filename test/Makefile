@@ -1,4 +1,4 @@
-INCLUDE_DIRS=../include xUnitCpp/include
+INCLUDE_DIRS=../include yUnit/include
 BIN_PATH=bin
 SRC_PATH=src
 OBJ_PATH=obj
@@ -12,7 +12,7 @@ CXXFLAGS = -Wall -Wextra -Werror -Wno-unused-variable -g -std=c++20 $(foreach di
 CFLAGS = -g $(foreach dir,$(INCLUDE_DIRS),$(patsubst %,-I%,$(dir)))
 LDFLAGS = 
 
-main.exe: main.cpp ../include/*
+main.exe: main.cpp ../include/* yUnit/*
 	mkdir -p $(BIN_PATH)
 	$(CXX) $(CXXFLAGS) $(SRC_PATH)/main.cpp -o $(BIN_PATH)/main.exe $(LDFLAGS)
 
