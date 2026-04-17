@@ -542,6 +542,8 @@ void SuiteVecAddition(TestEnvironment& tenv)
         vec<3, int> v2 {3, 5, 7};
 
         tenv.assertEq(v1 + v2, vec<3, int>{4, 3, 10});
+        // test commutativity
+        tenv.assertEq(v1 + v2, v2 + v1, "Addition is not commutative");
 
         vec<3, int> v1_old = v1;
         v1 += v2;
@@ -556,6 +558,8 @@ void SuiteVecAddition(TestEnvironment& tenv)
         vec<2, float> v2 {-1.5, 3};
 
         tenv.assertEq(v1 + v2, vec<2, float>{1, 6.7});
+        // test commutativity
+        tenv.assertEq(v1 + v2, v2 + v1, "Addition is not commutative");
 
         vec<2, float> v1_old = v1;
         v1 += v2;
@@ -564,12 +568,14 @@ void SuiteVecAddition(TestEnvironment& tenv)
     }
 
     {
-        tenv.beginTest("Vector-vector addition same types 3");
+        tenv.beginTest("Vector-vector addition - same types 3");
 
         vec<1, std::string> v1 {"Race"};
         vec<1, std::string> v2 {"car"};
 
         tenv.assertEq(v1 + v2, vec<1, std::string>{"Racecar"});
+        // test non-commutativity
+        tenv.assertNeq(v1 + v2, v2 + v1, "Addition is commutative");
 
         vec<1, std::string> v1_old = v1;
         v1 += v2;
