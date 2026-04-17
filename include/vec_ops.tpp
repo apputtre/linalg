@@ -160,8 +160,21 @@ namespace linalg
 	template<size_t L, typename T>
 	std::ostream& operator<<(std::ostream& os, const linalg::vec<L, T>& v)
 	{
+		if (v.length == 0)
+		{
+			std::cout << "<>";
+			return os;
+		}
+
+		std::cout << "<";
 		for (size_t i = 0; i < v.length; ++i)
-			std::cout << v[i] << "\t";
+		{
+			std::cout << v[i];
+
+			if (i != v.length - 1)
+				std::cout << ", ";
+		}
+		std::cout << ">";
 
 		return os;
 	};
