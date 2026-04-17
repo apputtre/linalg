@@ -583,6 +583,23 @@ void SuiteVecAddition(TestEnvironment& tenv)
         tenv.assertEq(v1, v1_old + v2);
     }
 
+    {
+        tenv.beginTest("Vector-vector addition - different types 1");
+
+        // when two vectors of different types are added, the smaller type should be promoted to the larger
+        vec<4, float> v1 {1.1, -2.2, 3.3, -4.4};
+        vec<4, int> v2 {1, 1, 1, 1};
+
+        tenv.assertEq(v1 + v2, vec<4, float> {2.1, -1.2, 4.3, -3.4});
+        // test commutativity
+        tenv.assertEq(v1 + v2, v2 + v1);
+
+        vec<4, float> v1_old = v1;
+        v1 += v2;
+
+        tenv.assertEq(v1, v1_old + v2);
+    }
+
 }
 
 int main()
