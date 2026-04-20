@@ -590,6 +590,7 @@ void SuiteVecAddition(TestEnvironment& tenv)
         vec<4, float> v1 {1.1, -2.2, 3.3, -4.4};
         vec<4, int> v2 {1, 1, 1, 1};
 
+        tenv.assert(std::is_same<decltype(v1 + v2), vec<4, float>>::value);
         tenv.assertEq(v1 + v2, vec<4, float> {2.1, -1.2, 4.3, -3.4});
         // test commutativity
         tenv.assertEq(v1 + v2, v2 + v1);
