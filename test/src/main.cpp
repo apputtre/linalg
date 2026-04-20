@@ -1023,6 +1023,15 @@ void SuiteVecDotProduct(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecScalarDivision(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector scalar division");
+
+    {
+        tenv.beginTest("Vector scalar division - same types 1");
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -1045,6 +1054,7 @@ int main()
     SuiteVecScalarSubtraction(tenv);
     SuiteVecScalarMultiplication(tenv);
     SuiteVecDotProduct(tenv);
+    SuiteVecScalarDivision(tenv);
 
     std::cout << tenv.getSummary();
 
