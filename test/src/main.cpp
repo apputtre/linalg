@@ -834,6 +834,14 @@ void SuiteVecSubtraction(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecScalarSubtraction(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector-scalar subtraction");
+
+    {
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -853,6 +861,7 @@ int main()
     SuiteVecScalarAddition(tenv);
     SuiteVecNegation(tenv);
     SuiteVecSubtraction(tenv);
+    SuiteVecScalarSubtraction(tenv);
 
     std::cout << tenv.getSummary();
 
