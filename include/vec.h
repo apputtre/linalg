@@ -119,10 +119,11 @@ namespace linalg
 		return new_vec;
 	}
 
-	template<size_t L, typename TVector, typename TScalar> requires std::convertible_to<TScalar, TVector>
-	vec<L, TVector> operator+(const TScalar& val, const vec<L, TVector>& v)
+	template<size_t L, typename TVector, typename TScalar>
+		requires requires (TVector x, TScalar y) {x + y;}
+	vec<L, AdditionResult<TVector, TScalar>> operator+(const TScalar& val, const vec<L, TVector>& v)
 	{
-		vec<L, TVector> new_vec;
+		vec<L, AdditionResult<TVector, TScalar>> new_vec;
 
 		for (size_t i = 0; i < L; ++i)
 			new_vec[i] = val + v[i];
