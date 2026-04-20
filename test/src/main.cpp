@@ -890,6 +890,15 @@ void SuiteVecScalarSubtraction(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecScalarMultiplication(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector scalar multiplication");
+
+    {
+
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -910,6 +919,7 @@ int main()
     SuiteVecNegation(tenv);
     SuiteVecSubtraction(tenv);
     SuiteVecScalarSubtraction(tenv);
+    SuiteVecScalarMultiplication(tenv);
 
     std::cout << tenv.getSummary();
 

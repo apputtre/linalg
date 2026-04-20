@@ -205,6 +205,8 @@ namespace linalg
 	{
 		for (size_t i = 0; i < L; ++i)
 			v[i] *= val;
+		
+		return v;
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
