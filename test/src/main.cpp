@@ -876,6 +876,28 @@ void SuiteVecScalarSubtraction(TestEnvironment& tenv)
 
         tenv.assertEq(v, (vec<2, float>) (v_old - x));
     }
+
+    {
+        tenv.beginTest("Vector-scalar subtraction - different types 2");
+
+        vec<3, double> v(2.6, -3.5, 137);
+        float x = 256;
+
+        auto result = v - x;
+
+        tenv.assert(std::is_same<decltype(result), vec<3, double>>::value);
+
+        tenv.assertEq((vec<3, float>) result, vec<3, float>(v[0] - x, v[1] - x, v[2] - x));
+
+        // test anti-commutativity
+        tenv.assertEq((vec<3, float>)(v - x), -(vec<3, float>)(x - v));
+
+        auto v_old = v;
+
+        v -= x;
+
+        tenv.assertEq((vec<3, float>)v, (vec<3, float>) (v_old - x));
+    }
 }
 
 int main()
