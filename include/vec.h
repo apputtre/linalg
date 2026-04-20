@@ -156,10 +156,11 @@ namespace linalg
 		return v1;
 	}
 
-	template<size_t L, typename T1, typename T2> requires std::convertible_to<T2, T1>
-	vec<L, T1> operator-(const vec<L, T1>& v1, const vec<L, T2>& v2)
+	template<size_t L, typename T1, typename T2>
+		requires requires (T1 x, T2 y) {x + y;}
+	vec<L, SubtractionResult<T1, T2>> operator-(const vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
-		vec<L, T1> new_vec(v1);
+		vec<L, SubtractionResult<T1, T2>> new_vec(v1);
 		new_vec -= v2;
 		return new_vec;
 	}
