@@ -715,6 +715,23 @@ void SuiteVecNegation(TestEnvironment& tenv)
 
         tenv.assertEq(-v, vec<3, int>(-v[0], -v[1], -v[2]));
     }
+
+    {
+        tenv.beginTest("Vector negation 2");
+
+        vec<2, float> v {2.5, 4.7};
+
+        tenv.assertEq(-v, vec<2, float>(-v[0], -v[1]));
+    }
+
+    {
+        tenv.beginTest("Vector negation 3");
+
+        vec<4, double> v {137, -12.5, 13, 3.14};
+
+        tenv.assertEq(-v, vec<4, double>(-v[0], -v[1], -v[2], -v[3]));
+    }
+
 }
 
 void SuiteVecSubtraction(TestEnvironment& tenv)
