@@ -245,26 +245,34 @@ namespace linalg
 		return acc;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T>& operator/=(vec<L, T>& v1, const U& val)
+	template<size_t L, typename TVector, typename TScalar>
+		requires requires (TVector x, TScalar y) {x / y;}
+	vec<L, TVector>& operator/=(vec<L, TVector>& v1, const TScalar& val)
 	{
-		apply(v1, [val](T& elem) {elem /= val; });
+		for (size_t i = 0; i < L; ++i)
+			v1[i] /= val;
+
 		return v1;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator/(const vec<L, T>& v, const U& val)
+	template<size_t L, typename TVector, typename TScalar>
+		requires requires (TVector x, TScalar y) {x / y;}
+	vec<L, DivisionResult<TVector, TScalar>> operator/(const vec<L, TVector>& v, const TScalar& val)
 	{
-		vec<L, T> new_vec(v);
+		vec<L, DivisionResult<TVector, TScalar>> new_vec(v);
 		new_vec /= val;
 		return new_vec;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator/(const U& val, const vec<L, T>& v)
+	template<size_t L, typename TVector, typename TScalar>
+		requires requires (TVector x, TScalar y) {x / y;}
+	vec<L, DivisionResult<TVector, TScalar>> operator/(const TScalar& val, const vec<L, TVector>& v)
 	{
-		vec<L, T> new_vec;
-		apply_elementwise([val](T& elem1, const T& elem2) {elem1 = val / elem2; }, v);
+		vec<L, DivisionResult<TVector, TScalar>> new_vec;
+
+		for (size_t i = 0; i < L; ++i)
+			new_vec[i] = val / v[i];
+
 		return new_vec;
 	}
 }
