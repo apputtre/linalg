@@ -709,7 +709,11 @@ void SuiteVecNegation(TestEnvironment& tenv)
     tenv.beginSuite("Vector negation");
 
     {
+        tenv.beginTest("Vector negation 1");
 
+        vec<3, int> v {25, 50, 75};
+
+        tenv.assertEq(-v, vec<3, int>(-v[0], -v[1], -v[2]));
     }
 }
 
