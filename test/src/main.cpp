@@ -1004,7 +1004,22 @@ void SuiteVecDotProduct(TestEnvironment& tenv)
 
         auto result = v1 * v2;
 
-        tenv.assert(std::is_same<decltype(result), vec<2, double>>::value);
+        tenv.assert(std::is_same<decltype(result), double>::value);
+        tenv.assertEq(result, v1[0] * v2[0] + v1[1] * v2[1]);
+        tenv.assertEq(v1 * v2, v2 * v1);
+    }
+
+    {
+        tenv.beginTest("Dot product - different types 2");
+
+        vec<2, float> v1(3.14, 137);
+        vec<2, int> v2(2, 3);
+
+        auto result = v1 * v2;
+
+        tenv.assert(std::is_same<decltype(result), float>::value);
+        tenv.assertEq(result, v1[0] * v2[0] + v1[1] * v2[1]);
+        tenv.assertEq(v1 * v2, v2 * v1);
     }
 }
 
