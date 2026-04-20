@@ -21,25 +21,6 @@ namespace linalg
 		return v + val;
 	}
 
-	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x + y;}
-	vec<L, T1>& operator+=(vec<L, T1>& v1, const vec<L, T2>& v2)
-	{
-		for (size_t i = 0; i < L; ++i)
-			v1[i] += v2[i];
-
-		return v1;
-	}
-
-	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x + y;}
-	vec<L, AdditionResult<T1, T2>> operator+(const vec<L, T1>& v1, const vec<L, T2>& v2)
-	{
-		vec<L, AdditionResult<T1, T2>> new_vec(v1);
-		new_vec += v2;
-		return new_vec;
-	}
-
 	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
 	vec<L, T>& operator-=(vec<L, T>& v, const U& val)
 	{
