@@ -676,7 +676,7 @@ void SuiteVecScalarAddition(TestEnvironment& tenv)
 
         v += x;
 
-        tenv.assertEq(v, (vec<3, double>) (v_old + x));
+        tenv.assertEq(v, (vec<3, float>) (v_old + x));
     }
 }
 
