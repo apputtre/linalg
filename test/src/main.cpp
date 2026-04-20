@@ -839,6 +839,20 @@ void SuiteVecScalarSubtraction(TestEnvironment& tenv)
     tenv.beginSuite("Vector-scalar subtraction");
 
     {
+        tenv.beginTest("Vector-scalar subtraction - same types");
+
+        vec<3, float> v(1, -2.5, 3);
+        float x = 0.2;
+
+        tenv.assertEq(v - x, vec<3, float> (v[0] - x, v[1] - x, v[2] - x));
+        // test anti-commutativity
+        tenv.assertEq(x - v, -(v - x));
+
+        auto v_old = v;
+
+        v -= x;
+
+        tenv.assertEq(v, v_old - x);
     }
 }
 
