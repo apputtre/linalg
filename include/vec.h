@@ -82,6 +82,18 @@ namespace linalg
 	template<typename T1, typename T2>
 	using AdditionResult = decltype(std::declval<T1>() + std::declval<T2>());
 
+	template<size_t L, typename T>
+		requires requires (T x) {-x;}
+	vec<L, T> operator-(const vec<L, T>& v)
+	{
+		vec<L, T> new_vec(v);
+
+		for (size_t i = 0; i < L; ++i)
+			new_vec[i] = -new_vec[i];
+		
+		return new_vec;
+	}
+
 	template<size_t L, typename T1, typename T2>
 		requires requires (T1 x, T2 y) {x + y;}
 	vec<L, T1>& operator+=(vec<L, T1>& v1, const vec<L, T2>& v2)
