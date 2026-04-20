@@ -104,7 +104,9 @@ namespace linalg
 	template<size_t L, typename TVector, typename TScalar> requires std::convertible_to<TScalar, TVector>
 	vec<L, TVector>& operator+=(vec<L, TVector>& v, const TScalar& val)
 	{
-		apply(v, [val](TVector& elem) {elem += val; });
+		for (size_t i = 0; i < L; ++i)
+			v[i] += val;
+		
 		return v;
 	}
 
