@@ -230,10 +230,11 @@ namespace linalg
 		return new_vec;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	T operator*(const vec<L, T>& v1, const vec<L, U>& v2)
+	template<size_t L, typename T1, typename T2>
+		requires requires (T1 x, T2 y) {x * y;} // TODO: missing requirement: MultiplicationResult<T1, T2> + MultiplicationResult<T1, T2>
+	MultiplicationResult<T1, T2> operator*(const vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
-		T acc = 0;
+		MultiplicationResult<T1, T2> acc = 0;
 
 		for (size_t i = 0; i < L; ++i)
 			acc += v1[i] * v2[i];
