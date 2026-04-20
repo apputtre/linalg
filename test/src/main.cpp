@@ -618,6 +618,23 @@ void SuiteVecAddition(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecScalarAddition(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector-scalar addition");
+
+    {
+        tenv.beginTest("Vector-scalar addition 1");
+
+        vec<3, float> v(1, -2.5, 3);
+        float x = 3.2;
+
+        tenv.assertEq(v + x, vec<3, float> (v[0] + x, v[1] + x, v[2] + x));
+
+        // test commutativity
+        tenv.assertEq(v + x, x + v);
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -634,6 +651,7 @@ int main()
     SuiteVecCopyAssignment(tenv);
     SuiteVecScalarAssignment(tenv);
     SuiteVecAddition(tenv);
+    SuiteVecScalarAddition(tenv);
 
     std::cout << tenv.getSummary();
 
