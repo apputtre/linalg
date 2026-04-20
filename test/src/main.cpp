@@ -623,7 +623,7 @@ void SuiteVecScalarAddition(TestEnvironment& tenv)
     tenv.beginSuite("Vector-scalar addition");
 
     {
-        tenv.beginTest("Vector-scalar addition 1");
+        tenv.beginTest("Vector-scalar addition 1 - same types 1");
 
         vec<3, float> v(1, -2.5, 3);
         float x = 3.2;
@@ -632,6 +632,29 @@ void SuiteVecScalarAddition(TestEnvironment& tenv)
 
         // test commutativity
         tenv.assertEq(v + x, x + v);
+
+        auto v_old = v;
+
+        v += x;
+        
+        tenv.assertEq(v, v_old + x);
+    }
+
+    {
+        tenv.beginTest("Vector-scalar addition 2 - same types 2");
+
+        vec<2, std::string> v("Hello", "Hello");
+        std::string x = " world";
+
+        tenv.assertEq(v + x, vec<2, std::string> (v[0] + x, v[1] + x));
+        // test non-commutativity
+        tenv.assertEq(x + v, vec<2, std::string> (x + v[0], x + v[1]));
+
+        auto v_old = v;
+
+        v += x;
+
+        tenv.assertEq(v, v_old + x);
     }
 }
 
