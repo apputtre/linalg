@@ -7,10 +7,10 @@ namespace linalg
 		return v;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator+(const vec<L, T>& v, const U& val)
+	template<size_t L, typename TVector, typename TScalar> requires std::convertible_to<TScalar, TVector>
+	vec<L, TVector> operator+(const vec<L, TVector>& v, const TScalar& val)
 	{
-		vec<L, T> new_vec(v);
+		vec<L, TVector> new_vec(v);
 		new_vec += val;
 		return new_vec;
 	}
