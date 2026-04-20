@@ -165,26 +165,35 @@ namespace linalg
 		return new_vec;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T>& operator-=(vec<L, T>& v, const U& val)
+	template<size_t L, typename TVector, typename TScalar>
+		requires requires (TVector x, TScalar y) {x - y;}
+	vec<L, TVector>& operator-=(vec<L, TVector>& v, const TScalar& val)
 	{
-		apply(v, [val](T& elem) {elem -= val; });
+		for (size_t i = 0; i < L; ++i)
+			v[i] -= val;
+		
 		return v;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator-(const vec<L, T>& v, const U& val)
+	template<size_t L, typename TVector, typename TScalar>
+		requires requires (TVector x, TScalar y) {x - y;}
+	vec<L, SubtractionResult<TVector, TScalar>> operator-(const vec<L, TVector>& v, const TScalar& val)
 	{
-		vec<L, T> new_vec(v);
+		vec<L, TVector> new_vec(v);
 		new_vec -= val;
 		return new_vec;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator-(const U& val, const vec<L, T>& v)
+	template<size_t L, typename TVector, typename TScalar>
+		requires requires (TVector x, TScalar y) {x - y;}
+	vec<L, SubtractionResult<TVector, TScalar>> operator-(const TScalar& val, const vec<L, TVector>& v)
 	{
-		vec<L, T> new_vec;
-		return new_vec + val - v;
+		vec<L, SubtractionResult<TVector, TScalar>> new_vec;
+
+		for (size_t i = 0; i < L; ++i)
+			new_vec[i] = val - v[i];
+
+		return new_vec;
 	}
 }
 
