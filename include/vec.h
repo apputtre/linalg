@@ -88,6 +88,9 @@ namespace linalg
 	template<typename T1, typename T2>
 	using MultiplicationResult = decltype(std::declval<T1>() * std::declval<T2>());
 
+	template<typename T1, typename T2>
+	using DivisionResult = decltype(std::declval<T1>() / std::declval<T2>());
+
 	template<size_t L, typename T>
 		requires requires (T x) {-x;}
 	vec<L, T> operator-(const vec<L, T>& v)
