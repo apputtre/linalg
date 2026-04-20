@@ -142,6 +142,22 @@ namespace linalg
 
 		return new_vec;
 	}
+
+	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
+	vec<L, T>& operator-=(vec<L, T>& v1, const vec<L, U>& v2)
+	{
+		apply_elementwise(v1, [v2](T& elem_1, const T& elem_2) {elem_1 -= elem_2; }, v2);
+		return v1;
+	}
+
+	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
+	vec<L, T> operator-(const vec<L, T>& v1, const vec<L, U>& v2)
+	{
+		vec<L, T> new_vec(v1);
+		new_vec -= v2;
+		return new_vec;
+	}
+
 }
 
 #endif
