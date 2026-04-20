@@ -971,6 +971,30 @@ void SuiteVecDotProduct(TestEnvironment& tenv)
 
         tenv.assertNeq(v1 * v2, 0);
     }
+
+    {
+        tenv.beginTest("Dot product - same types 2");
+
+        vec<3, float> v1(1.5, -2.5, 3.5);
+        vec<3, float> v2(4.5, -5.5, 6.5);
+
+        tenv.assertEq(v1 * v2, v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]);
+        tenv.assertEq(v1 * v2, v2 * v1);
+
+        tenv.assertNeq(v1 * v2, 0);
+    }
+
+    {
+        tenv.beginTest("Dot product - same types 3");
+
+        vec<3, double> v1(0.1, -0.2, 0.3);
+        vec<3, double> v2(137.5, 3.14, 192);
+
+        tenv.assertEq(v1 * v2, v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]);
+        tenv.assertEq(v1 * v2, v2 * v1);
+
+        tenv.assertNeq(v1 * v2, 0);
+    }
 }
 
 int main()
