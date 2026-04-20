@@ -814,8 +814,23 @@ void SuiteVecSubtraction(TestEnvironment& tenv)
         v1 += v2;
 
         tenv.assertEq(v1, v1_old + v2);
+    }
 
+    {
+        tenv.beginTest("Vector-vector subtraction - different types 2");
 
+        vec<2, float> v1 {1.5, -3.6};
+        vec<2, double> v2 {3.14, 9.2};
+
+        tenv.assert(std::is_same<decltype(v1 - v2), vec<2, double>>::value);
+        tenv.assertEq(v1 - v2, vec<2, double> (v1[0] - v2[0], v1[1] - v2[1]));
+        // test anti - commutativity
+        tenv.assertEq((vec<2, float>)(v1 - v2), -(vec<2, float>)(v2 - v1));
+
+        vec<2, float> v1_old = v1;
+        v1 += v2;
+
+        tenv.assertEq(v1, (vec<2, float>) (v1_old + v2));
     }
 }
 
