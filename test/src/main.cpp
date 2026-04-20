@@ -956,6 +956,21 @@ void SuiteVecScalarMultiplication(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecDotProduct(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector dot product");
+
+    {
+        tenv.beginTest("Dot product - Test 1");
+
+        vec<2, int> v1(1, 2);
+        vec<2, int> v2(3, 4);
+
+        tenv.assertEq(v1 * v2, v1[0] * v2[0] + v1[1] * v2[1]);
+        tenv.assertEq(v1 * v2, v2 * v1);
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -977,6 +992,7 @@ int main()
     SuiteVecSubtraction(tenv);
     SuiteVecScalarSubtraction(tenv);
     SuiteVecScalarMultiplication(tenv);
+    SuiteVecDotProduct(tenv);
 
     std::cout << tenv.getSummary();
 
