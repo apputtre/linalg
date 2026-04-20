@@ -6,15 +6,6 @@
 namespace linalg
 {
 	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T>& operator-=(vec<L, T>& v, const U& val);
-
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator-(const vec<L, T>& v, const U& val);
-
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	vec<L, T> operator-(const U& val, const vec<L, T>& v);
-
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
 	vec<L, T>& operator*=(vec<L, T>& v1, const U& val);
 
 	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
