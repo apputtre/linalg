@@ -1,17 +1,6 @@
 namespace linalg
 {
 	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	T operator*(const vec<L, T>& v1, const vec<L, U>& v2)
-	{
-		T acc = 0;
-
-		for (size_t i = 0; i < L; ++i)
-			acc += v1[i] * v2[i];
-
-		return acc;
-	}
-
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
 	vec<L, T>& operator/=(vec<L, T>& v1, const U& val)
 	{
 		apply(v1, [val](T& elem) {elem /= val; });
