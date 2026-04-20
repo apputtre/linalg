@@ -995,6 +995,17 @@ void SuiteVecDotProduct(TestEnvironment& tenv)
 
         tenv.assertNeq(v1 * v2, 0);
     }
+
+    {
+        tenv.beginTest("Dot product - different types 1");
+
+        vec<2, float> v1(1.5, -2.5);
+        vec<2, double> v2(3.5, 4.5);
+
+        auto result = v1 * v2;
+
+        tenv.assert(std::is_same<decltype(result), vec<2, double>>::value);
+    }
 }
 
 int main()
