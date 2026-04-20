@@ -895,8 +895,67 @@ void SuiteVecScalarMultiplication(TestEnvironment& tenv)
     tenv.beginSuite("Vector scalar multiplication");
 
     {
+        tenv.beginTest("Vector-scalar multiplication - same types");
 
+        vec<3, float> v(1, -2.5, 3);
+        float x = 0.2;
+
+        tenv.assertEq(v * x, vec<3, float> (v[0] * x, v[1] * x, v[2] * x));
+        // test commutativity
+        tenv.assertEq(x * v, v * x);
+
+        auto v_old = v;
+
+        v *= x;
+
+        tenv.assertEq(v, v_old * x);
     }
+
+    /*
+    {
+        tenv.beginTest("Vector-scalar multiplication - different types 1");
+
+        vec<2, float > v {0.1, -0.2};
+        double x = 1.75;
+
+        auto result = v - x;
+
+        tenv.assert(std::is_same<decltype(result), vec<2, double>>::value);
+
+        tenv.assertEq((vec<2, float>) result, vec<2, float>(v[0] - x, v[1] - x));
+
+        // test anti-commutativity
+        tenv.assertEq((vec<2, float>)(v - x), -(vec<2, float>)(x - v));
+
+        auto v_old = v;
+
+        v -= x;
+
+        tenv.assertEq(v, (vec<2, float>) (v_old - x));
+    }
+
+    {
+        tenv.beginTest("Vector-scalar multiplication - different types 2");
+
+        vec<3, double> v(2.6, -3.5, 137);
+        float x = 256;
+
+        auto result = v - x;
+
+        tenv.assert(std::is_same<decltype(result), vec<3, double>>::value);
+
+        tenv.assertEq((vec<3, float>) result, vec<3, float>(v[0] - x, v[1] - x, v[2] - x));
+
+        // test anti-commutativity
+        tenv.assertEq((vec<3, float>)(v - x), -(vec<3, float>)(x - v));
+
+        auto v_old = v;
+
+        v -= x;
+
+        tenv.assertEq((vec<3, float>)v, (vec<3, float>) (v_old - x));
+    }
+    */
 }
 
 int main()
