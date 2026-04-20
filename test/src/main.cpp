@@ -678,6 +678,28 @@ void SuiteVecScalarAddition(TestEnvironment& tenv)
 
         tenv.assertEq(v, (vec<3, float>) (v_old + x));
     }
+
+    {
+        tenv.beginTest("Vector-scalar addition - different types 2");
+
+        vec<3, double> v {0.1, -0.2, 0.3};
+        float x = 2.5;
+
+        auto result = v + x;
+
+        tenv.assert(std::is_same<decltype(result), vec<3, double>>::value);
+
+        tenv.assertEq(result, vec<3, double>(v[0] + x, v[1] + x, v[2] + x));
+
+        // test commutativity
+        tenv.assertEq(v + x, x + v);
+
+        auto v_old = v;
+
+        v += x;
+
+        tenv.assertEq(v, (vec<3, double>) (v_old + x));
+    }
 }
 
 int main()
