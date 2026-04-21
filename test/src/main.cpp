@@ -1148,6 +1148,18 @@ void SuiteVecScalarDivision(TestEnvironment& tenv)
         }
 
         tenv.assert(exception_thrown, "Division by zero perimtted");
+
+        exception_thrown = false;
+        try
+        {
+            v /= 0;
+        }
+        catch(std::exception& e)
+        {
+            exception_thrown = true;
+        }
+
+        tenv.assert(exception_thrown, "Division by zero permitted");
     }
 }
 
