@@ -1156,6 +1156,46 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecNorm(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector norm");
+
+    {
+        tenv.beginTest("Vector norm 1");
+
+        vec<3, float> v(1, -2.5, 3);
+
+        auto actual = norm(v);
+
+        tenv.assert(std::is_same<decltype(actual), vec<3, float>>::value);
+
+        vec<3, float> expected = v / v.mag();
+
+        tenv.assert(
+            floatCompare(actual[0], expected[0]) &&
+            floatCompare(actual[1], expected[1]) &&
+            floatCompare(actual[2], expected[2])
+        );
+    }
+
+    {
+        tenv.beginTest("Vector norm 2");
+
+        vec<2, double> v(137, 5.5);
+
+        auto actual = norm(v);
+
+        tenv.assert(std::is_same<decltype(actual), vec<2, double>>::value);
+
+        vec<2, double> expected = v / v.mag();
+
+        tenv.assert(
+            floatCompare(actual[0], expected[0]) &&
+            floatCompare(actual[1], expected[1])
+        );
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -1180,6 +1220,7 @@ int main()
     SuiteVecDotProduct(tenv);
     SuiteVecScalarDivision(tenv);
     SuiteVecMagnitude(tenv);
+    SuiteVecNorm(tenv);
 
     std::cout << tenv.getSummary();
 
