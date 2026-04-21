@@ -281,7 +281,7 @@ namespace linalg
 	{
 		T acc = 0;
 
-		for (int i = 0; i < v.length; ++i)
+		for (size_t i = 0; i < v.length; ++i)
 			acc += std::pow(v[i], 2);
 
 		T mag = std::sqrt(acc);
