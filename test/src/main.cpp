@@ -1203,6 +1203,20 @@ void SuiteVecNorm(TestEnvironment& tenv)
             floatCompare(actual[1], expected[1])
         );
     }
+
+    {
+        tenv.beginTest("Norm of zero vector");
+
+        vec<3, double> v;
+
+        auto actual = norm(v);
+
+        tenv.assert(std::is_same<decltype(actual), vec<3, double>>::value);
+
+        vec<3, double> expected(0, 0, 0);
+
+        tenv.assertEq(actual, expected);
+    }
 }
 
 int main()
