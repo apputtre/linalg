@@ -18,7 +18,7 @@ namespace linalg
 		T w {};
 		T elems[L - 4] {};
 
-		value_type& operator[](size_t idx) const
+		T& operator[](size_t idx) const
 		{
 			if (idx >= length)
 				throw std::runtime_error("Index out of bounds");
@@ -44,7 +44,7 @@ namespace linalg
 	{
 		T x {};
 
-		value_type& operator[](size_t idx) const
+		T& operator[](size_t idx) const
 		{
 			switch(idx)
 			{
@@ -62,7 +62,7 @@ namespace linalg
 		T x {};
 		T y {};
 
-		value_type& operator[](size_t idx) const
+		T& operator[](size_t idx) const
 		{
 			switch(idx)
 			{
@@ -83,7 +83,7 @@ namespace linalg
 		T y {};
 		T z {};
 
-		value_type& operator[](size_t idx) const
+		T& operator[](size_t idx) const
 		{
 			
 			switch(idx)
