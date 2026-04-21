@@ -24,12 +24,6 @@ namespace linalg
 	// Apply a binary operation between every element of this vector and every element of other
 	template<size_t L, typename T, typename U, typename F>
 	void apply_elementwise(vec<L, T>& v, F func, const vec<L, U>& other) requires std::convertible_to<U, T>;
-
-	template<size_t L, typename T>
-	T mag(vec<L, T> v);
-
-	template<size_t L, typename T>
-	vec<L, T> norm(vec<L, T> v);
 }
 
 #include "vec_ops.tpp"

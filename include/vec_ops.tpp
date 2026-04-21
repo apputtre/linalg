@@ -67,29 +67,4 @@ namespace linalg
 			func(v[i], other[i]);
 	}
 
-	template<size_t L, typename T>
-	T mag(vec<L, T> v)
-	{
-		T acc = 0;
-
-		for (int i = 0; i < v.length; ++i)
-			acc += std::pow(v[i], 2);
-
-		T mag = std::sqrt(acc);
-
-		return mag;
-	}
-
-	template<size_t L, typename T>
-	vec<L, T> norm(vec<L, T> v)
-	{
-		T m = mag(v);
-
-		if (m == 0)
-			return v;
-
-		vec<L, T> ret = v / m;
-
-		return ret;
-	}
 }
