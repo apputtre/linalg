@@ -1131,6 +1131,24 @@ void SuiteVecScalarDivision(TestEnvironment& tenv)
 
         tenv.assertEq((vec<2, float>)v, (vec<2, float>) (v_old / x));
     }
+
+    {
+        tenv.beginTest("Vector-scalar division - division by 0");
+
+        vec<3, double> v(1, -2.5, 3);
+
+        bool exception_thrown = false;
+        try
+        {
+            v / 0;
+        }
+        catch(std::exception& e)
+        {
+            exception_thrown = true;
+        }
+
+        tenv.assert(exception_thrown, "Division by zero perimtted");
+    }
 }
 
 void SuiteVecMagnitude(TestEnvironment& tenv)
