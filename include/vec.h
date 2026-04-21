@@ -21,7 +21,7 @@ namespace linalg
 		T x {value_type{}};
 
 	private:
-		T elems[L] {value_type{}};
+		T elems[L == 1? 0 : L - 1] {};
 
 	public:
 		vec() {}
