@@ -14,18 +14,34 @@ namespace linalg
 	{
 		typedef T value_type;
 
-	private:
-		T elems[L] {value_type{}};
 
 	public:
 		const static size_t length = L;
 
-		T& x = elems[0];
+		T x {value_type{}};
 
-		template<typename... TOther>
-		vec(TOther... vals)
-			: elems {static_cast<value_type>(vals)...}
-		{}
+	private:
+		T elems[L] {value_type{}};
+
+	public:
+		vec() {}
+
+		template<typename... TVals>
+		vec(TVals... vals)
+		{
+			std::initializer_list<T> list {static_cast<T>(vals)...};
+
+			if (list.size() != length)
+				throw std::logic_error("Invalid initializer list size");
+			
+			for (size_t i = 0; i < list.size(); ++i)
+			{
+				if (i == 0)
+					x = *list.begin();
+				else
+					elems[i - 1] = *(list.begin() + i);
+			}
+		}
 
 		template<typename TOther>
 		vec(TOther scalar)
@@ -77,7 +93,13 @@ namespace linalg
 			if (idx >= length)
 				throw std::runtime_error("Index out of bounds");
 			
-			return (value_type&)elems[idx];
+			switch(idx)
+			{
+				case 0:
+					return const_cast<value_type&>(x);
+				default:
+					return (value_type&)elems[idx - 1];
+			}
 		}
 
 
