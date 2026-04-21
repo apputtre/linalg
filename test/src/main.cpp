@@ -14,7 +14,7 @@ bool floatCompare(double x, double y)
 {
     for (size_t i = 0; i < sizeof(std::declval<double>()); ++i)
     {
-        unsigned int bx, by;
+        uint8_t bx, by;
 
         memcpy(&bx, (uint8_t*) &x + i, 1);
         memcpy(&by, (uint8_t*) &y + i, 1);
