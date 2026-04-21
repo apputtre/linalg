@@ -5,9 +5,6 @@
 
 namespace linalg
 {
-	template<size_t L, typename T>
-	std::ostream& operator<<(std::ostream& os, const linalg::vec<L, T>& v);
-
 	// Apply a unary operation to every element in the vector
 	template<size_t L, typename T, typename F>
 	void apply(vec<L, T>& v, F func);
