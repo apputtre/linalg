@@ -104,21 +104,27 @@ namespace linalg
 	template<typename T1, typename T2>
 	using DivisionResult = decltype(std::declval<T1>() / std::declval<T2>());
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	bool operator==(const vec<L, T>& v1, const vec<L, U>& v2)
+	template<size_t L, typename T1, typename T2>
+		requires requires (T1 x, T2 y) {x == y;}
+	bool operator==(const vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
-		if (v1.length != v2.length)
-			return false;
-
-		for (size_t i = 0; i < v1.length; ++i)
+		for (size_t i = 0; i < L; ++i)
 			if (v1[i] != v2[i])
 				return false;
 
 		return true;
 	}
 
-	template<size_t L, typename T>
-	bool operator==(const vec<L, T>& v, const T& scalar)
+	template<size_t L, typename T1, typename T2>
+		requires requires (T1 x, T2 y) {x == y;}
+	bool operator!=(vec<L, T1>& v1, const vec<L, T2>& v2)
+	{
+		return !(v1 == v2);
+	}
+
+	template<size_t L, typename TVector, typename TScalar>
+		requires std::convertible_to<TScalar, TVector>
+	bool operator==(const vec<L, TVector>& v, const TScalar& scalar)
 	{
 		for (size_t i = 0; i < v.length; ++i)
 			if (v[i] != scalar)
@@ -127,11 +133,21 @@ namespace linalg
 		return true;
 	}
 
-	template<size_t L, typename T, typename U> requires std::convertible_to<U, T>
-	bool operator!=(vec<L, T>& v1, const vec<L, U>& v2)
+	template<size_t L, typename TVector, typename TScalar>
+		requires std::convertible_to<TScalar, TVector>
+	bool operator!=(const vec<L, TVector>& v, const TScalar& scalar)
 	{
-		return !(v1 == v2);
+		return !(v == scalar);
 	}
+
+	/*
+	template<size_t L, typename TVector, typename TScalar>
+		requires requires (TVector x, TScalar y) {x == y;}
+	bool operator==(const TScalar& scalar, const vec<L, TVector>& v)
+	{
+		return v == scalar;
+	}
+	*/
 
 	template<size_t L, typename T>
 		requires requires (T x) {-x;}
