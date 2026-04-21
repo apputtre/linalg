@@ -1133,7 +1133,8 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
 
         vec<3, float> v(1.5, -2, 3.75);
 
-        tenv.assertEq(mag(v), sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]));
+        float expected = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+        tenv.assert(floatCompare(mag(v), expected));
     }
 }
 
