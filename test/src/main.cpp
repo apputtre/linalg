@@ -1028,7 +1028,20 @@ void SuiteVecScalarDivision(TestEnvironment& tenv)
     tenv.beginSuite("Vector scalar division");
 
     {
-        tenv.beginTest("Vector scalar division - same types 1");
+        tenv.beginTest("Vector-scalar division - same types");
+
+        vec<3, float> v(1.5, -2, 3.5);
+        float x = 2;
+
+        tenv.assertEq(v * x, vec<3, float> (v[0] * x, v[1] * x, v[2] * x));
+        // test commutativity
+        tenv.assertEq(x * v, v * x);
+
+        auto v_old = v;
+
+        v *= x;
+
+        tenv.assertEq(v, v_old * x);
     }
 }
 
