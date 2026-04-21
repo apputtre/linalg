@@ -1089,7 +1089,7 @@ void SuiteVecScalarDivision(TestEnvironment& tenv)
     }
 
     {
-        tenv.beginTest("Vector-scalar multiplication - different types 1");
+        tenv.beginTest("Vector-scalar division - different types 1");
 
         vec<2, double> v(-3.5, 137);
         float x = 256;
@@ -1111,7 +1111,7 @@ void SuiteVecScalarDivision(TestEnvironment& tenv)
     }
 
     {
-        tenv.beginTest("Vector-scalar multiplication - different types 2");
+        tenv.beginTest("Vector-scalar division - different types 2");
 
         vec<2, float> v(-3.5, 137);
         double x = 256;
