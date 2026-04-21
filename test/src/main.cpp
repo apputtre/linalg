@@ -12,6 +12,10 @@ using namespace linalg;
 
 bool floatCompare(double x, double y)
 {
+    if (!(std::endian::native == std::endian::little))
+        throw std::runtime_error("Not implemented");
+
+    int diff_ulps = 0;
     for (size_t i = 0; i < sizeof(std::declval<double>()); ++i)
     {
         uint8_t bx, by;
@@ -19,24 +23,10 @@ bool floatCompare(double x, double y)
         memcpy(&bx, (uint8_t*) &x + i, 1);
         memcpy(&by, (uint8_t*) &y + i, 1);
 
-        if (std::endian::native == std::endian::little)
-        {
-            if (i == 0)
-            {
-                // compare all but the first bit
-                if (bx >> 1 != by >> 1)
-                    return false;
-            }
-            else
-            {
-                if (bx != by)
-                    return false;
-            }
-        }
-        else
-        {
-            throw std::runtime_error("Not implemented");
-        }
+        int diff = (int) bx - (int) by;
+        diff *= pow(2, i*8);
+
+        diff_ulps += diff;
     }
 
     return true;
