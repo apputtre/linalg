@@ -10,6 +10,12 @@
 namespace linalg
 {
 	template<size_t L, typename T> requires (L > 0)
+	struct vec_base_storage
+	{
+
+	}
+
+	template<size_t L, typename T> requires (L > 0)
 	struct vec
 	{
 		typedef T value_type;
