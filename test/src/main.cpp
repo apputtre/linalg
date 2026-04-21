@@ -1089,6 +1089,11 @@ void SuiteVecScalarDivision(TestEnvironment& tenv)
     }
 }
 
+void SuiteVecMagnitude(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector magnitude");
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -1112,6 +1117,7 @@ int main()
     SuiteVecScalarMultiplication(tenv);
     SuiteVecDotProduct(tenv);
     SuiteVecScalarDivision(tenv);
+    SuiteVecMagnitude(tenv);
 
     std::cout << tenv.getSummary();
 
