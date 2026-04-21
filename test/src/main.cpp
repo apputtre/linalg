@@ -1244,6 +1244,31 @@ void SuiteVecNorm(TestEnvironment& tenv)
 
 }
 
+void SuiteVecComponentAliases(TestEnvironment& tenv)
+{
+    tenv.beginSuite("Vector component aliases");
+
+    {
+        tenv.beginTest();
+
+        vec<3, float> v(1.5, 2.5);
+
+        tenv.assertEq(v.x, v[0]);
+
+        float a = 137;
+
+        v.x = a;
+
+        tenv.assertEq(v[0], a);
+
+        float b = 12.5;
+
+        v[0] = b;
+
+        tenv.assertEq(v.x, b);
+    }
+}
+
 int main()
 {
     TestEnvironment tenv;
@@ -1270,6 +1295,7 @@ int main()
     SuiteVecMagnitude(tenv);
     SuiteVecNorm(tenv);
     SuiteVecComparison(tenv);
+    SuiteVecComponentAliases(tenv);
 
     std::cout << tenv.getSummary();
 
