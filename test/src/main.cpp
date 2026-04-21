@@ -18,7 +18,7 @@ bool floatCompare(TFloat x, TFloat y)
         throw std::runtime_error("Not implemented");
 
     int diff_ulps = 0;
-    for (size_t i = 0; i < sizeof(std::declval<double>()); ++i)
+    for (size_t i = 0; i < sizeof(std::declval<TFloat>()); ++i)
     {
         uint8_t bx, by;
 
