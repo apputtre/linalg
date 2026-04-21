@@ -104,11 +104,8 @@ namespace linalg
 	struct vec : public vec_base_storage<L, T>
 	{
 		typedef T value_type;
-
-	public:
 		const static size_t length = L;
 
-	public:
 		vec() {}
 
 		template<typename... TVals>
