@@ -77,6 +77,18 @@ namespace linalg
 			
 			return (value_type&)elems[idx];
 		}
+
+		T mag() const
+		{
+			T acc = 0;
+
+			for (size_t i = 0; i < L; ++i)
+				acc += std::pow((*this)[i], 2);
+
+			T mag = std::sqrt(acc);
+
+			return mag;
+		}
 	};
 
 	template<typename T1, typename T2>
@@ -274,19 +286,6 @@ namespace linalg
 			new_vec[i] = val / v[i];
 
 		return new_vec;
-	}
-
-	template<size_t L, typename T>
-	T mag(vec<L, T> v)
-	{
-		T acc = 0;
-
-		for (size_t i = 0; i < v.length; ++i)
-			acc += std::pow(v[i], 2);
-
-		T mag = std::sqrt(acc);
-
-		return mag;
 	}
 
 	template<size_t L, typename T>

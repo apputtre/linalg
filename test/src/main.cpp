@@ -1134,7 +1134,7 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
         vec<3, float> v(1.5, -2, 3.75);
 
         float expected = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
-        tenv.assert(floatCompare(mag(v), expected));
+        tenv.assert(floatCompare(v.mag(), expected));
     }
 
     {
@@ -1143,7 +1143,7 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
         vec<2, double> v(-2.5, 137);
 
         double expected = sqrt(v[0]*v[0] + v[1]*v[1]);
-        tenv.assert(floatCompare(mag(v), expected));
+        tenv.assert(floatCompare(v.mag(), expected));
     }
 
     {
@@ -1152,7 +1152,7 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
         vec<3, int> v(1, -2, 3);
 
         int expected = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
-        tenv.assert(floatCompare(mag(v), expected));
+        tenv.assert(floatCompare(v.mag(), expected));
     }
 }
 
