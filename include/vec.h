@@ -261,6 +261,9 @@ namespace linalg
 		requires requires (TVector x, TScalar y) {x / y;}
 	vec<L, TVector>& operator/=(vec<L, TVector>& v1, const TScalar& val)
 	{
+		if (val == 0)
+			throw std::logic_error("Division by zero");
+
 		for (size_t i = 0; i < L; ++i)
 			v1[i] /= val;
 
