@@ -34,7 +34,7 @@ namespace linalg
 				case 3:
 					return const_cast<T&>(w);
 				default:
-					return elems[idx - 4];
+					return const_cast<T&>(elems[idx - 4]);
 			}
 		}
 	};
@@ -140,10 +140,22 @@ namespace linalg
 				(*this)[i] = static_cast<value_type>(other[i]);
 		}
 
+		value_type& operator[](size_t idx) const
+		{
+			try
+			{
+				return vec_base_storage<L, T>::operator[](idx);
+			}
+			catch(std::runtime_error& e)
+			{
+				throw e;
+			}
+		}
+
 		vec& operator=(const vec<L, T>& other)
 		{
 			for (size_t i = 0; i < this->length; ++i)
-				(*this)[i] = static_cast<value_type>(other[i]);
+				this->operator[](i) = static_cast<value_type>(other[i]);
 			
 			return *this;
 		}
@@ -170,7 +182,7 @@ namespace linalg
 			T acc = 0;
 
 			for (size_t i = 0; i < L; ++i)
-				acc += std::pow((*this)[i], 2);
+				acc += std::pow(this->operator[](i), 2);
 
 			T mag = std::sqrt(acc);
 
