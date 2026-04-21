@@ -20,7 +20,7 @@ namespace linalg
 
 		T& operator[](size_t idx) const
 		{
-			if (idx >= length)
+			if (idx >= L)
 				throw std::runtime_error("Index out of bounds");
 			
 			switch(idx)
@@ -71,7 +71,7 @@ namespace linalg
 				case 1:
 					return const_cast<T&>(y);
 				default:
-					std::runtime_error("Index out of bounds");
+					throw std::runtime_error("Index out of bounds");
 			}
 		}
 	};
@@ -95,7 +95,7 @@ namespace linalg
 				case 2:
 					return const_cast<T&>(z);
 				default:
-					std::runtime_error("Index out of bounds");
+					throw std::runtime_error("Index out of bounds");
 			}
 		}
 	};
