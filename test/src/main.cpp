@@ -164,7 +164,7 @@ void SuiteVecSize(TestEnvironment& tenv)
 
         vec<3, float> v(1, 2.5, -3);
 
-        tenv.assert(sizeof(v) == sizeof(float) * 3, "Vector not expected size");
+        tenv.assertEq(sizeof(v), sizeof(float) * 3, "Vector not expected size");
     }
 
     {
@@ -172,7 +172,7 @@ void SuiteVecSize(TestEnvironment& tenv)
 
         vec<2, double> v(3.5, 14);
 
-        tenv.assert(sizeof(v) == sizeof(double) * 2, "Vector not expected size");
+        tenv.assertEq(sizeof(v), sizeof(double) * 2, "Vector not expected size");
     }
 
     {
@@ -180,7 +180,7 @@ void SuiteVecSize(TestEnvironment& tenv)
 
         vec<4, int> v(1, 2, 3, 4);
 
-        tenv.assert(sizeof(v) == sizeof(int) * 4, "Vector not expected size");
+        tenv.assertEq(sizeof(v), sizeof(int) * 4, "Vector not expected size");
     }
 }
 
@@ -1251,7 +1251,7 @@ void SuiteVecComponentAliases(TestEnvironment& tenv)
     {
         tenv.beginTest();
 
-        vec<3, float> v(1.5, 2.5);
+        vec<3, float> v(1.5, 2.5, -3.5);
 
         tenv.assertEq(v.x, v[0]);
 
