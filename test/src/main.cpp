@@ -436,12 +436,12 @@ void SuiteVecCopyAssignment(TestEnvironment& tenv)
     {
         tenv.beginTest();
 
-        vec<6, int> v1(1, 3, 5, 7, 9);
+        vec<6, int> v1(1, 3, 5, 7, 9, 11);
         vec<6, double> v2;
 
         v2 = v1;
 
-        tenv.assert(v2 == vec<6, double>(1, 3, 5, 7, 9), "Vector copy assignment failed");
+        tenv.assert(v2 == vec<6, double>(1, 3, 5, 7, 9, 11), "Vector copy assignment failed");
     }
 }
 
