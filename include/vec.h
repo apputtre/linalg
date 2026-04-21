@@ -140,14 +140,19 @@ namespace linalg
 		return !(v == scalar);
 	}
 
-	/*
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x == y;}
+		requires std::convertible_to<TScalar, TVector>
 	bool operator==(const TScalar& scalar, const vec<L, TVector>& v)
 	{
-		return v == scalar;
+		return (v == scalar);
 	}
-	*/
+
+	template<size_t L, typename TVector, typename TScalar>
+		requires std::convertible_to<TScalar, TVector>
+	bool operator!=(const TScalar& scalar, const vec<L, TVector>& v)
+	{
+		return !(v == scalar);
+	}
 
 	template<size_t L, typename T>
 		requires requires (T x) {-x;}
