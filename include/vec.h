@@ -10,7 +10,7 @@
 namespace linalg
 {
 	template<size_t L, typename T> requires (L > 0)
-	class vec
+	struct vec
 	{
 		typedef T value_type;
 
