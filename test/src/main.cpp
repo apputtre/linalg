@@ -1136,6 +1136,24 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
         float expected = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
         tenv.assert(floatCompare(mag(v), expected));
     }
+
+    {
+        tenv.beginTest("Vector magnitude test 2");
+
+        vec<2, double> v(-2.5, 137);
+
+        double expected = sqrt(v[0]*v[0] + v[1]*v[1]);
+        tenv.assert(floatCompare(mag(v), expected));
+    }
+
+    {
+        tenv.beginTest("Vector magnitude test 3");
+
+        vec<3, int> v(1, -2, 3);
+
+        int expected = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+        tenv.assert(floatCompare(mag(v), expected));
+    }
 }
 
 int main()
