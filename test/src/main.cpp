@@ -1092,6 +1092,14 @@ void SuiteVecScalarDivision(TestEnvironment& tenv)
 void SuiteVecMagnitude(TestEnvironment& tenv)
 {
     tenv.beginSuite("Vector magnitude");
+
+    {
+        tenv.beginTest("Vector magnitude test 1");
+
+        vec<3, float> v(1.5, -2, 3.75);
+
+        tenv.assertEq(mag(v), sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]));
+    }
 }
 
 int main()
