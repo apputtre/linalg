@@ -1043,6 +1043,28 @@ void SuiteVecScalarDivision(TestEnvironment& tenv)
 
         tenv.assertEq(v, v_old / x);
     }
+
+    {
+        tenv.beginTest("Vector-scalar multiplication - different types 1");
+
+        vec<2, double> v(-3.5, 137);
+        float x = 256;
+
+        auto result = v / x;
+
+        tenv.assert(std::is_same<decltype(result), vec<2, double>>::value);
+
+        tenv.assertEq((vec<2, float>) result, vec<2, float>(v[0] / x, v[1] / x));
+
+        // test commutativity
+        tenv.assertEq((vec<2, float>)(v / x), (vec<2, float>)(1/(x / v)));
+
+        auto v_old = v;
+
+        v /= x;
+
+        tenv.assertEq((vec<2, float>)v, (vec<2, float>) (v_old / x));
+    }
 }
 
 int main()
