@@ -1247,6 +1247,7 @@ void SuiteVecNorm(TestEnvironment& tenv)
 
         tenv.assertEq(actual, expected);
     }
+
 }
 
 int main()
@@ -1274,6 +1275,7 @@ int main()
     SuiteVecScalarDivision(tenv);
     SuiteVecMagnitude(tenv);
     SuiteVecNorm(tenv);
+    SuiteVecComparison(tenv);
 
     std::cout << tenv.getSummary();
 
