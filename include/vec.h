@@ -291,7 +291,7 @@ namespace linalg
 	template<size_t L, typename T>
 	vec<L, T> norm(vec<L, T> v)
 	{
-		T m = mag(v);
+		T m = v.mag();
 
 		if (m == 0)
 			return v;
