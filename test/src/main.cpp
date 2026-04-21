@@ -527,6 +527,9 @@ void SuiteVecScalarComparison(TestEnvironment& tenv)
 
         tenv.assertEq(v, 2.4f, "Vector scalar comparison failed");
         tenv.assertEq(2.4f, v, "Vector scalar comparison failed");
+
+        tenv.assertNeq(v, -1);
+        tenv.assertNeq(-1, v);
     }
 
     {
@@ -534,7 +537,11 @@ void SuiteVecScalarComparison(TestEnvironment& tenv)
 
         vec<2, int> v(13, 13);
 
-        tenv.assert(v == 13, "Vector scalar comparison failed");
+        tenv.assertEq(v, 13, "Vector scalar comparison failed");
+        tenv.assertEq(13, v, "Vector scalar comparison failed");
+
+        tenv.assertNeq(v, 0);
+        tenv.assertNeq(0, v);
     }
 
     {
@@ -542,38 +549,25 @@ void SuiteVecScalarComparison(TestEnvironment& tenv)
 
         vec<2, std::string> v("hello world", "hello world");
 
-        tenv.assert(v == std::string("hello world"), "Vector scalar comparison failed");
+        tenv.assertEq(v, std::string("hello world"), "Vector scalar comparison failed");
+        tenv.assertEq(std::string("hello world"), v, "Vector scalar comparison failed");
+
+        tenv.assertNeq(v, std::string("goodbye world"));
+        tenv.assertNeq(std::string("goodbye world"), v);
     }
 
     {
         tenv.beginTest();
 
-        vec<3, double> v(1, 2.5, -3);
+        vec<4, double> v(-1024, -1024, -1024, -1024);
 
-        tenv.assert(!(v == 2.5), "Vector scalar comparison failed");
+        tenv.assertEq(v, -1024, "Vector scalar comparison failed");
+        tenv.assertEq(-1024, v, "Vector scalar comparison failed");
+
+        tenv.assertNeq(v, 1024, "Vector scalar comparison failed");
+        tenv.assertNeq(1024, v, "Vector scalar comparison failed");
     }
 
-    {
-        tenv.beginTest();
-
-        vec<3, float> v(2, 2.5, -3);
-
-        tenv.assert(v != 7.0f, "Vector scalar comparison failed");
-    }
-
-    {
-        tenv.beginTest();
-
-        vec<2, int> v(1, 1);
-
-        tenv.assert(v != 0, "Vector scalar comparison failed");
-    }
-
-    tenv.beginTest();
-
-    vec<4, double> v(2.5, 2.5, 2.5, 2.5);
-
-    tenv.assert(!(v != 2.5), "Vector scalar comparison failed");
 }
 
 void SuiteVecAddition(TestEnvironment& tenv)
