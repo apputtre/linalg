@@ -9,20 +9,46 @@
 
 namespace linalg
 {
-	template<size_t L, typename T> requires (L > 0)
-	struct vec_base_storage {};
+	template<size_t L, typename T> requires (L > 0 && L > 4)
+	struct vec_base_storage
+	{
+		T x {};
+		T y {};
+		T z {};
+		T w {};
+		T elems[L - 4] {};
+	};
 
 	template<typename T>
-	struct vec_base_storage<1, T> {};
+	struct vec_base_storage<1, T>
+	{
+		T x {};
+	};
 
 	template<typename T>
-	struct vec_base_storage<2, T> {};
+	struct vec_base_storage<2, T>
+	{
+		T x {};
+		T y {};
+	};
 
 	template<typename T>
-	struct vec_base_storage<3, T> {};
+	struct vec_base_storage<3, T>
+	{
+		T x {};
+		T y {};
+		T z {};
+	};
 
 	template<typename T>
-	struct vec_base_storage<4, T> {};
+	struct vec_base_storage<4, T>
+	{
+		T x {};
+		T y {};
+		T z {};
+		T w {};
+	};
+
 
 	template<size_t L, typename T> requires (L > 0)
 	struct vec
