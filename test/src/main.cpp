@@ -182,6 +182,14 @@ void SuiteVecSize(TestEnvironment& tenv)
 
         tenv.assertEq(sizeof(v), sizeof(int) * 4, "Vector not expected size");
     }
+
+    tenv.beginTest("vec1d size");
+
+    {
+        vec<1, double> v(137.5);
+
+        tenv.assertEq(sizeof(v), sizeof(double), "Vector not expected size");
+    }
 }
 
 void SuiteVecComparison(TestEnvironment& tenv)
