@@ -9,7 +9,7 @@
 
 namespace linalg
 {
-	template<size_t L, typename T> requires (L > 0 && L > 4)
+	template<size_t L, typename T> requires (L > 0)
 	struct vec_base_storage
 	{
 		T x {};
@@ -17,12 +17,43 @@ namespace linalg
 		T z {};
 		T w {};
 		T elems[L - 4] {};
+
+		value_type& operator[](size_t idx) const
+		{
+			if (idx >= length)
+				throw std::runtime_error("Index out of bounds");
+			
+			switch(idx)
+			{
+				case 0:
+					return const_cast<T&>(x);
+				case 1:
+					return const_cast<T&>(y);
+				case 2:
+					return const_cast<T&>(z);
+				case 3:
+					return const_cast<T&>(w);
+				default:
+					return elems[idx - 4];
+			}
+		}
 	};
 
 	template<typename T>
 	struct vec_base_storage<1, T>
 	{
 		T x {};
+
+		value_type& operator[](size_t idx) const
+		{
+			switch(idx)
+			{
+				case 0:
+					return const_cast<T&>(x);
+				default:
+					throw std::runtime_error("Index out of bounds");
+			}
+		}
 	};
 
 	template<typename T>
@@ -30,6 +61,19 @@ namespace linalg
 	{
 		T x {};
 		T y {};
+
+		value_type& operator[](size_t idx) const
+		{
+			switch(idx)
+			{
+				case 0:
+					return const_cast<T&>(x);
+				case 1:
+					return const_cast<T&>(y);
+				default:
+					std::runtime_error("Index out of bounds");
+			}
+		}
 	};
 
 	template<typename T>
@@ -38,31 +82,31 @@ namespace linalg
 		T x {};
 		T y {};
 		T z {};
-	};
 
-	template<typename T>
-	struct vec_base_storage<4, T>
-	{
-		T x {};
-		T y {};
-		T z {};
-		T w {};
+		value_type& operator[](size_t idx) const
+		{
+			
+			switch(idx)
+			{
+				case 0:
+					return const_cast<T&>(x);
+				case 1:
+					return const_cast<T&>(y);
+				case 2:
+					return const_cast<T&>(z);
+				default:
+					std::runtime_error("Index out of bounds");
+			}
+		}
 	};
-
 
 	template<size_t L, typename T> requires (L > 0)
-	struct vec
+	struct vec : public vec_base_storage<L, T>
 	{
 		typedef T value_type;
 
-
 	public:
 		const static size_t length = L;
-
-		T x {value_type{}};
-
-	private:
-		T elems[L == 1? 0 : L - 1] {};
 
 	public:
 		vec() {}
@@ -76,12 +120,7 @@ namespace linalg
 				throw std::logic_error("Invalid initializer list size");
 			
 			for (size_t i = 0; i < list.size(); ++i)
-			{
-				if (i == 0)
-					x = *list.begin();
-				else
-					elems[i - 1] = *(list.begin() + i);
-			}
+				(*this)[i] = *(list.begin() + i);
 		}
 
 		template<typename TOther>
@@ -128,21 +167,6 @@ namespace linalg
 			
 			return *this;
 		}
-
-		value_type& operator[](size_t idx) const
-		{
-			if (idx >= length)
-				throw std::runtime_error("Index out of bounds");
-			
-			switch(idx)
-			{
-				case 0:
-					return const_cast<value_type&>(x);
-				default:
-					return (value_type&)elems[idx - 1];
-			}
-		}
-
 
 		T mag() const
 		{
