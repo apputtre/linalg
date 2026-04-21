@@ -20,6 +20,8 @@ namespace linalg
 	public:
 		const static size_t length = L;
 
+		T& x = elems[0];
+
 		template<typename... TOther>
 		vec(TOther... vals)
 			: elems {static_cast<value_type>(vals)...}
