@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "vec.h"
-#include "vec_ops.h"
 
 #include "TestEnvironment.h"
 
