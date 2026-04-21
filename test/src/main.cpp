@@ -1259,21 +1259,21 @@ void SuiteVecComponentAliases(TestEnvironment& tenv)
     {
         tenv.beginTest();
 
-        vec<3, float> v(1.5, 2.5, -3.5);
+        vec<4, float> v(1, 2, 3, 4);
 
-        tenv.assertEq(v.x, v[0]);
-
-        float a = 137;
+        float a = 137.5;
 
         v.x = a;
-
         tenv.assertEq(v[0], a);
 
-        float b = 12.5;
+        v.y = a;
+        tenv.assertEq(v[1], a);
 
-        v[0] = b;
+        v.z = a;
+        tenv.assertEq(v[2], a);
 
-        tenv.assertEq(v.x, b);
+        v.w = a;
+        tenv.assertEq(v[3], a);
     }
 }
 
