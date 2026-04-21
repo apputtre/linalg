@@ -10,7 +10,9 @@
 
 using namespace linalg;
 
-bool floatCompare(double x, double y)
+template<typename TFloat>
+    requires std::floating_point<typename std::remove_reference<TFloat>::type>
+bool floatCompare(TFloat x, TFloat y)
 {
     if (!(std::endian::native == std::endian::little))
         throw std::runtime_error("Not implemented");
@@ -29,7 +31,24 @@ bool floatCompare(double x, double y)
         diff_ulps += diff;
     }
 
-    return true;
+    if (abs(diff_ulps) <= 1)
+        return true;
+    
+    return false;
+}
+
+template<typename T1, typename T2>
+bool floatCompare(T1 x, T2 y)
+    requires (
+        std::floating_point<typename std::remove_reference<T1>::type> &&
+        std::floating_point<typename std::remove_reference<T2>::type> &&
+        !std::is_same<T1, T2>::value
+    )
+{
+    if (sizeof(std::declval<T1>() > std::declval<T2>()))
+        return floatCompare(x, (T1)y);
+    else
+        return floatCompare((T2)x, y);
 }
 
 void SuiteVecElemAccessConstruction(TestEnvironment& tenv)
@@ -1142,7 +1161,7 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
         vec<3, int> v(1, -2, 3);
 
         int expected = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
-        tenv.assert(floatCompare(v.mag(), expected));
+        tenv.assertEq(v.mag(), expected);
     }
 }
 
