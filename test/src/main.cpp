@@ -525,7 +525,8 @@ void SuiteVecScalarComparison(TestEnvironment& tenv)
 
         vec<3, float> v(2.4, 2.4, 2.4);
 
-        tenv.assert(v == 2.4f, "Vector scalar comparison failed");
+        tenv.assertEq(v, 2.4f, "Vector scalar comparison failed");
+        tenv.assertEq(2.4f, v, "Vector scalar comparison failed");
     }
 
     {
