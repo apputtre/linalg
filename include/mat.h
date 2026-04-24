@@ -1,26 +1,34 @@
-#ifndef MAT_H
-#define MAT_H
-
-#include <memory>
-#include <iostream>
-#include <concepts>
+#ifndef MAT4_H
+#define MAT4_H
 
 #include "vec.h"
-#include "vec4.h"
-#include "vec_ops.h"
 
+/*
 namespace linalg
 {
-	template<size_t L, typename T>
+	template<size_t Rows, size_t Cols, typename T>
 	class mat
 	{
 	private:
-		T elems[L];
+		vec<Rows, T> cols[Cols];
 
 	public:
-		const static int num_rows = L;
-		const static int num_cols = L;
+		const static int num_rows = 4;
+		const static int num_cols = 4;
 		const static int num_elements = num_rows * num_cols;
+
+		mat() {};
+	};
+}
+*/
+namespace linalg
+{
+	template<size_t Rows, size_t Cols>
+	class mat
+	{
+	public:
+
+		mat() {};
 	};
 }
 

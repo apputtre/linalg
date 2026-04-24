@@ -1308,7 +1308,7 @@ int main()
 
     std::cout << tenv.getSummary();
 
-    std::cout << yUnit::getSummary();
+    std::cout << yUnit::getSummary("MatTests");
 
     return 0;
 }
