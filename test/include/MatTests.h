@@ -14,13 +14,11 @@ SUITE(matConstruction,
             v2 = {21, 22};
 
             mat<2, 2, float> m(v1, v2);
-            /*
-            mat<2, 2, float> m
-            (
-                {11, 12},
-                {13, 14}
-            );
-            */
+
+            assertEq(m[0][0], 11);
+            assertEq(m[0][1], 21);
+            assertEq(m[1][0], 12);
+            assertEq(m[1][1], 22);
         })
     }
 )
