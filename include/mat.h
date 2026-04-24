@@ -12,11 +12,12 @@ namespace linalg
 		vec<Rows, T> cols[Cols];
 
 	public:
-		const static int num_rows = 4;
-		const static int num_cols = 4;
+		const static int num_rows = Rows;
+		const static int num_cols = Cols;
 		const static int num_elements = num_rows * num_cols;
 
-		mat() {};
+		template<vec<num_cols, T>... Rows>
+		mat(Rows... rows) {};
 	};
 }
 
