@@ -3,6 +3,7 @@
 #include "vec.h"
 
 #include "TestEnvironment.h"
+#include "MatTests.h"
 
 #include <float.h>
 #include <bit>
@@ -1306,6 +1307,8 @@ int main()
     SuiteVecComponentAliases(tenv);
 
     std::cout << tenv.getSummary();
+
+    std::cout << yUnit::getSummary();
 
     return 0;
 }

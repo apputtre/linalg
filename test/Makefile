@@ -1,4 +1,4 @@
-INCLUDE_DIRS=../include yUnit/include
+INCLUDE_DIRS=../include include yUnit/include
 BIN_PATH=bin
 SRC_PATH=src
 OBJ_PATH=obj
