@@ -26,12 +26,17 @@ namespace linalg
 					cols[c][r] = (*(list.begin() + r))[c];
 		}
 
-		vec<num_rows, T>& operator[](size_t idx) const
+		vec<num_cols, T> operator[](size_t idx) const
 		{
 			if (idx >= num_rows)
 				throw std::runtime_error("Index out of bounds");
 			
-			return const_cast<vec<num_cols, T>&>(cols[idx]);
+			vec<num_cols, T> row;
+			
+			for (size_t c = 0; c < num_cols; ++c)
+				row[c] = cols[c][idx];
+			
+			return vec<num_cols, T>(row);
 		}
 	};
 }
