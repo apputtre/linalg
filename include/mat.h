@@ -1,5 +1,5 @@
-#ifndef MAT4_H
-#define MAT4_H
+#ifndef MAT_H
+#define MAT_H
 
 #include "vec.h"
 
@@ -11,7 +11,13 @@ namespace linalg
 	private:
 		vec<Rows, T> cols[Cols];
 
-		void set_row(std::initializer_list<T> row, size_t idx)
+		void set_row(const std::initializer_list<T>& row, size_t idx)
+		{
+			for (size_t c = 0; c < num_cols; ++c)
+				cols[c][idx] = *(row.begin() + c);
+		}
+
+		void set_row(const vec<num_cols, T>& row, size_t idx)
 		{
 			for (size_t c = 0; c < num_cols; ++c)
 				cols[c][idx] = *(row.begin() + c);
@@ -35,6 +41,13 @@ namespace linalg
 			for (size_t r = 0; r < num_rows; ++r)
 				for (size_t c = 0; c < num_cols; ++c)
 					cols[c][r] = (*(list.begin() + r))[c];
+		}
+
+		template<std::convertible_to<vec<num_cols, T>>... Row>
+		mat(Row... rows)
+		{
+			for (size_t r = 0; r < num_rows; ++r)
+				(set_row(rows, r), ...);
 		}
 
 		vec<num_cols, T> operator[](size_t idx) const
