@@ -11,15 +11,26 @@ namespace linalg
 	private:
 		vec<Rows, T> cols[Cols];
 
+		void set_row(std::initializer_list<T> row, size_t idx)
+		{
+			for (size_t c = 0; c < num_cols; ++c)
+				cols[c][idx] = *(row.begin() + c);
+		}
+
 	public:
 		const static int num_rows = Rows;
 		const static int num_cols = Cols;
 		const static int num_elements = num_rows * num_cols;
 
-		template<std::convertible_to<vec<num_cols, T>>... Row>
+		template<std::initializer_list<T>... Row>
 		mat(Row... rows)
 		{
-			std::initializer_list<vec<num_cols, T>> list {rows...};
+			/*
+			for (r in num_rows)	
+				(set_row(rows), ...)
+			*/
+
+			std::initializer_list<std::initializer_list<T>> list {rows...};
 
 			for (size_t r = 0; r < num_rows; ++r)
 				for (size_t c = 0; c < num_cols; ++c)
