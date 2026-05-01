@@ -1,6 +1,7 @@
 #include "yUnit.h"
 
 #include "mat.h"
+#include "utils.h"
 
 using namespace linalg;
 
