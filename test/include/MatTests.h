@@ -34,5 +34,21 @@ SUITE(matConstruction,
             assertEq(m2[3][1], 14);
             assertEq(m2[1][3], 8);
         })
+
+        TEST(defaultConstruction,
+        {
+            mat<3, 3, float> m1;
+
+            for (int r = 0; r < m1.num_rows; ++r)
+                for (int c = 0; c < m1.num_cols; ++c)
+                    assertEq(m1[r][c], 0);
+                
+            mat<2, 2, std::string> m2;
+
+            for (int r = 0; r < m2.num_rows; ++r)
+                for (int c = 0; c < m2.num_cols; ++c)
+                    assertEq(m2[r][c], std::string{});
+
+        })
     }
 )
