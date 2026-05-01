@@ -108,5 +108,23 @@ SUITE(matConstruction,
                 for (size_t c = 0; c < m4.num_cols; ++c)
                     assertEq(m4[r][c], (int) m3[r][c]);
         })
+
+        TEST(copyAssignment,
+        {
+            mat<2, 2, float> m1 {
+                {11.1, 12.2},
+                {21.3, 22.4}
+            };
+
+            mat<2, 2, float> m2 = m1;
+
+            assert(floatCompare(m2[0][0], 11.1));
+            assert(floatCompare(m2[1][0], 21.3));
+            assert(floatCompare(m2[0][1], 12.2));
+
+            // verify copy independence
+            m1[1][1] = 137;
+            assertNeq(m2[1][1], 137);
+        })
     }
 )
