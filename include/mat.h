@@ -12,9 +12,9 @@ namespace linalg
 		vec<Rows, T> cols[Cols];
 
 	public:
-		const static size_t num_rows = Rows;
-		const static size_t num_cols = Cols;
-		const static size_t num_elements = num_rows * num_cols;
+		constexpr static size_t num_rows = Rows;
+		constexpr static size_t num_cols = Cols;
+		constexpr static size_t num_elements = num_rows * num_cols;
 
 		mat(std::initializer_list<std::initializer_list<T>> rows)
 		{
