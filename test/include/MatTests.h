@@ -6,7 +6,7 @@ using namespace linalg;
 
 SUITE(matConstruction,
     {
-        TEST(listConstruction,
+        TEST(vecConstruction,
         {
             vec<2, float> v1, v2;
 
@@ -19,7 +19,10 @@ SUITE(matConstruction,
             assertEq(m1[0][1], 12);
             assertEq(m1[1][0], 21);
             assertEq(m1[1][1], 22);
+        })
 
+        TEST(listConstruction,
+        {
             mat<4, 4, int> m2({
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
