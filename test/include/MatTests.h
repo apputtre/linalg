@@ -77,20 +77,35 @@ SUITE(matConstruction,
                 {21.5f, 22.5f}
             });
 
-            //assertEq(m1.num_cols, (size_t) 2);
+            assert(verifyMatDims(m1));
 
-            //mat<2, 2, double> m2(m1);
+            mat<2, 2, float> m2(m1);
 
-            /*
-            assertEq(m1.num_rows, m2.num_rows);
-            assertEq(m1.num_cols, m2.num_cols);
-            */
+            assert(verifyMatDims(m2));
 
-            /*
-            for (int r = 0; r < m1.num_rows; ++r)
-                for (int c = 0; c < m1.num_cols; ++c)
+            for (size_t r = 0; r < m1.num_rows; ++r)
+                for (size_t c = 0; c < m1.num_cols; ++c)
                     assertEq(m1[r][c], m2[r][c]);
-                    */
+            
+            // verify copy independence
+            m1[0][0] = 137;
+            assertNeq(m2[0][0], 137);
+
+            mat<3, 3, float> m3 {
+                {11.1, 12.2, 13.3},
+                {21.4, 22.5, 23.6},
+                {31.7, 32.8, 33.9},
+            };
+
+            assert(verifyMatDims(m3));
+
+            mat<3, 3, int> m4(m3);
+
+            assert(verifyMatDims(m4));
+
+            for (size_t r = 0; r < m4.num_rows; ++r)
+                for (size_t c = 0; c < m4.num_cols; ++c)
+                    assertEq(m4[r][c], (int) m3[r][c]);
         })
     }
 )
