@@ -16,20 +16,12 @@ namespace linalg
 		const static int num_cols = Cols;
 		const static int num_elements = num_rows * num_cols;
 
-		/*
-		template<std::initializer_list<T>... Row>
-		mat(Row... rows)
+		mat(std::initializer_list<std::initializer_list<T>> rows)
 		{
-			for (r in num_rows)	
-				(set_row(rows), ...)
-
-			std::initializer_list<std::initializer_list<T>> list {rows...};
-
-			for (size_t r = 0; r < num_rows; ++r)
-				for (size_t c = 0; c < num_cols; ++c)
-					cols[c][r] = (*(list.begin() + r))[c];
+			size_t r = 0;
+			for (auto row : rows)
+				set_row(row, r++);
 		}
-		*/
 
 		template<std::convertible_to<vec<num_cols, T>>... Row>
 		mat(Row... rows)
