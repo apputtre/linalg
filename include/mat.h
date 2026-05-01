@@ -23,7 +23,7 @@ namespace linalg
 				set_row(row, r++);
 		}
 
-		template<std::convertible_to<vec<num_cols, T>>... Row>
+		template<std::same_as<vec<num_cols, T>>... Row>
 		mat(Row... rows)
 		{
 			size_t r = 0;
