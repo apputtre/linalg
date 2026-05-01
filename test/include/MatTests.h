@@ -39,14 +39,14 @@ SUITE(matConstruction,
         {
             mat<3, 3, float> m1;
 
-            for (int r = 0; r < m1.num_rows; ++r)
-                for (int c = 0; c < m1.num_cols; ++c)
+            for (size_t r = 0; r < m1.num_rows; ++r)
+                for (size_t c = 0; c < m1.num_cols; ++c)
                     assertEq(m1[r][c], 0);
                 
             mat<2, 2, std::string> m2;
 
-            for (int r = 0; r < m2.num_rows; ++r)
-                for (int c = 0; c < m2.num_cols; ++c)
+            for (size_t r = 0; r < m2.num_rows; ++r)
+                for (size_t c = 0; c < m2.num_cols; ++c)
                     assertEq(m2[r][c], std::string{});
 
         })
