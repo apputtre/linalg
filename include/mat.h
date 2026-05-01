@@ -30,16 +30,19 @@ namespace linalg
 			(set_row(rows, r++), ...);
 		}
 
+		template<std::convertible_to<T> TOther>
+		mat(const mat<Rows, Cols, TOther>& other)
+		{
+			for (size_t r = 0; r < num_rows; ++r)
+				for (size_t c = 0; c < num_cols; ++c)
+					cols[c][r] = static_cast<T>(other[r][c]);
+		}
+
 		mat() = default;
-
 		mat(const mat& other) = default;
-
 		mat(mat&& other) = default;
-
 		mat& operator=(const mat& other) = default;
-
 		mat& operator=(mat&& other) = default;
-
 		~mat() = default;
 
 		vec<num_cols, T> operator[](size_t idx) const
