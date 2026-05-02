@@ -169,5 +169,14 @@ SUITE(matConstruction,
 
             assert(expected);
         })
+
+        TEST(elementAssignment,
+        {
+            mat<3, 3, float> m;
+
+            m[1][2] = 15;
+
+            assertEq(m[1][2], 15);
+        })
     }
 )
