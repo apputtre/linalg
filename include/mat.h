@@ -39,7 +39,7 @@ namespace linalg
 		}
 
 		template<std::convertible_to<T> TOther>
-		mat(const T& val)
+		mat(const TOther& val)
 		{
 			for (size_t r = 0; r < num_rows; ++r)
 				for (size_t c = 0; c < num_cols; ++c)
