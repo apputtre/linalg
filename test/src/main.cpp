@@ -1133,7 +1133,7 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
         vec<3, float> v(1.5, -2, 3.75);
 
         float expected = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
-        tenv.assert(floatCompare(v.mag(), expected));
+        tenv.assert(floatCompare(mag(v), expected));
     }
 
     {
@@ -1142,7 +1142,7 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
         vec<2, double> v(-2.5, 137);
 
         double expected = sqrt(v[0]*v[0] + v[1]*v[1]);
-        tenv.assert(floatCompare(v.mag(), expected));
+        tenv.assert(floatCompare(mag(v), expected));
     }
 
     {
@@ -1151,7 +1151,7 @@ void SuiteVecMagnitude(TestEnvironment& tenv)
         vec<3, int> v(1, -2, 3);
 
         int expected = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
-        tenv.assertEq(v.mag(), expected);
+        tenv.assertEq(mag(v), expected);
     }
 }
 
@@ -1168,7 +1168,7 @@ void SuiteVecNorm(TestEnvironment& tenv)
 
         tenv.assert(std::is_same<decltype(actual), vec<3, float>>::value);
 
-        vec<3, float> expected = v / v.mag();
+        vec<3, float> expected = v / mag(v);
 
         tenv.assert(
             floatCompare(actual[0], expected[0]) &&
@@ -1186,7 +1186,7 @@ void SuiteVecNorm(TestEnvironment& tenv)
 
         tenv.assert(std::is_same<decltype(actual), vec<2, double>>::value);
 
-        vec<2, double> expected = v / v.mag();
+        vec<2, double> expected = v / mag(v);
 
         tenv.assert(
             floatCompare(actual[0], expected[0]) &&
