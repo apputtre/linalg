@@ -155,5 +155,19 @@ SUITE(matConstruction,
             assertEq(m2[1][0], 'c');
             assertEq(m2[1][1], 'd');
         })
+
+        TEST(scalarConstructor,
+        {
+            mat<2, 2, int> m(137);
+
+            bool expected = true;
+
+            for (size_t r = 0; r < m.num_rows; ++r)
+                for (size_t c = 0; c < m.num_rows; ++c)
+                    if (m[r][c] != 137)
+                        expected = false;
+
+            assert(expected);
+        })
     }
 )
