@@ -9,7 +9,7 @@ namespace linalg
 	class mat
 	{
 	private:
-		vec<Rows, T> cols[Cols];
+		vec<Cols, T> rows[Rows];
 
 	public:
 		constexpr static size_t num_rows = Rows;
@@ -37,38 +37,32 @@ namespace linalg
 
 			for (size_t r = 0; r < num_rows; ++r)
 				for (size_t c = 0; c < num_cols; ++c)
-					cols[c][r] = static_cast<T>(other[r][c]);
+					rows[r][c] = static_cast<T>(other[r][c]);
 		}
 
 		template<std::convertible_to<T> TOther>
 		mat(const TOther& val)
 		{
-			std::fill(&cols[0], &cols[0] + num_cols, val);
+			std::fill(&rows[0], &rows[0] + num_rows, val);
 		}
 
-		vec<num_cols, T> operator[](size_t idx) const
+		vec<num_cols, T>& operator[](size_t idx) const
 		{
 			if (idx >= num_rows)
 				throw std::runtime_error("Index out of bounds");
 			
-			vec<num_cols, T> row;
-			
-			for (size_t c = 0; c < num_cols; ++c)
-				row[c] = cols[c][idx];
-			
-			return vec<num_cols, T>(row);
+			return const_cast<vec<num_cols, T>&>(rows[idx]);
 		}
 	private:
 		void set_row(const std::initializer_list<T>& row, size_t idx)
 		{
 			for (size_t c = 0; c < num_cols; ++c)
-				cols[c][idx] = *(row.begin() + c);
+				rows[idx][c] = *(row.begin() + c);
 		}
 
 		void set_row(const vec<num_cols, T>& row, size_t idx)
 		{
-			for (size_t c = 0; c < num_cols; ++c)
-				cols[c][idx] = row[c];
+			rows[idx] = row;
 		}
 	};
 }
