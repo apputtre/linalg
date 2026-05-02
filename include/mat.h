@@ -18,9 +18,16 @@ namespace linalg
 
 		mat(std::initializer_list<std::initializer_list<T>> rows)
 		{
+			if (rows.size() != num_rows)
+				throw std::runtime_error("Incorrect number of rows in initializer");
+
 			size_t r = 0;
 			for (auto row : rows)
+			{
+				if (row.size() != num_cols)
+					throw std::runtime_error("Incorrect number of columns in initializer");
 				set_row(row, r++);
+			}
 		}
 
 		template<std::same_as<vec<num_cols, T>>... Row>
