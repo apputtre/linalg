@@ -38,18 +38,31 @@ SUITE(matConstruction,
 
         TEST(listConstruction,
         {
-            mat<4, 4, int> m({
+            mat<4, 4, int> m1({
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
                 {9, 10, 11, 12},
                 {13, 14, 15, 16}
             });
 
-            assert(verifyMatDims(m));
+            assert(verifyMatDims(m1));
 
-            assertEq(m[0][3], 4);
-            assertEq(m[3][1], 14);
-            assertEq(m[1][3], 8);
+            assertEq(m1[0][3], 4);
+            assertEq(m1[3][1], 14);
+            assertEq(m1[1][3], 8);
+
+            mat<4, 3, float> m2
+            {
+                {11, 12, 13},
+                {21, 22, 23},
+                {31, 32, 33},
+                {41, 42, 43}
+            };
+
+            assert(verifyMatDims(m2));
+
+            assertEq(m2[2][1], 32);
+            assertEq(m2[3][2], 43);
         })
 
         TEST(defaultConstruction,
