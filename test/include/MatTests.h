@@ -63,6 +63,23 @@ SUITE(matConstruction,
 
             assertEq(m2[2][1], 32);
             assertEq(m2[3][2], 43);
+
+            bool exception_caught = false;
+
+            try
+            {
+                mat<2, 2, float> m3
+                {
+                    {1, 2, 3},
+                    {4, 5, 6}
+                };
+            }
+            catch(std::runtime_error& e)
+            {
+                exception_caught = true;
+            }
+
+            assert(exception_caught, "Illegal list initializer size allowed");
         })
 
         TEST(defaultConstruction,
