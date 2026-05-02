@@ -38,6 +38,14 @@ namespace linalg
 					cols[c][r] = static_cast<T>(other[r][c]);
 		}
 
+		template<std::convertible_to<T> TOther>
+		mat(const T& val)
+		{
+			for (size_t r = 0; r < num_rows; ++r)
+				for (size_t c = 0; c < num_cols; ++c)
+					cols[c][r] = static_cast<T>(val);
+		}
+
 		vec<num_cols, T> operator[](size_t idx) const
 		{
 			if (idx >= num_rows)
