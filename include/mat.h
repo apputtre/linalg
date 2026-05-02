@@ -41,9 +41,7 @@ namespace linalg
 		template<std::convertible_to<T> TOther>
 		mat(const TOther& val)
 		{
-			for (size_t r = 0; r < num_rows; ++r)
-				for (size_t c = 0; c < num_cols; ++c)
-					cols[c][r] = static_cast<T>(val);
+			std::fill(&cols[0], &cols[0] + num_cols, val);
 		}
 
 		vec<num_cols, T> operator[](size_t idx) const
