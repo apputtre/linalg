@@ -31,6 +31,7 @@ namespace linalg
 		}
 
 		template<std::same_as<vec<num_cols, T>>... Row>
+			requires (sizeof...(Row) == Rows)
 		mat(Row... rows)
 		{
 			size_t r = 0;
@@ -52,6 +53,8 @@ namespace linalg
 		{
 			std::fill(&rows[0], &rows[0] + num_rows, val);
 		}
+
+		mat() = default;
 
 		vec<num_cols, T>& operator[](size_t idx) const
 		{
