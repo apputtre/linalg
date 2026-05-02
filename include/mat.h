@@ -33,6 +33,8 @@ namespace linalg
 		template<std::convertible_to<T> TOther>
 		mat(const mat<Rows, Cols, TOther>& other)
 		{
+			//std::transform(&other[0], &other[0] + other.num_elements, cols[0], [](const TOther& t) {return static_cast<T>(t);});
+
 			for (size_t r = 0; r < num_rows; ++r)
 				for (size_t c = 0; c < num_cols; ++c)
 					cols[c][r] = static_cast<T>(other[r][c]);
