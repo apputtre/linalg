@@ -109,6 +109,21 @@ SUITE(matConstruction,
                     assertEq(m4[r][c], (int) m3[r][c]);
         })
 
+        TEST(moveConstruction,
+        {
+            mat<3, 3, double> m1
+            {
+                {1, 3, 5},
+                {-7, -9, -11},
+                {13, 17, 19}
+            };
+
+            mat<3, 3, double> m2(std::move(m1));
+
+            assertEq(m2[1][0], -7);
+            assertEq(m2[2][1], 17);
+        })
+
         TEST(copyAssignment,
         {
             mat<2, 2, float> m1 {
@@ -125,6 +140,20 @@ SUITE(matConstruction,
             // verify copy independence
             m1[1][1] = 137;
             assertNeq(m2[1][1], 137);
+        })
+
+        TEST(moveAssignment,
+        {
+            mat<2, 2, char> m1
+            {
+                {'a', 'b'},
+                {'c', 'd'}
+            };
+
+            mat<2, 2, char> m2 = std::move(m1);
+
+            assertEq(m2[1][0], 'c');
+            assertEq(m2[1][1], 'd');
         })
     }
 )
