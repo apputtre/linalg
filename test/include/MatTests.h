@@ -172,11 +172,17 @@ SUITE(matConstruction,
 
         TEST(elementAssignment,
         {
-            mat<3, 3, float> m;
+            mat<3, 3, float> m1;
+            m1[1][2] = 15;
+            assertEq(m1[1][2], 15);
 
-            m[1][2] = 15;
+            mat<2, 2, std::string> m2;
+            m2[1][0] = "hello world";
+            assertEq(m2[1][0], std::string("hello world"));
 
-            assertEq(m[1][2], 15);
+            mat<4, 3, int> m3;
+            m3[2][1] = 137.5;
+            assertEq(m3[2][1], 137);
         })
     }
 )
