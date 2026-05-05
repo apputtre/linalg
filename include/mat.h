@@ -72,23 +72,6 @@ namespace linalg
 		}
 
 		template<typename TOther>
-		friend bool operator==(const mat<Rows, Cols, T>& m1, const mat<Rows, Cols, TOther>& m2)
-			requires EqualityComparable<T, TOther>
-		{
-			for (size_t r = 0; r < Rows; ++r)
-				if (m1[r] != m2[r])
-						return false;
-			return true;
-		}
-
-		template<typename TOther>
-		friend bool operator!=(const mat<Rows, Cols, T>& m1, const mat<Rows, Cols, TOther>& m2)
-			requires EqualityComparable<T, TOther>
-		{
-			return !(m1 == m2);
-		}
-
-		template<typename TOther>
 		mat<Rows, Cols, AdditionResult<T, TOther>>& operator+=(const mat<Rows, Cols, TOther>& m)
 		{
 			for (size_t r = 0; r < Rows; ++r)
@@ -105,26 +88,6 @@ namespace linalg
 			
 			return *this;
 		}
-
-		/*
-		template<typename TScalar>
-			requires (!std::is_same<TScalar, mat>())
-		friend mat<Rows, Cols, AdditionResult<T, TScalar>> operator+(const mat& m, const TScalar& scalar)
-		{
-			mat<Rows, Cols, AdditionResult<T, TScalar>> result = m;
-			result += scalar;
-			return result;
-		}
-
-		template<typename TScalar>
-			requires (!std::is_same<TScalar, mat>())
-		friend mat<Rows, Cols, AdditionResult<TScalar, T>> operator+(const TScalar& scalar, const mat& mat)
-		{
-			mat<Rows, Cols, AdditionResult<T, TScalar>> result;
-
-			return result;
-		}
-			*/
 
 		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
 		{
@@ -163,10 +126,48 @@ namespace linalg
 	};
 
 	template<size_t Rows, size_t Cols, typename T1, typename T2>
+	bool operator==(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
+		requires EqualityComparable<T1, T2>
+	{
+		for (size_t r = 0; r < Rows; ++r)
+			if (m1[r] != m2[r])
+					return false;
+		return true;
+	}
+
+	template<size_t Rows, size_t Cols, typename T1, typename T2>
+	bool operator!=(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
+		requires EqualityComparable<T1, T2>
+	{
+		return !(m1 == m2);
+	}
+
+	template<size_t Rows, size_t Cols, typename T1, typename T2>
 	mat<Rows, Cols, AdditionResult<T1, T2>> operator+(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
 	{
 		mat<Rows, Cols, AdditionResult<T1, T2>> result = m1;
 		result += m2;
+		return result;
+	}
+
+	template<size_t Rows, size_t Cols, typename T, typename TScalar>
+		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
+	mat<Rows, Cols, AdditionResult<T, TScalar>> operator+(const mat<Rows, Cols, T>& m, const TScalar& scalar)
+	{
+		mat<Rows, Cols, AdditionResult<T, TScalar>> result = m;
+		result += scalar;
+		return result;
+	}
+
+	template<size_t Rows, size_t Cols, typename T, typename TScalar>
+		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
+	mat<Rows, Cols, AdditionResult<TScalar, T>> operator+(const TScalar& scalar, const mat<Rows, Cols, T>& m)
+	{
+		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
+
+		for (size_t r = 0; r < result.num_rows; ++r)
+			result[r] = scalar + m[r];
+
 		return result;
 	}
 }
