@@ -75,9 +75,10 @@ namespace linalg
 		friend bool operator==(const mat<Rows, Cols, T>& m1, const mat<Rows, Cols, TOther>& m2)
 			requires EqualityComparable<T, TOther>
 		{
-			for (size_t i = 0; i < num_elements; ++i)
-				if (*(&m1[0] + i) != *(&m2[0] + i))
-					return false;
+			for (size_t r = 0; r < Rows; ++r)
+				for (size_t c = 0; c < Cols; ++c)
+					if (m1[r][c] != m2[r][c])
+						return false;
 			return true;
 		}
 
