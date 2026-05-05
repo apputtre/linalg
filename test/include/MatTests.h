@@ -302,4 +302,24 @@ SUITE(matArithmetic,
             {17.5, 26}
         });
     })
+
+    /*
+    TEST(matScalarAddition,
+    {
+        mat<2, 2, int> m {
+            {1, 2},
+            {3, 4}
+        };
+
+        int x = 5;
+
+        mat<2, 2, int> expected = {
+            {6, 7},
+            {8, 9}
+        };
+
+        assertEq(m + 5, expected);
+        assertEq(5 + m, expected);
+    })
+    */
 })

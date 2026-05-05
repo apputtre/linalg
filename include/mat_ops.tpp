@@ -1,21 +1,5 @@
 namespace linalg
 {
-	template<size_t L, typename T, typename U>
-	mat<L, T>& operator+=(mat<L, T>& m, const U& val) requires std::convertible_to<U, T>
-	{
-		apply(m, [val](T& elem) {elem += val; });
-
-		return m;
-	}
-
-	// Scalar addition
-	template<size_t L, typename T, typename U>
-	mat<L, T> operator+(const mat<L, T>& m, const U& val) requires std::convertible_to<U, T>
-	{
-		mat new_mat(m);
-		new_mat += val;
-		return new_mat;
-	}
 
 	// Scalar addition
 	template<size_t L, typename T, typename U>
