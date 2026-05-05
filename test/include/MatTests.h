@@ -218,7 +218,7 @@ SUITE(matConstruction,
 
 SUITE(matComparison,
     {
-        TEST(matEquality,
+        TEST(matEquality1,
         {
             mat<2, 2, int> m1 {
                 {11, 12},
@@ -231,5 +231,6 @@ SUITE(matComparison,
             };
 
             assertEq(m1, m2);
+            assertEq(m2, m1);
         })
     })
