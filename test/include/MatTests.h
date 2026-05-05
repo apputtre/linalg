@@ -249,4 +249,20 @@ SUITE(matComparison,
             assertEq(m1, m2);
             assertEq(m2, m1);
         })
+
+        TEST(matEquality3,
+        {
+            mat<2, 2, double> m1{
+                {1, 2.5},
+                {-3, 4}
+            };
+
+            mat<2, 2, double> m2 {
+                {11, 12},
+                {21, 22}
+            };
+
+            assertNeq(m1, m2);
+            assertNeq(m2, m1);
+        })
     })
