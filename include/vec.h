@@ -9,6 +9,18 @@
 
 namespace linalg
 {
+	template<typename T1, typename T2>
+	using AdditionResult = decltype(std::declval<T1>() + std::declval<T2>());
+
+	template<typename T1, typename T2>
+	using SubtractionResult = decltype(std::declval<T1>() - std::declval<T2>());
+
+	template<typename T1, typename T2>
+	using MultiplicationResult = decltype(std::declval<T1>() * std::declval<T2>());
+
+	template<typename T1, typename T2>
+	using DivisionResult = decltype(std::declval<T1>() / std::declval<T2>());
+
 	template<size_t L, typename T> requires (L > 0)
 	struct vec_base_storage
 	{
@@ -177,18 +189,6 @@ namespace linalg
 			return *this;
 		}
 	};
-
-	template<typename T1, typename T2>
-	using AdditionResult = decltype(std::declval<T1>() + std::declval<T2>());
-
-	template<typename T1, typename T2>
-	using SubtractionResult = decltype(std::declval<T1>() - std::declval<T2>());
-
-	template<typename T1, typename T2>
-	using MultiplicationResult = decltype(std::declval<T1>() * std::declval<T2>());
-
-	template<typename T1, typename T2>
-	using DivisionResult = decltype(std::declval<T1>() / std::declval<T2>());
 
 	template<size_t L, typename T1, typename T2>
 		requires requires (T1 x, T2 y) {x == y;}

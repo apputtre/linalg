@@ -180,23 +180,4 @@ namespace linalg
 				func(m1[c][r], m2[c][r]);
 	}
 
-	template<size_t L, typename T>
-	std::ostream& operator<<(std::ostream& os, const linalg::mat<L, T>& m)
-	{
-		for (int r = 0; r < m.num_rows; ++r)
-		{
-			for (int c = 0; c < m.num_cols; ++c)
-			{
-				std::cout << m[c][r];
-
-				if (c != m.num_cols - 1)
-					std::cout << '\t';
-			}
-
-			if (r != m.num_rows - 1)
-				std::cout << '\n';
-		}
-
-		return os;
-	};
 }

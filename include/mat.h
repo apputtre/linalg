@@ -88,6 +88,23 @@ namespace linalg
 			return !(m1 == m2);
 		}
 
+		template<typename TOther>
+		friend mat<Rows, Cols, AdditionResult<T, TOther>>& operator+=(mat<Rows, Cols, T>& m1, const mat<Rows, Cols, TOther>& m2)
+		{
+			for (size_t r = 0; r < Rows; ++r)
+				m1[r] += m2[r];
+			
+			return m1;
+		}
+
+		template<typename TOther>
+		friend mat<Rows, Cols, AdditionResult<T, TOther>> operator+(const mat<Rows, Cols, T>& m1, const mat<Rows, Cols, TOther>& m2)
+		{
+			mat<Rows, Cols, AdditionResult<T, TOther>> result = m1;
+			result += m2;
+			return result;
+		}
+
 		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
 		{
 			os << "{";

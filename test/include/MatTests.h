@@ -282,3 +282,24 @@ SUITE(matComparison,
             assertNeq(m2, m1);
         })
     })
+
+SUITE(matArithmetic,
+{
+    TEST(matMatAddition,
+    {
+        mat<2, 2, float> m1 {
+            {11, 12},
+            {21, 22}
+        };
+
+        mat<2, 2, float> m2 {
+            {1.5, 2},
+            {-3.5, 4}
+        };
+
+        assertEq(m1 + m2, mat<2, 2, float> {
+            {12.5, 14},
+            {17.5, 26}
+        });
+    })
+})
