@@ -121,15 +121,11 @@ namespace linalg
 		vec() {}
 
 		template<typename... TVals>
+			requires (sizeof...(TVals) == length)
 		vec(TVals... vals)
 		{
-			std::initializer_list<T> list {static_cast<T>(vals)...};
-
-			if (list.size() != length)
-				throw std::logic_error("Invalid initializer list size");
-			
-			for (size_t i = 0; i < list.size(); ++i)
-				(*this)[i] = *(list.begin() + i);
+			size_t i = 0;
+			(set(vals, i++), ...);
 		}
 
 		template<typename TOther>
@@ -187,6 +183,12 @@ namespace linalg
 				(*this)[i] = scalar;
 			
 			return *this;
+		}
+
+	private:
+		void set(const T& val, size_t idx)
+		{
+			(*this)[idx] = val;
 		}
 	};
 
