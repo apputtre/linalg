@@ -303,6 +303,21 @@ SUITE(matArithmetic,
         });
     })
 
+    TEST(matScalarAddition1,
+    {
+        mat<2, 2, int> m {
+            {1, 2},
+            {3, 4}
+        };
+
+        m += -2;
+
+        assertEq(m, mat<2, 2, int> {
+            {-1, 0},
+            {1, 2}
+        });
+    })
+
     /*
     TEST(matScalarAddition,
     {

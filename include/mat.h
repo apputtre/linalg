@@ -96,7 +96,6 @@ namespace linalg
 			
 			return *this;
 		}
-		/*
 
 		template<typename TScalar>
 			requires (!std::is_same<TScalar, mat>())
@@ -108,6 +107,7 @@ namespace linalg
 			return m;
 		}
 
+		/*
 		template<typename TScalar>
 			requires (!std::is_same<TScalar, mat>())
 		friend mat<Rows, Cols, AdditionResult<T, TScalar>> operator+(const mat& m, const TScalar& scalar)
