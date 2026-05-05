@@ -70,6 +70,40 @@ namespace linalg
 			
 			return const_cast<vec<num_cols, T>&>(rows[idx]);
 		}
+
+		template<typename TOther>
+		friend bool operator==(const mat<Rows, Cols, T>& m1, const mat<Rows, Cols, TOther>& m2)
+			requires EqualityComparable<T, TOther>
+		{
+			for (size_t i = 0; i < num_elements; ++i)
+				if (*(&m1[0] + i) != *(&m2[0] + i))
+					return false;
+			return true;
+		}
+
+		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
+		{
+			os << "{";
+			for (size_t r = 0; r < m.num_rows; ++r)
+			{
+				os << "{";
+				for (size_t c = 0; c < m.num_cols; ++c)
+				{
+					os << m[r][c];
+
+					if (c != m.num_cols - 1)
+						os << ", ";
+				}
+				os << "}";
+
+				if (r != m.num_rows - 1)
+					os << ",";
+			}
+			os << "}";
+
+			return os;
+		}
+
 	private:
 		void set_row(const std::initializer_list<T>& row, size_t idx)
 		{
