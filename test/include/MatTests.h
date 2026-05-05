@@ -214,5 +214,22 @@ SUITE(matConstruction,
             m3[2][1] = 137.5;
             assertEq(m3[2][1], 137);
         })
-    }
-)
+    })
+
+SUITE(matComparison,
+    {
+        TEST(matEquality,
+        {
+            mat<2, 2, int> m1 {
+                {11, 12},
+                {21, 22}
+            };
+
+            mat<2, 2, int> m2 {
+                {11, 12},
+                {21, 22}
+            };
+
+            assertEq(m1, m2);
+        })
+    })
