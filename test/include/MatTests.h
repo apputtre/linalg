@@ -335,4 +335,35 @@ SUITE(matArithmetic,
         assertEq(m + 5, expected);
         assertEq(5 + m, expected);
     })
+
+    TEST(matMatSubtraction,
+    {
+        mat<2, 2, float> m1 {
+            {11, 12},
+            {21, 22}
+        };
+
+        mat<2, 2, float> m2 {
+            {1.5, 2},
+            {-3.5, 4}
+        };
+
+        assertEq(m1 - m2, mat<2, 2, float> {
+            {9.5, 10},
+            {24.5, 18}
+        });
+    })
+
+    TEST(matScalarSubtraction,
+    {
+        mat<2, 2, double> m {
+            {11, 12},
+            {21, 22}
+        };
+
+        assertEq(m - 5, mat<2, 2, double> {
+            {6, 7},
+            {16, 17}
+        });
+    })
 })

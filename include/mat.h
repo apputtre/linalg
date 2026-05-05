@@ -89,6 +89,24 @@ namespace linalg
 			return *this;
 		}
 
+		template<typename TOther>
+		mat<Rows, Cols, SubtractionResult<T, TOther>>& operator-=(const mat<Rows, Cols, TOther>& m)
+		{
+			for (size_t r = 0; r < Rows; ++r)
+				(*this)[r] -= m[r];
+			
+			return *this;
+		}
+
+		template<typename TScalar>
+		mat<Rows, Cols, SubtractionResult<T, TScalar>>& operator-=(const TScalar& scalar)
+		{
+			for (size_t r = 0; r < Rows; ++r)
+				(*this)[r] -= scalar;
+			
+			return *this;
+		}
+
 		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
 		{
 			os << "{";
@@ -167,6 +185,35 @@ namespace linalg
 
 		for (size_t r = 0; r < result.num_rows; ++r)
 			result[r] = scalar + m[r];
+
+		return result;
+	}
+
+	template<size_t Rows, size_t Cols, typename T1, typename T2>
+	mat<Rows, Cols, SubtractionResult<T1, T2>> operator-(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
+	{
+		mat<Rows, Cols, SubtractionResult<T1, T2>> result = m1;
+		result -= m2;
+		return result;
+	}
+
+	template<size_t Rows, size_t Cols, typename T, typename TScalar>
+		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
+	mat<Rows, Cols, SubtractionResult<T, TScalar>> operator-(const mat<Rows, Cols, T>& m, const TScalar& scalar)
+	{
+		mat<Rows, Cols, AdditionResult<T, TScalar>> result = m;
+		result -= scalar;
+		return result;
+	}
+
+	template<size_t Rows, size_t Cols, typename T, typename TScalar>
+		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
+	mat<Rows, Cols, SubtractionResult<TScalar, T>> operator-(const TScalar& scalar, const mat<Rows, Cols, T>& m)
+	{
+		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
+
+		for (size_t r = 0; r < result.num_rows; ++r)
+			result[r] = scalar - m[r];
 
 		return result;
 	}
