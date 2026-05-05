@@ -98,12 +98,12 @@ namespace linalg
 		}
 
 		template<typename TScalar>
-		friend mat<Rows, Cols, AdditionResult<T, TScalar>>& operator+=(mat& m, const TScalar& scalar)
+		mat<Rows, Cols, AdditionResult<T, TScalar>>& operator+=(const TScalar& scalar)
 		{
 			for (size_t r = 0; r < Rows; ++r)
-				m[r] += scalar;
+				(*this)[r] += scalar;
 			
-			return m;
+			return *this;
 		}
 
 		/*
