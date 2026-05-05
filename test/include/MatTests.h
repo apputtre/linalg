@@ -250,7 +250,7 @@ SUITE(matComparison,
             assertEq(m2, m1);
         })
 
-        TEST(matEquality3,
+        TEST(matInequality1,
         {
             mat<2, 2, double> m1{
                 {1, 2.5},
@@ -260,6 +260,22 @@ SUITE(matComparison,
             mat<2, 2, double> m2 {
                 {11, 12},
                 {21, 22}
+            };
+
+            assertNeq(m1, m2);
+            assertNeq(m2, m1);
+        })
+
+        TEST(matInequality2,
+        {
+            mat<2, 2, int> m1 {
+                {1, 2},
+                {3, 4}
+            };
+
+            mat<2, 2, int> m2 {
+                {5, 6},
+                {7, 8}
             };
 
             assertNeq(m1, m2);

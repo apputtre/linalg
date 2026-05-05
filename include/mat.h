@@ -81,6 +81,13 @@ namespace linalg
 			return true;
 		}
 
+		template<typename TOther>
+		friend bool operator!=(const mat<Rows, Cols, T>& m1, const mat<Rows, Cols, TOther>& m2)
+			requires EqualityComparable<T, TOther>
+		{
+			return !(m1 == m2);
+		}
+
 		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
 		{
 			os << "{";
