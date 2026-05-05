@@ -76,8 +76,7 @@ namespace linalg
 			requires EqualityComparable<T, TOther>
 		{
 			for (size_t r = 0; r < Rows; ++r)
-				for (size_t c = 0; c < Cols; ++c)
-					if (m1[r][c] != m2[r][c])
+				if (m1[r] != m2[r])
 						return false;
 			return true;
 		}
