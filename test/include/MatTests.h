@@ -233,4 +233,20 @@ SUITE(matComparison,
             assertEq(m1, m2);
             assertEq(m2, m1);
         })
+
+        TEST(matEquality2,
+        {
+            mat<4, 3, float> m1
+            {
+                {1, 2.5, -3},
+                {4, -5.5, 6},
+                {7.5, 8, -9},
+                {10, 11.5, 12}
+            };
+
+            mat<4, 3, float> m2 = m1;
+
+            assertEq(m1, m2);
+            assertEq(m2, m1);
+        })
     })
