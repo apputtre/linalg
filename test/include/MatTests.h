@@ -217,6 +217,26 @@ SUITE(matElementAccess,
         m3[2][1] = 137.5;
         assertEq(m3[2][1], 137);
     })
+
+    TEST(rowAccess,
+    {
+        mat<4, 3, float> m {
+            {11, 12, 13},
+            {21, 22, 23},
+            {31, 32, 33},
+            {41, 42, 43},
+        };
+
+        auto r3 = m[2];
+
+        assertEq(r3[0], 31);
+        assertEq(r3[1], 32);
+        assertEq(r3[2], 33);
+
+        r3[2] = 137;
+
+        assertEq(m[2][2], 137);
+    })
 })
 
 SUITE(matComparison,
