@@ -98,7 +98,6 @@ namespace linalg
 		}
 
 		template<typename TScalar>
-			requires (!std::is_same<TScalar, mat>())
 		friend mat<Rows, Cols, AdditionResult<T, TScalar>>& operator+=(mat& m, const TScalar& scalar)
 		{
 			for (size_t r = 0; r < Rows; ++r)
