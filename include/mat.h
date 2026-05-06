@@ -63,12 +63,17 @@ namespace linalg
 
 		mat() = default;
 
-		vec<num_cols, T>& operator[](size_t idx) const
+		vec<num_cols, T>& operator[](size_t idx)
 		{
 			if (idx >= num_rows)
 				throw std::runtime_error("Index out of bounds");
 			
-			return const_cast<vec<num_cols, T>&>(rows[idx]);
+			return rows[idx];
+		}
+
+		const vec<num_cols, T>& operator[](size_t idx) const
+		{
+			return (*const_cast<mat*>(this))[idx];
 		}
 
 		template<typename TOther>
