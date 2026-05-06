@@ -62,3 +62,65 @@ SUITE(submatAssignment,
             assertEq(elems[3], 314);
         })
     })
+
+SUITE(submatComparison,
+{
+    TEST(test1,
+    {
+        int elems[] = {11, 12, 21, 22};
+
+        submat<2, int> s(&elems[1], 2);
+        
+        assertEq(s, vec<2, int> {12, 22});
+    })
+})
+
+/*
+    }
+
+    {
+        tenv.beginTest("Equal vector comparison (int-int)");
+
+        vec<2, int> v1(1, 3);
+        vec<2, int> v2(1, 3);
+
+        tenv.assert(v1 == v2, "Equal vectors considered unequal");
+    }
+
+    {
+        tenv.beginTest("Equal vector comparison (double-double)");
+
+        vec<4, double> v1(1, 2.5, -3, 137);
+        vec<4, double> v2(1, 2.5, -3, 137);
+
+        tenv.assert(v1 == v2, "Equal vectors considered unequal");
+    }
+
+    {
+        tenv.beginTest("Unequal vector comparison (float-float)");
+
+        vec<3, float> v1(1, 2.5, -3);
+        vec<3, float> v2(4, 5.5, -6);
+
+        tenv.assert(v1 != v2, "Unequal vectors considered equal");
+    }
+
+    {
+        tenv.beginTest("Unequal vector comparison (int-int)");
+
+        vec<2, float> v1(1, 3);
+        vec<2, float> v2(5, 7);
+
+        tenv.assert(v1 != v2, "Unequal vectors considered equal");
+    }
+
+    {
+        tenv.beginTest("Unequal vector comparison (double-double)");
+
+        vec<4, double> v1(1, 2.5, -3, 137);
+        vec<4, double> v2(1, 3, 7.5, 9);
+
+        tenv.assert(v1 != v2, "Unequal vectors considered equal");
+    }
+}
+    */
