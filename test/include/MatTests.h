@@ -227,7 +227,7 @@ SUITE(matElementAccess,
             {41, 42, 43},
         };
 
-        auto r3 = m[2];
+        auto& r3 = m[2];
 
         assertEq(r3[0], 31);
         assertEq(r3[1], 32);
