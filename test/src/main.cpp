@@ -4,6 +4,7 @@
 
 #include "TestEnvironment.h"
 #include "MatTests.h"
+#include "SubmatTests.h"
 #include "utils.h"
 
 using namespace linalg;
@@ -1266,6 +1267,7 @@ int main()
     std::cout << tenv.getSummary();
 
     std::cout << yUnit::getSummary("MatTests");
+    std::cout << yUnit::getSummary("SubmatTests");
 
     return 0;
 }
