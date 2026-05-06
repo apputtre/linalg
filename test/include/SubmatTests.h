@@ -8,7 +8,7 @@ SUITE(submatConstruction,
         {
             int elems[] = {11, 12, 21, 22};
 
-            submat s(&elems[2], 2, 1);
+            submat<2, int> s(&elems[2], 1);
 
             assertEq(s[0], 21);
             assertEq(s[1], 22);
@@ -18,7 +18,7 @@ SUITE(submatConstruction,
         {
             int elems[] = {11, 12, 21, 22};
 
-            submat s(&elems[1], 2, 2);
+            submat<2, int> s(&elems[1], 2);
 
             assertEq(s[0], 12);
             assertEq(s[1], 22);
@@ -31,7 +31,7 @@ SUITE(submatAssignment,
         {
             int elems[] = {11, 12, 21, 22};
 
-            submat s(&elems[2], 2, 1);
+            submat<2, int> s(&elems[2], 1);
 
             s[1] = 137;
 
@@ -42,7 +42,7 @@ SUITE(submatAssignment,
         {
             int elems[] = {11, 12, 21, 22};
 
-            submat s(&elems[1], 2, 2);
+            submat<2, int> s(&elems[1], 2);
 
             s = 137;
 
@@ -54,9 +54,9 @@ SUITE(submatAssignment,
         {
             int elems[] = {11, 12, 21, 22};
 
-            submat s(&elems[1], 2, 2);
-
-            s = vec<2, int> {137, 314};
+            submat<2, int> s(&elems[1], 2);
+            vec<2, int> v = {137, 314};
+            s = v;
 
             assertEq(elems[1], 137);
             assertEq(elems[3], 314);

@@ -1,16 +1,21 @@
 #ifndef SUBMAT_H
 #define SUBMAT_H
 
-template<typename T>
+#include "vec.h"
+
+template<size_t L, typename T>
 struct submat
 {
+    submat(T* data, const size_t& stride)
+        : data{data}, stride{stride}
+    {}
+
     T* data;
-    const size_t size;
     const size_t stride;
 
     T& operator[](size_t idx)
     {
-        if (idx > size)
+        if (idx > L)
             throw std::runtime_error("Index out of bounds");
 
         return data[idx * stride];
@@ -24,21 +29,23 @@ struct submat
 			
 			return *this;
 		}
-
-		template<typename TOther>
-		vec& operator=(const vec<L, TOther>& other)
-		{
-			for (size_t i = 0; i < this->length; ++i)
-				(*this)[i] = static_cast<value_type>(other[i]);
-			
-			return *this;
-		}
             */
 
-    submat& operator=(const T& scalar)
+    template<typename TOther>
+    submat& operator=(const vec<L, TOther>& v)
     {
-        for (size_t i = 0; i < size; ++i)
-            (*this)[i] = scalar;
+        for (size_t i = 0; i < L; ++i)
+            (*this)[i] = static_cast<T>(v[i]);
+        
+        return *this;
+    }
+
+    template<typename TOther>
+        requires (!std::same_as<T, vec<L, TOther>>)
+    submat& operator=(const TOther& scalar)
+    {
+        for (size_t i = 0; i < L; ++i)
+            (*this)[i] = static_cast<T>(scalar);
         
         return *this;
     }
