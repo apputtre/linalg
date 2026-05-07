@@ -41,6 +41,7 @@ struct submat
     }
 
     template<typename TOther>
+        requires (!std::same_as<T, vec<L, TOther>>)
     submat& operator=(const TOther& scalar)
     {
         for (size_t i = 0; i < L; ++i)
