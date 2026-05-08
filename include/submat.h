@@ -3,13 +3,23 @@
 
 #include "vec.h"
 
+template<size_t Rows, size_t Cols, typename T>
+struct submat_base
+{
+    T* data;
+
+	submat_base(T* data)
+		: data{data}
+	{}
+};
+
 /*
 2-D non element owning submatrix
 */
 template<size_t Rows, size_t Cols, typename T>
-struct submat
+struct submat : submat_base<Rows, Cols, T>
 {
-    T* data;
+	submat(T* data) : submat_base<Rows, Cols, T>(data) {}
 
 	T& operator()(size_t r, size_t c)
 	{
@@ -19,7 +29,7 @@ struct submat
 		if (c > Cols)
 			throw std::runtime_error("Column index out of range");
 
-		return data[r * Cols + c];
+		return this->data[r * Cols + c];
 	}
 
 	submat<1, Cols, T> operator()(size_t r)
@@ -27,7 +37,7 @@ struct submat
         if (r > Rows)
             throw std::runtime_error("Index out of bounds");
 
-        return submat<1, Cols, T> {&data[r * Cols]};
+        return submat<1, Cols, T>(&this->data[r * Cols]);
 	}
 
     submat<1, Cols, T> operator[](size_t r)
@@ -38,16 +48,16 @@ struct submat
 
 // 1-D submatrix
 template<size_t Cols, typename T>
-struct submat<1, Cols, T>
+struct submat<1, Cols, T> : submat_base<1, Cols, T>
 {
-	T* data;
+	submat(T* data) : submat_base<1, Cols, T>(data) {}
 
 	T& operator()(size_t c)
 	{
 		if (c > Cols)
 			throw std::runtime_error("Index out of bounds");
 
-		return data[c];
+		return this->data[c];
 	}
 
 	T& operator[](size_t r)
