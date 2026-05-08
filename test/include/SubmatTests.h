@@ -39,6 +39,24 @@ SUITE(submatConstruction,
         assertEq(s(1), 137);
         assertEq(elems[3], 137);
     })
+
+    TEST(submatColConstruction,
+    {
+        int elems[] = {
+            11, 12,
+            21, 22
+        };
+
+        submat<2, 1, int> s(&elems[1]);
+
+        assertEq(s(0), 12);
+        assertEq(s(1), 22);
+
+        s(1) = 137;
+
+        assertEq(s(1), 137);
+        assertEq(elems[3], 137);
+    })
 })
 
 SUITE(submatRowAccess,
