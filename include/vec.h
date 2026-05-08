@@ -7,8 +7,6 @@
 #include <concepts>
 #include <cstring>
 
-#include "submat.h"
-
 namespace linalg
 {
 	template<typename T1, typename T2>
@@ -185,11 +183,6 @@ namespace linalg
 				(*this)[i] = scalar;
 			
 			return *this;
-		}
-
-		operator submat<T, L>()
-		{
-			return submat<T, L>(&this->x, 1);
 		}
 
 	private:

@@ -81,24 +81,6 @@ SUITE(submatArithmetic,
     })
 })
 
-SUITE(vecToSubmatConversion,
-{
-    TEST(test_1,
-    {
-        vec<3, int> v{1, 3, 5};
-
-        submat<int, 3> s(v);
-
-        assertEq(s(0), 1);
-        assertEq(s(1), 3);
-        assertEq(s(2), 5);
-
-        s(1) = 137;
-
-        assertEq(v[1], 137);
-    })
-})
-
 /*
 SUITE(submatRowAccess,
 {
