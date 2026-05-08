@@ -389,4 +389,22 @@ SUITE(matArithmetic,
             {16, 17}
         });
     })
+
+    TEST(matMatMultiplication,
+    {
+        mat<2, 2, int> m1 {
+            {1, 2},
+            {3, 4}
+        };
+
+        mat<2, 2, int> m2 {
+            {1, 0},
+            {0, 1}
+        };
+
+        assertEq(m1 * m2, mat<2, 2, int> {
+            {1, 2},
+            {3, 4}
+        });
+    })
 })

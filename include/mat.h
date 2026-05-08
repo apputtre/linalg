@@ -112,6 +112,12 @@ namespace linalg
 			return *this;
 		}
 
+		template<typename TOther>
+		mat<Cols, Rows, MultiplicationResult<T, TOther>>& operator*=(const mat<Cols, Rows, TOther>& m)
+		{
+			return *this;
+		}
+
 		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
 		{
 			os << "{";
@@ -222,6 +228,15 @@ namespace linalg
 
 		return result;
 	}
+
+	template<size_t Rows, size_t Cols, typename T1, typename T2>
+	mat<Cols, Rows, MultiplicationResult<T1, T2>> operator*(const mat<Rows, Cols, T1>& m1, const mat<Cols, Rows, T2>& m2)
+	{
+		mat<Cols, Rows, SubtractionResult<T1, T2>> result = m1;
+		result *= m2;
+		return result;
+	}
+
 }
 
 #endif
