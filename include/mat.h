@@ -228,6 +228,13 @@ namespace linalg
 	{
 		mat<Rows, Rows, SubtractionResult<T1, T2>> result;
 
+		for (size_t r = 0; r < result.num_rows; ++r)
+			for (size_t c = 0; c < result.num_cols; ++c)
+			{
+				for (size_t j = 0; j < m1.num_cols; ++j)
+					result[r][c] += m1[r][j] * m2[j][c];
+			}
+
 		return result;
 	}
 
