@@ -4,7 +4,7 @@
 
 SUITE(submatConstruction,
 {
-    TEST(test_1,
+    TEST(submat2DConstruction,
     {
         int elems[] = {
             11, 12,
@@ -19,6 +19,24 @@ SUITE(submatConstruction,
         s(1, 1) = 137;
 
         assertEq(s(1, 1), 137);
+        assertEq(elems[3], 137);
+    })
+
+    TEST(submatRowConstruction,
+    {
+        int elems[] = {
+            11, 12,
+            21, 22
+        };
+
+        submat<1, 2, int> s(&elems[2]);
+
+        assertEq(s(0), 21);
+        assertEq(s(1), 22);
+
+        s(1) = 137;
+
+        assertEq(s(1), 137);
         assertEq(elems[3], 137);
     })
 })
