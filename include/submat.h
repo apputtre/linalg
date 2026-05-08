@@ -13,9 +13,7 @@ struct submat_base
 	{}
 };
 
-/*
-2-D non element owning submatrix
-*/
+// 2D non element owning submatrix
 template<size_t Rows, size_t Cols, typename T>
 struct submat : submat_base<Rows, Cols, T>
 {
@@ -46,7 +44,7 @@ struct submat : submat_base<Rows, Cols, T>
     }
 };
 
-// 1-D submatrix
+// 1D non element owning submatrix
 template<size_t Cols, typename T>
 struct submat<1, Cols, T> : submat_base<1, Cols, T>
 {
