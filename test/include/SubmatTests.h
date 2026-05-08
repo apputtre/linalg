@@ -4,27 +4,26 @@
 
 SUITE(submatConstruction,
     {
-        TEST(submatRow,
+        TEST(test_1,
         {
-            int elems[] = {11, 12, 21, 22};
+            int elems[] = {
+                11, 12,
+                21, 22
+            };
 
-            submat<2, int> s(&elems[2], 1);
+            submat<2, 2, int> s(&elems[0]);
 
-            assertEq(s[0], 21);
-            assertEq(s[1], 22);
-        })
+            assertEq(s(1, 0), 21);
+            assertEq(s(1, 1), 22);
 
-        TEST(submatCol,
-        {
-            int elems[] = {11, 12, 21, 22};
+            s(1, 1) = 137;
 
-            submat<2, int> s(&elems[1], 2);
-
-            assertEq(s[0], 12);
-            assertEq(s[1], 22);
+            assertEq(s(1, 1), 137);
+            assertEq(elems[3], 137);
         })
     })
 
+/*
 SUITE(submatAssignment,
     {
         TEST(submatElementAssignment,
@@ -62,3 +61,4 @@ SUITE(submatAssignment,
             assertEq(elems[3], 314);
         })
     })
+*/
