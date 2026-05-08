@@ -59,28 +59,6 @@ SUITE(submatConstruction,
     })
 })
 
-SUITE(submatArithmetic,
-{
-    TEST(submatAddition,
-    {
-        int elems[] = {
-            11, 12,
-            21, 22
-        };
-
-        // create submat that represents first row ({11, 12})
-        submat<int, 2> s1(&elems[0], 1);
-
-        // create submat that represents second row({21, 22})
-        submat<int, 2> s2(&elems[2], 1);
-
-        s1 += s2;
-
-        assertEq(s1(0), 32);
-        assertEq(s1(1), 34);
-    })
-})
-
 /*
 SUITE(submatRowAccess,
 {

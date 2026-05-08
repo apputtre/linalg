@@ -33,22 +33,6 @@ struct submat
 		return data[offset];
 	}
 
-	template<typename... Indices>
-	const T& operator()(Indices... indices) const
-		requires (sizeof...(Indices) == sizeof...(Extents))
-	{
-		return (*const_cast<submat*>(this))(indices...);
-	}
-
-	submat& operator+=(const submat& other)
-		requires (sizeof...(Extents) == 1)
-	{
-		for (size_t i = 0; i < extents[0]; ++i)
-			(*this)(i) += other(i);
-		
-		return *this;
-	}
-
 private:
 	void setExtent(size_t extent, size_t idx)
 	{
