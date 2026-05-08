@@ -3,25 +3,50 @@
 #include "submat.h"
 
 SUITE(submatConstruction,
+{
+    TEST(test_1,
     {
-        TEST(test_1,
-        {
-            int elems[] = {
-                11, 12,
-                21, 22
-            };
+        int elems[] = {
+            11, 12,
+            21, 22
+        };
 
-            submat<2, 2, int> s(&elems[0]);
+        submat<2, 2, int> s(&elems[0]);
 
-            assertEq(s(1, 0), 21);
-            assertEq(s(1, 1), 22);
+        assertEq(s(1, 0), 21);
+        assertEq(s(1, 1), 22);
 
-            s(1, 1) = 137;
+        s(1, 1) = 137;
 
-            assertEq(s(1, 1), 137);
-            assertEq(elems[3], 137);
-        })
+        assertEq(s(1, 1), 137);
+        assertEq(elems[3], 137);
     })
+})
+
+SUITE(submatRowAccess,
+{
+    TEST(test_1,
+    {
+        int elems[] = {
+            11, 12,
+            21, 22
+        };
+
+        submat<2, 2, int> s(&elems[0]);
+
+        // access the second row of s ({21, 22})
+        auto row = s[1];
+
+        assertEq(row[0], 21);
+        assertEq(row[1], 22);
+
+        row[1] = 137;
+
+        assertEq(row[1], 137);
+        assertEq(s(1, 1), 137);
+        assertEq(elems[3], 137);
+    })
+})
 
 /*
 SUITE(submatAssignment,
