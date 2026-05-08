@@ -3,14 +3,54 @@
 
 #include "vec.h"
 
-template<typename T, size_t E0, size_t E1>
-struct submat_base
+template<typename T, size_t... Extents>
+struct submat
 {
     T* data;
+	size_t extents[sizeof...(Extents)];
+	size_t strides[sizeof...(Extents)];
 
-	submat_base(T* data)
+	template<typename... Strides>
+	submat(T* data, Strides... strides)
+		requires (sizeof...(Strides) == sizeof...(Extents))
 		: data{data}
-	{}
+	{
+		size_t idx = 0;
+		(setExtent(Extents, idx++), ...);
+
+		idx = 0;
+		(setStride(strides, idx++), ...);
+	}
+
+	template<typename... Indices>
+	T& operator()(Indices... indices)
+		requires (sizeof...(Indices) == sizeof...(Extents))
+	{
+		size_t dim = 0;
+		size_t offset = 0;
+		(calculateOffset(dim++, Extents, indices, offset), ...);
+
+		return data[offset];
+	}
+
+private:
+	void setExtent(size_t extent, size_t idx)
+	{
+		extents[idx] = extent;
+	}
+
+	void setStride(size_t stride, size_t idx)
+	{
+		strides[idx] = stride;
+	}
+
+	void calculateOffset(size_t dim, size_t extent, size_t idx, size_t& offset)
+	{
+		if (idx > extent)
+			throw std::runtime_error(std::format("Index {} out of bounds", dim + 1));
+		
+		offset += strides[dim] * idx;
+	}
 };
 
 /*
@@ -19,26 +59,10 @@ struct submat_base
 E0: extent of the first dimension (i.e. number of elements in each row)
 E1: extent of the second dimension (i.e. number of elements in each column)
 */
-template<typename T, size_t E0, size_t E1>
-struct submat : submat_base<T, E0, E1>
+/*
+template<typename T, size_t... Extents>
+struct submat : submat<T, Extents>
 {
-	size_t strides[2];
-
-	submat(T* data, size_t stride_0, size_t stride_1) : submat_base<T, E0, E1>(data)
-	{
-		this->strides[0] = stride_0;
-		this->strides[1] = stride_1;
-	}
-
-	T& operator()(size_t r, size_t c)
-	{
-		if (r > E1)
-			throw std::runtime_error("Row index out of bounds");
-		
-		if (c > E0)
-			throw std::runtime_error("Column index out of bounds");
-
-		return this->data[r * strides[0] + c * strides[1]];
 	}
 
 	submat<T, E1, 1> operator()(size_t r)
@@ -57,7 +81,7 @@ struct submat : submat_base<T, E0, E1>
 
 // 1D non element owning submatrix
 template<typename T, size_t E0>
-struct submat<T, E0, 1> : submat_base<T, E0, 1>
+struct submat<T, E0, 1> : submat<T, E0, 1>
 {
 	size_t stride;
 
@@ -79,5 +103,6 @@ struct submat<T, E0, 1> : submat_base<T, E0, 1>
 		return (*this)(i);
 	}
 };
+*/
 
 #endif

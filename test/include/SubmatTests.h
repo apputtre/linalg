@@ -29,7 +29,7 @@ SUITE(submatConstruction,
             21, 22
         };
 
-        submat<int, 2, 1> s(&elems[2], 1);
+        submat<int, 2> s(&elems[2], 1);
 
         assertEq(s(0), 21);
         assertEq(s(1), 22);
@@ -47,7 +47,7 @@ SUITE(submatConstruction,
             21, 22
         };
 
-        submat<int, 2, 1> s(&elems[1], 2);
+        submat<int, 2> s(&elems[1], 2);
 
         assertEq(s(0), 12);
         assertEq(s(1), 22);
