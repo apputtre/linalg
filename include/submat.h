@@ -22,12 +22,17 @@ struct submat
 		return data[r * Cols + c];
 	}
 
-    submat<1, Cols, T> operator[](size_t r)
-    {
+	submat<1, Cols, T> operator()(size_t r)
+	{
         if (r > Rows)
             throw std::runtime_error("Index out of bounds");
 
         return submat<1, Cols, T> {&data[r * Cols]};
+	}
+
+    submat<1, Cols, T> operator[](size_t r)
+    {
+		return (*this)(r);
     }
 };
 
@@ -37,12 +42,17 @@ struct submat<1, Cols, T>
 {
 	T* data;
 
-	T& operator[](size_t c)
+	T& operator()(size_t c)
 	{
 		if (c > Cols)
 			throw std::runtime_error("Index out of bounds");
 
 		return data[c];
+	}
+
+	T& operator[](size_t r)
+	{
+		return (*this)(r);
 	}
 };
 
