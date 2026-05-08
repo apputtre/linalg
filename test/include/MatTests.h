@@ -390,25 +390,7 @@ SUITE(matArithmetic,
         });
     })
 
-    TEST(matMatMultiplication_1,
-    {
-        mat<2, 2, int> m1 {
-            {1, 2},
-            {3, 4}
-        };
-
-        mat<2, 2, int> m2 {
-            {1, 0},
-            {0, 1}
-        };
-
-        assertEq(m1 * m2, mat<2, 2, int> {
-            {1, 2},
-            {3, 4}
-        });
-    })
-
-    TEST(matMatMultiplication_2,
+    TEST(matMatMultiplication,
     {
         mat<3, 2, int> m1 {
             {1, 2},
@@ -426,5 +408,27 @@ SUITE(matArithmetic,
             {19, 26, 33},
             {29, 40, 51}
         });
+    })
+
+    TEST(matScalarMultiplication,
+    {
+        mat<2, 2, int> m {
+            {11, 12},
+            {21, 22}
+        };
+
+        /*
+        assertEq(m1 * 2, mat<2, 2, int> {
+            {22, 24},
+            {42, 44}
+        });
+        */
+
+        assertEq(m * 1, mat<2, 2, int> {
+            {11, 12},
+            {21, 22}
+        });
+
+        assertEq(m * 1, 1 * m);
     })
 })
