@@ -1,7 +1,7 @@
 #ifndef SUBMAT_H
 #define SUBMAT_H
 
-#include "vec.h"
+#include <format>
 
 template<typename T, size_t... Extents>
 struct submat
