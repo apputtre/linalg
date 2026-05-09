@@ -59,69 +59,18 @@ SUITE(submatConstruction,
     })
 })
 
-/*
-SUITE(submatRowAccess,
-{
-    TEST(test_1,
-    {
-        int elems[] = {
-            11, 12,
-            21, 22
-        };
-
-        submat<int, 2, 2> s(&elems[0], 2, 1);
-
-        // access the second row of s ({21, 22})
-        auto row = s[1];
-
-        assertEq(row[0], 21);
-        assertEq(row[1], 22);
-
-        row[1] = 137;
-
-        assertEq(row[1], 137);
-        assertEq(s(1, 1), 137);
-        assertEq(elems[3], 137);
-    })
-})
-*/
-
-/*
 SUITE(submatAssignment,
     {
-        TEST(submatElementAssignment,
+        TEST(submatAssignment,
         {
             int elems[] = {11, 12, 21, 22};
 
-            submat<2, int> s(&elems[2], 1);
+            submat<int, 2> s1(&elems[0], 1);
+            submat<int, 2> s2(&elems[2], 1);
 
-            s[1] = 137;
+            s2 = s1;
 
-            assertEq(elems[3], 137);
-        })
-
-        TEST(submatScalarAssignment,
-        {
-            int elems[] = {11, 12, 21, 22};
-
-            submat<2, int> s(&elems[1], 2);
-
-            s = 137;
-
-            assertEq(elems[1], 137);
-            assertEq(elems[3], 137);
-        })
-
-        TEST(submatVectorAssignment,
-        {
-            int elems[] = {11, 12, 21, 22};
-
-            submat<2, int> s(&elems[1], 2);
-            vec<2, int> v = {137, 314};
-            s = v;
-
-            assertEq(elems[1], 137);
-            assertEq(elems[3], 314);
+            assertEq(elems[2], 11);
+            assertEq(elems[3], 12);
         })
     })
-*/

@@ -22,6 +22,15 @@ struct submat
 		(setStride(strides, idx++), ...);
 	}
 
+	submat& operator=(const submat& other)
+		requires (sizeof...(Extents) == 1)
+	{
+		for (size_t i = 0; i < extents[0]; ++i)
+			(*this)(i) = other(i);
+		
+		return *this;
+	}
+
 	template<typename... Indices>
 	T& operator()(Indices... indices)
 		requires (sizeof...(Indices) == sizeof...(Extents))
