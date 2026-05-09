@@ -37,7 +37,7 @@ struct submat
 	T& operator()(Indices... indices) const
 		requires (sizeof...(Indices) == sizeof...(Extents))
 	{
-		return (*const_cast<const submat<T, Extents...>*>(this))(indices...);
+		return (*const_cast<submat<T, Extents...>*>(this))(indices...);
 	}
 
 	T& operator[](size_t idx)
@@ -49,7 +49,7 @@ struct submat
 	T& operator[](size_t idx) const
 		requires (sizeof...(Extents) == 1)
 	{
-		return (*const_cast<const submat<T, Extents...>*>(this))[idx];
+		return (*const_cast<submat<T, Extents...>*>(this))[idx];
 	}
 
 private:
