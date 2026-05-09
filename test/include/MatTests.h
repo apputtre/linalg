@@ -424,4 +424,19 @@ SUITE(matArithmetic,
 
         assertEq(m * 2, 2 * m);
     })
+
+    TEST(matScalarDivion,
+    {
+        mat<2, 2, float> m {
+            {11, 12},
+            {21, 22}
+        };
+
+        assertEq(m / 2, mat<2, 2, float> {
+            {5.5, 6},
+            {10.5, 11}
+        });
+
+        assertEq(2 / m, 1 / (m / 2));
+    })
 })
