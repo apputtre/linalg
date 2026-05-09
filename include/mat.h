@@ -2,6 +2,7 @@
 #define MAT_H
 
 #include "vec.h"
+#include "submat.h"
 
 namespace linalg
 {
@@ -16,7 +17,7 @@ namespace linalg
 	class mat
 	{
 	private:
-		vec<Cols, T> rows[Rows];
+		T elems[Rows * Cols] {};
 
 	public:
 		constexpr static size_t num_rows = Rows;
@@ -52,26 +53,26 @@ namespace linalg
 
 			for (size_t r = 0; r < num_rows; ++r)
 				for (size_t c = 0; c < num_cols; ++c)
-					rows[r][c] = static_cast<T>(other[r][c]);
+					(*this)[r][c] = static_cast<T>(other[r][c]);
 		}
 
 		template<std::convertible_to<T> TOther>
 		mat(const TOther& val)
 		{
-			std::fill(&rows[0], &rows[0] + num_rows, val);
+			std::fill(&elems[0], &elems[num_elements], val);
 		}
 
 		mat() = default;
 
-		vec<num_cols, T>& operator[](size_t idx)
+		submat<T, Cols> operator[](size_t idx)
 		{
 			if (idx >= num_rows)
 				throw std::runtime_error("Index out of bounds");
 			
-			return rows[idx];
+			return submat<T, Cols>(&elems[0 + idx * Cols], 1);
 		}
 
-		const vec<num_cols, T>& operator[](size_t idx) const
+		const submat<T, Cols> operator[](size_t idx) const
 		{
 			return (*const_cast<mat*>(this))[idx];
 		}
@@ -80,7 +81,8 @@ namespace linalg
 		mat<Rows, Cols, AdditionResult<T, TOther>>& operator+=(const mat<Rows, Cols, TOther>& m)
 		{
 			for (size_t r = 0; r < Rows; ++r)
-				(*this)[r] += m[r];
+				for (size_t c = 0; c < Cols; ++c)
+					(*this)[r][c] += m[r][c];
 			
 			return *this;
 		}
@@ -88,8 +90,8 @@ namespace linalg
 		template<typename TScalar>
 		mat<Rows, Cols, AdditionResult<T, TScalar>>& operator+=(const TScalar& scalar)
 		{
-			for (size_t r = 0; r < Rows; ++r)
-				(*this)[r] += scalar;
+			for (T* it = &elems[0]; it < &elems[num_elements]; ++it)
+				*it += scalar;
 			
 			return *this;
 		}
@@ -98,7 +100,8 @@ namespace linalg
 		mat<Rows, Cols, SubtractionResult<T, TOther>>& operator-=(const mat<Rows, Cols, TOther>& m)
 		{
 			for (size_t r = 0; r < Rows; ++r)
-				(*this)[r] -= m[r];
+				for (size_t c = 0; c < Cols; ++c)
+					(*this)[r][c] -= m[r][c];
 			
 			return *this;
 		}
@@ -107,7 +110,8 @@ namespace linalg
 		mat<Rows, Cols, SubtractionResult<T, TScalar>>& operator-=(const TScalar& scalar)
 		{
 			for (size_t r = 0; r < Rows; ++r)
-				(*this)[r] -= scalar;
+				for (size_t c = 0; c < Cols; ++c)
+					(*this)[r][c] -= scalar;
 			
 			return *this;
 		}
@@ -116,7 +120,8 @@ namespace linalg
 		mat<Rows, Cols, SubtractionResult<T, TScalar>>& operator*=(const TScalar& scalar)
 		{
 			for (size_t r = 0; r < Rows; ++r)
-				(*this)[r] *= scalar;
+				for (size_t c = 0; c < Cols; ++c)
+					(*this)[r][c] *= scalar;
 			
 			return *this;
 		}
@@ -125,7 +130,8 @@ namespace linalg
 		mat<Rows, Cols, SubtractionResult<T, TScalar>>& operator/=(const TScalar& scalar)
 		{
 			for (size_t r = 0; r < Rows; ++r)
-				(*this)[r] /= scalar;
+				for (size_t c = 0; c < Cols; ++c)
+					(*this)[r][c] /= scalar;
 			
 			return *this;
 		}
@@ -157,12 +163,13 @@ namespace linalg
 		void set_row(const std::initializer_list<T>& row, size_t idx)
 		{
 			for (size_t c = 0; c < num_cols; ++c)
-				rows[idx][c] = *(row.begin() + c);
+				(*this)[idx][c] = *(row.begin() + c);
 		}
 
 		void set_row(const vec<num_cols, T>& row, size_t idx)
 		{
-			rows[idx] = row;
+			for (size_t c = 0; c < num_cols; ++c)
+				(*this)[idx][c] = row[c];
 		}
 	};
 
@@ -171,8 +178,9 @@ namespace linalg
 		requires EqualityComparable<T1, T2>
 	{
 		for (size_t r = 0; r < Rows; ++r)
-			if (m1[r] != m2[r])
-					return false;
+			for (size_t c = 0; c < Cols; ++c)
+				if (m1[r][c] != m2[r][c])
+						return false;
 		return true;
 	}
 
@@ -207,7 +215,8 @@ namespace linalg
 		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
-			result[r] = scalar + m[r];
+			for (size_t c = 0; c < result.num_cols; ++c)
+				result[r][c] = scalar + m[r][c];
 
 		return result;
 	}
@@ -272,7 +281,8 @@ namespace linalg
 		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
-			result[r] = scalar * m[r];
+			for (size_t c = 0; c < result.num_cols; ++c)
+				result[r][c] = scalar * m[r][c];
 
 		return result;
 	}
@@ -293,7 +303,8 @@ namespace linalg
 		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
-			result[r] = scalar / m[r];
+			for (size_t c = 0; c < result.num_cols; ++c)
+					result[r][c] = scalar / m[r][c];
 
 		return result;
 	}

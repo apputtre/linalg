@@ -215,6 +215,7 @@ SUITE(matElementAccess,
 
         mat<4, 3, int> m3;
         m3[2][1] = 137.5;
+
         assertEq(m3[2][1], 137);
     })
 
