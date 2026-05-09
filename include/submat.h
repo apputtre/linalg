@@ -33,6 +33,12 @@ struct submat
 		return data[offset];
 	}
 
+	T& operator[](size_t idx)
+		requires (sizeof...(Extents) == 1)
+	{
+		return (*this)(idx);
+	}
+
 private:
 	void setExtent(size_t extent, size_t idx)
 	{
