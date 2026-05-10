@@ -250,10 +250,10 @@ namespace linalg
 		return result;
 	}
 
-	template<size_t Rows, size_t Cols, typename T1, typename T2>
-	mat<Rows, Rows, MultiplicationResult<T1, T2>> operator*(const mat<Rows, Cols, T1>& m1, const mat<Cols, Rows, T2>& m2)
+	template<size_t Rows1, size_t Cols1, size_t Cols2, typename T1, typename T2>
+	mat<Rows1, Cols2, MultiplicationResult<T1, T2>> operator*(const mat<Rows1, Cols1, T1>& m1, const mat<Cols1, Cols2, T2>& m2)
 	{
-		mat<Rows, Rows, SubtractionResult<T1, T2>> result;
+		mat<Rows1, Cols2, SubtractionResult<T1, T2>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
 			for (size_t c = 0; c < result.num_cols; ++c)

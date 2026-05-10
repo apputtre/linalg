@@ -391,7 +391,7 @@ SUITE(matArithmetic,
         });
     })
 
-    TEST(matMatMultiplication,
+    TEST(matMatMultiplicationSameDims,
     {
         mat<3, 2, int> m1 {
             {1, 2},
@@ -408,6 +408,27 @@ SUITE(matArithmetic,
             {9, 12, 15},
             {19, 26, 33},
             {29, 40, 51}
+        });
+    })
+
+    TEST(matMatMultiplicationDifferentDims,
+    {
+        mat<3, 3, int> m1 {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        mat<3, 1, int> m2 {
+            {1},
+            {2},
+            {3}
+        };
+
+        assertEq(m1 * m2, mat<3, 1, int> {
+            {14},
+            {32},
+            {50}
         });
     })
 
