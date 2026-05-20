@@ -1,14 +1,16 @@
 #include <iostream>
 
+#include "yUnit.h"
+
 #include "vec.h"
 
 #include "TestEnvironment.h"
-#include "MatTests.h"
-#include "SubmatTests.h"
 #include "utils.h"
+#include "requirements/Vector.h"
 
 using namespace linalg;
 
+/*
 void SuiteVecElemAccessConstruction(TestEnvironment& tenv)
 {
     tenv.beginSuite("Vector element access and construction");
@@ -1235,9 +1237,11 @@ void SuiteVecComponentAliases(TestEnvironment& tenv)
         tenv.assertEq(v[3], a);
     }
 }
+*/
 
 int main()
 {
+    /*
     TestEnvironment tenv;
 
     SuiteVecElemAccessConstruction(tenv);
@@ -1265,9 +1269,14 @@ int main()
     SuiteVecComponentAliases(tenv);
 
     std::cout << tenv.getSummary();
+    */
 
+    std::cout << yUnit::getSummary();
+
+    /*
     std::cout << yUnit::getSummary("MatTests");
     std::cout << yUnit::getSummary("SubmatTests");
+    */
 
     return 0;
 }

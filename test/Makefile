@@ -12,7 +12,7 @@ CXXFLAGS = -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-parameter -g -
 CFLAGS = -g $(foreach dir,$(INCLUDE_DIRS),$(patsubst %,-I%,$(dir)))
 LDFLAGS = 
 
-main.exe: main.cpp ../include/* yUnit/test/* yUnit/include/* include/*
+main.exe: main.cpp ../include/* yUnit/test/* yUnit/include/* include/* include/requirements/*
 	mkdir -p $(BIN_PATH)
 	$(CXX) $(CXXFLAGS) $(SRC_PATH)/main.cpp -o $(BIN_PATH)/main.exe $(LDFLAGS)
 

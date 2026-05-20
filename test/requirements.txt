@@ -1,0 +1,38 @@
+Vector Requirements
+
+Let vector<L, T> be shorthand for a vector of length L and with elements of type T.
+
+[C] Vector Construction
+
+[C.1] A vector<L, T1> may be constructed from a list of values of length L and type T2 if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+[C.2] A vector<L, T1> may be constructed from a vector<L, T2> if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+[C.3] A vector<L, T1> may be constructed from a single value x of type T2 if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+Each element of the resulting vector has the value x, after applying any necessary conversions.
+
+[DA] Data Access
+
+[DA.1] The first element of a vector can be read from and written to using the subscript 0, the second element of a
+vector can be read from and written to using the subscript 1, and so on.
+
+[DA.2] A vector<L, T1> can be assigned to another vector<L, T2> if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+After the assignment, each element in the first vector has the value of the corresponding element in the second vector
+after applying any necessary conversions.
+
+[DL] Data Layout
+
+[DL.1] If s is the size of the type T in bytes, then the size of a vector<L, T> is L * s bytes.
+
+[DL.2] The elements of a vector are laid out in memory contiguously, with vector<L, T>[0] being stored at the first
+address allocated to the vector, vector<L, T>[1] being stored at the second, and so on.
