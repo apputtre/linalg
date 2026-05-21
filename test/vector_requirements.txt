@@ -28,12 +28,14 @@ Each element of the resulting vector has the value x, after applying any necessa
 
 [DA] Data Access
 
-[DA.1] 
+[DA.1] Vector element access
 
 The first element of a vector can be read from and written to using the subscript 0, the second element of a
 vector can be read from and written to using the subscript 1, and so on.
 
-[DA.2] A vector<L, T1> can be assigned to another vector<L, T2> if:
+[DA.2] Vector assignment
+
+A vector<L, T1> can be assigned to another vector<L, T2> if:
     - T1 = T2, or
     - T2 is convertible to T1.
 
@@ -43,51 +45,71 @@ after applying any necessary conversions.
 
 [DL] Data Layout
 
-[DL.1] If s is the size of the type T in bytes, then the size of a vector<L, T> is L * s bytes.
+[DL.1] Size of a vector
 
-[DL.2] The elements of a vector are laid out in memory contiguously, with vector<L, T>[0] being stored at the first
+If s is the size of the type T in bytes, then the size of a vector<L, T> is L * s bytes.
+
+[DL.2] Vector data layout
+
+The elements of a vector are laid out in memory contiguously, with vector<L, T>[0] being stored at the first
 address allocated to the vector, vector<L, T>[1] being stored at the second, and so on.
 
 
 [CMP] Comparison
 
-[CMP.1] A vector<L, T1> v1 is considered equal to a vector<L, T2> v2 if for i in [0, L), v1[i] = v2[i].
+[CMP.1] Vector comparison
 
-[CMP.2] A vector<L, T1> v is considered equal to a scalar value x of type T2 if for i in [0, L), v[i] = x.
+A vector<L, T1> v1 is considered equal to a vector<L, T2> v2 if for i in [0, L), v1[i] = v2[i].
+
+[CMP.2] Vector scalar comparison
+
+A vector<L, T1> v is considered equal to a scalar value x of type T2 if for i in [0, L), v[i] = x.
 
 [A] Arithmetic
 
-[A.1] Let v1 be a vector<L, T1> and v2 be a vector <L, T2>.
+[A.1] Vector addition
+
+Let v1 be a vector<L, T1> and v2 be a vector <L, T2>.
 
 The result of the expression v1 + v2 is a vector<L, T3> v3, where:
     - T3 is the type of the value of the expression x + y, where x is of type T1 and y is of type T2, and
     - For i in [0, L), v3[i] = v1[i] + v2[i].
 
-[A.2] Let v be a vector<L, T1> v1 and x be a scalar value of type T2.
+[A.2] Vector scalar addition
+
+Let v be a vector<L, T1> v1 and x be a scalar value of type T2.
 
 The result of the expression v + x is a vector<L, T3> v2, where:
     - T3 is the type of the value of the expression a + b, where a is of type T1 and b is of type T2, and
     - For i in [0, L), v2[i] = v1[i] + x
 
-[A.3] Let v1 be a vector<L, T1> and v2 be a vector <L, T2>.
+[A.3] Vector subtraction
+
+Let v1 be a vector<L, T1> and v2 be a vector <L, T2>.
 
 The result of the expression v1 - v2 is a vector<L, T3> v3, where:
     - T3 is the type of the value of the expression x - y, where x is of type T1 and y is of type T2,
     - For i in [0, L), v3[i] = v1[i] - v2[i].
 
-[A.4] Let v1 be a vector<L, T1> and x be a scalar value of type T2.
+[A.4] Vector scalar subtraction
+
+Let v1 be a vector<L, T1> and x be a scalar value of type T2.
 
 The result of the expression v - x is a vector<L, T3> v2, where:
     - T3 is the type of the value of the expression a - b, where a is of type T1 and b is of type T2, and
     - For i in [0, L), v2[i] = v1[i] - x
 
-[A.5] Let v1 be a vector<L, T1> and x be a scalar value of type T2.
+[A.5] Vector scalar multiplication
+
+Let v1 be a vector<L, T1> and x be a scalar value of type T2.
 
 The result of the expression v * x is a vector<L, T3> v2, where:
     - T3 is the type of the value of the expression a * b, where a is of type T1 and b is of type T2, and
     - For i in [0, L), v2[i] = v1[i] * x
 
-[A.6] Let v1 be a vector<L, T1> and x be a scalar value of type T2.
+[A.6] Vector scalar division
+
+Let v1 be a vector<L, T1> and x be a scalar value of type T2.
 
 The result of the expression v / x is a vector<L, T3> v2, where:
     - T3 is the type of the value of the expression a / b, where a is of type T1 and b is of type T2, and
@@ -96,24 +118,32 @@ The result of the expression v / x is a vector<L, T3> v2, where:
 
 [S] Special Operations
 
-[S.1] Let v be a vector<L, T1>, where T1 is an integral or floating-point value.
+[S.1] Vector magnitude
+
+Let v be a vector<L, T1>, where T1 is an integral or floating-point value.
 
 The expression v.mag() yields a scalar value x of type T2 representing the magnitude of v. The type T2 is the type
 returned by the standard library square root function when called on an operand of type T1.
 
-[S.2] Let v be a vector<L, T1>, where T1 is an integral or floating-point value which is not a zero vector.
+[S.2] Vector normalization
+
+Let v be a vector<L, T1>, where T1 is an integral or floating-point value which is not a zero vector.
 
 The expression v.norm() yields a vector<L, T2> representing the result of normalizing the vector v. The type T2 is the
 type of the value of the expression T1 / v.mag().
 
 If v is a zero vector, then the expression v.norm() returns a zero vector of length L.
 
-[S.3] Let v1 be a vector<L, T1> and v2 be a vector<L, T2>.
+[S.3] Vector dot product
+
+Let v1 be a vector<L, T1> and v2 be a vector<L, T2>.
 
 The expression v1.dot(v2) yields a scalar value x of type T2 representing the inner product of vectors v1 and v2. The
 type T2 is the type of the expression T1 * T2.
 
-[S.4] Let v1 be a vector<3, T1> and v2 be a vector<3, T2>.
+[S.4] Vector cross product
+
+Let v1 be a vector<3, T1> and v2 be a vector<3, T2>.
 
 The expression v1.cross(v2) yields a vector<3, T3> representing the cross product of v1 and v2. The type T3 is the type
 of the value of the expression T1 * T2.
