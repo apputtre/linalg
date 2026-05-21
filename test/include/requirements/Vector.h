@@ -116,3 +116,153 @@ SUITE("Vector data layout") // [DL.2]
         assertEq(v[2], *(&v[0] + 2));
     }
 }
+
+SUITE("Vector comparison") // [CMP.1]
+{
+    TEST("Test 1")
+    {
+        linalg::vec<3, float> v1(1.0f, 2.5f, 3.0f);
+        linalg::vec<3, float> v2(1.0f, 2.5f, 3.0f);
+
+        assertEq(v1, v2);
+        assertEq(v2, v1);
+    }
+
+    TEST("Test 2")
+    {
+        linalg::vec<2, int> v1(3, 4);
+        linalg::vec<2, int> v2(1, 7);
+
+        assertNeq(v1, v2);
+        assertNeq(v2, v1);
+    }
+
+    TEST("Test 3")
+    {
+        linalg::vec<2, float> v1(1.0f, 2.0f);
+        linalg::vec<2, double> v2(1.0, 2.0);
+
+        assertEq(v1, v2);
+        assertEq(v2, v1);
+    }
+}
+
+SUITE("Vector addition") // [A.1]
+{
+    FIXTURE()
+    {
+        linalg::vec<3, float> v1;
+        linalg::vec<3, double> v2;
+
+        SETUP()
+        {
+            v1 = linalg::vec<3, float>(1, 2, 3);
+            v2 = linalg::vec<3, double>(0.5);
+        }
+
+        FTEST("Test 1")
+        {
+            auto v3 = v1 + v2;
+
+            assert(std::is_same<decltype(v3), linalg::vec<3, double>>::value);
+            assertEq(v3, linalg::vec<3, double>(1.5, 2.5, 3.5));
+            assertEq(v3, v2 + v1);
+        }
+
+        FTEST("Test 2")
+        {
+            v1 += v2;
+
+            assertEq(v1, linalg::vec<3, double>(1.5, 2.5, 3.5));
+        }
+
+        FTEST("Test 3")
+        {
+            v2 += v1;
+
+            assertEq(v2, linalg::vec<3, double>(1.5, 2.5, 3.5));
+        }
+    }
+}
+
+SUITE("Vector scalar addition") // [A.2]
+{
+    linalg::vec<3, float> v(1, 2.5, 3);
+    int x = 1;
+
+    TEST("Test 1")
+    {
+        auto v2 = v + x;
+
+        assert(std::is_same<decltype(v2), linalg::vec<3, float>>::value);
+        assertEq(v2, linalg::vec<3, float>(2, 3.5, 4));
+        assertEq(v2, x + v);
+    }
+
+    TEST("Test 2")
+    {
+        v += x;
+
+        assertEq(v, linalg::vec<3, float>(2, 3.5, 4));
+    }
+}
+
+SUITE("Vector subtraction") // [A.3]
+{
+    FIXTURE()
+    {
+        linalg::vec<3, float> v1;
+        linalg::vec<3, double> v2;
+
+        SETUP()
+        {
+            v1 = linalg::vec<3, float>(1, 2, 3);
+            v2 = linalg::vec<3, double>(0.5);
+        }
+
+        FTEST("Test 1")
+        {
+            auto v3 = v1 - v2;
+
+            assert(std::is_same<decltype(v3), linalg::vec<3, double>>::value);
+            assertEq(v3, linalg::vec<3, double>(0.5, 1.5, 2.5));
+            assertEq(v3, -(v2 - v1));
+        }
+
+        FTEST("Test 2")
+        {
+            v1 -= v2;
+
+            assertEq(v1, linalg::vec<3, double>(0.5, 1.5, 2.5));
+        }
+
+        FTEST("Test 3")
+        {
+            v2 -= v1;
+
+            assertEq(v2, linalg::vec<3, double>(-0.5, -1.5, -2.5));
+        }
+    }
+}
+
+SUITE("Vector scalar subtraction") // [A.4]
+{
+    linalg::vec<3, float> v(1, 2.5, 3);
+    int x = 1;
+
+    TEST("Test 1")
+    {
+        auto v2 = v - x;
+
+        assert(std::is_same<decltype(v2), linalg::vec<3, float>>::value);
+        assertEq(v2, linalg::vec<3, float>(0, 1.5, 2));
+        assertEq(v2, -(x - v));
+    }
+
+    TEST("Test 2")
+    {
+        v -= x;
+
+        assertEq(v, linalg::vec<3, float>(0, 1.5, 2));
+    }
+}
