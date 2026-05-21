@@ -203,6 +203,18 @@ namespace linalg
 			return (*this) / this->mag();
 		}
 
+		template<typename TOther>
+			requires requires (T x, TOther y) {x * y;} // TODO: missing requirement: MultiplicationResult<T1, T2> + MultiplicationResult<T1, T2>
+		MultiplicationResult<T, TOther> dot(const vec<L, TOther>& v)
+		{
+			MultiplicationResult<T, TOther> acc = 0;
+
+			for (size_t i = 0; i < L; ++i)
+				acc += (*this)[i] * v[i];
+
+			return acc;
+		}
+
 	private:
 		void set(const T& val, size_t idx)
 		{
@@ -400,18 +412,6 @@ namespace linalg
 			new_vec[i] = val * v[i];
 
 		return new_vec;
-	}
-
-	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x * y;} // TODO: missing requirement: MultiplicationResult<T1, T2> + MultiplicationResult<T1, T2>
-	MultiplicationResult<T1, T2> operator*(const vec<L, T1>& v1, const vec<L, T2>& v2)
-	{
-		MultiplicationResult<T1, T2> acc = 0;
-
-		for (size_t i = 0; i < L; ++i)
-			acc += v1[i] * v2[i];
-
-		return acc;
 	}
 
 	template<size_t L, typename TVector, typename TScalar>

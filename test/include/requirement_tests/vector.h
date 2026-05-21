@@ -397,3 +397,17 @@ SUITE("Vector norm") // [S.2]
         assertEq(n, linalg::vec<3, double>(0));
     }
 }
+
+SUITE("Vector dot product")
+{
+    TEST("Test 1")
+    {
+        linalg::vec<3, float> v1(1, 2.5, 3);
+        linalg::vec<3, double> v2(4, 5, 6);
+
+        auto n = v1.dot(v2);
+
+        assert(std::is_same<decltype(n), double>::value);
+        assertEq(n, 34.5);
+    }
+}
