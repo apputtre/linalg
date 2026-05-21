@@ -45,7 +45,9 @@ address allocated to the vector, vector<L, T>[1] being stored at the second, and
 
 [CMP.1] A vector<L, T1> v1 is considered equal to a vector<L, T2> v2 if for i in [0, L), v1[i] = v2[i].
 
-    [A] Arithmetic
+[CMP.2] A vector<L, T1> v is considered equal to a scalar value x of type T2 if for i in [0, L), v[i] = x.
+
+[A] Arithmetic
 
 [A.1] Let v1 be a vector<L, T1> and v2 be a vector <L, T2>.
 

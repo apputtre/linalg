@@ -153,6 +153,16 @@ SUITE("Vector comparison") // [CMP.1]
     }
 }
 
+SUITE("Vector scalar comparison") // [CMP.2]
+{
+    TEST("Test 1")
+    {
+        linalg::vec<3, float> v(2.5, 2.5, 2.5);
+
+        assertEq(v, 2.5);
+    }
+}
+
 SUITE("Vector addition") // [A.1]
 {
     FIXTURE()
