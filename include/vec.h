@@ -305,7 +305,7 @@ namespace linalg
 
 	template<size_t L, typename T1, typename T2>
 		requires requires (T1 x, T2 y) {x + y;}
-	vec<L, SubtractionResult<T1, T2>>& operator-=(vec<L, T1>& v1, const vec<L, T2>& v2)
+	vec<L, T1>& operator-=(vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
 		for (size_t i = 0; i < L; ++i)
 			v1[i] -= v2[i];
@@ -480,7 +480,5 @@ namespace linalg
 
 		return os;
 	};
-
 }
-
 #endif
