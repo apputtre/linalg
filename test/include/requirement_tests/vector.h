@@ -411,3 +411,17 @@ SUITE("Vector dot product")
         assertEq(n, 34.5);
     }
 }
+
+SUITE("Vector cross product")
+{
+    TEST("Test 1")
+    {
+        linalg::vec<3, float> v1(1, 0, 0);
+        linalg::vec<3, double> v2(0, 1, 0);
+
+        auto n = v1.cross(v2);
+
+        assert(std::is_same<decltype(n), linalg::vec<3, double>>::value);
+        assertEq(n, linalg::vec<3, double>(0, 0, 1));
+    }
+}

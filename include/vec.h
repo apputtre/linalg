@@ -215,6 +215,17 @@ namespace linalg
 			return acc;
 		}
 
+		template<typename TOther>
+			requires (L == 3) && requires (T x, TOther y) {x * y;}
+		vec<3, MultiplicationResult<T, TOther>> cross(const vec<L, TOther>& v)
+		{
+			return linalg::vec<3, MultiplicationResult<T, TOther>>(
+				this->y * v.z - this->z * v.y,
+				this->z * v.x - this->x * v.z,
+				this->x * v.y - this->y * v.x
+			);
+		}
+
 	private:
 		void set(const T& val, size_t idx)
 		{
