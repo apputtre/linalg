@@ -5,15 +5,21 @@ Let vector<L, T> be shorthand for a vector of length L and with elements of type
 
 [C] Vector Construction
 
-[C.1] A vector<L, T1> may be constructed from a list of values of length L and type T2 if:
+[C.1] Vector construction from list
+
+A vector<L, T1> may be constructed from a list of values of length L and type T2 if:
     - T1 = T2, or
     - T2 is convertible to T1.
 
-[C.2] A vector<L, T1> may be constructed from a vector<L, T2> if:
+[C.2] Vector construction from vector
+
+A vector<L, T1> may be constructed from a vector<L, T2> if:
     - T1 = T2, or
     - T2 is convertible to T1.
 
-[C.3] A vector<L, T1> may be constructed from a single value x of type T2 if:
+[C.3] Vector construction from scalar
+
+A vector<L, T1> may be constructed from a single value x of type T2 if:
     - T1 = T2, or
     - T2 is convertible to T1.
 
@@ -22,7 +28,9 @@ Each element of the resulting vector has the value x, after applying any necessa
 
 [DA] Data Access
 
-[DA.1] The first element of a vector can be read from and written to using the subscript 0, the second element of a
+[DA.1] 
+
+The first element of a vector can be read from and written to using the subscript 0, the second element of a
 vector can be read from and written to using the subscript 1, and so on.
 
 [DA.2] A vector<L, T1> can be assigned to another vector<L, T2> if:

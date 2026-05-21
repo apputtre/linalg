@@ -6,13 +6,6 @@
 
 namespace linalg
 {
-	template<typename T1, typename T2>
-	concept EqualityComparable = requires(T1 t1, T2 t2)
-	{
-		t1 == t2;
-		t2 == t1;
-	};
-
 	template<size_t Rows, size_t Cols, typename T>
 	class mat
 	{

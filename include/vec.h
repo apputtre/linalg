@@ -7,19 +7,11 @@
 #include <concepts>
 #include <cstring>
 
+#include "linalg_common.h"
+
 namespace linalg
 {
-	template<typename T1, typename T2>
-	using AdditionResult = decltype(std::declval<T1>() + std::declval<T2>());
-
-	template<typename T1, typename T2>
-	using SubtractionResult = decltype(std::declval<T1>() - std::declval<T2>());
-
-	template<typename T1, typename T2>
-	using MultiplicationResult = decltype(std::declval<T1>() * std::declval<T2>());
-
-	template<typename T1, typename T2>
-	using DivisionResult = decltype(std::declval<T1>() / std::declval<T2>());
+	using namespace impl;
 
 	template<size_t L, typename T> requires (L > 0)
 	struct vec_base_storage
@@ -204,7 +196,7 @@ namespace linalg
 		}
 
 		template<typename TOther>
-			requires requires (T x, TOther y) {x * y;} // TODO: missing requirement: MultiplicationResult<T1, T2> + MultiplicationResult<T1, T2>
+			requires (Multipliable<T, TOther>) &&(Addable<MultiplicationResult<T, TOther>, MultiplicationResult<T, TOther>>)
 		MultiplicationResult<T, TOther> dot(const vec<L, TOther>& v)
 		{
 			MultiplicationResult<T, TOther> acc = 0;
@@ -216,7 +208,9 @@ namespace linalg
 		}
 
 		template<typename TOther>
-			requires (L == 3) && requires (T x, TOther y) {x * y;}
+			requires (L == 3) &&
+			(Multipliable<T, TOther>) &&
+			(Subtractable<MultiplicationResult<T, TOther>, MultiplicationResult<T, TOther>>)
 		vec<3, MultiplicationResult<T, TOther>> cross(const vec<L, TOther>& v)
 		{
 			return linalg::vec<3, MultiplicationResult<T, TOther>>(
@@ -234,7 +228,7 @@ namespace linalg
 	};
 
 	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x == y;}
+		requires EqualityComparable<T1, T2>
 	bool operator==(const vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
 		for (size_t i = 0; i < L; ++i)
@@ -245,14 +239,14 @@ namespace linalg
 	}
 
 	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x == y;}
+		requires EqualityComparable<T1, T2>
 	bool operator!=(vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
 		return !(v1 == v2);
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires std::convertible_to<TScalar, TVector>
+		requires EqualityComparable<TVector, TScalar>
 	bool operator==(const vec<L, TVector>& v, const TScalar& scalar)
 	{
 		for (size_t i = 0; i < v.length; ++i)
@@ -263,28 +257,28 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires std::convertible_to<TScalar, TVector>
+		requires EqualityComparable<TVector, TScalar>
 	bool operator!=(const vec<L, TVector>& v, const TScalar& scalar)
 	{
 		return !(v == scalar);
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires std::convertible_to<TScalar, TVector>
+		requires EqualityComparable<TVector, TScalar>
 	bool operator==(const TScalar& scalar, const vec<L, TVector>& v)
 	{
 		return (v == scalar);
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires std::convertible_to<TScalar, TVector>
+		requires EqualityComparable<TVector, TScalar>
 	bool operator!=(const TScalar& scalar, const vec<L, TVector>& v)
 	{
 		return !(v == scalar);
 	}
 
 	template<size_t L, typename T>
-		requires requires (T x) {-x;}
+		requires Negatable<T>
 	vec<L, T> operator-(const vec<L, T>& v)
 	{
 		vec<L, T> new_vec(v);
@@ -296,7 +290,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x + y;}
+		requires Addable<T1, T2>
 	vec<L, T1>& operator+=(vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
 		for (size_t i = 0; i < L; ++i)
@@ -306,7 +300,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x + y;}
+		requires Addable<T1, T2>
 	vec<L, AdditionResult<T1, T2>> operator+(const vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
 		vec<L, AdditionResult<T1, T2>> new_vec(v1);
@@ -315,6 +309,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
+		requires Addable<TVector, TScalar>
 	vec<L, TVector>& operator+=(vec<L, TVector>& v, const TScalar& val)
 	{
 		for (size_t i = 0; i < L; ++i)
@@ -324,7 +319,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x + y;}
+		requires Addable<TVector, TScalar>
 	vec<L, AdditionResult<TVector, TScalar>> operator+(const vec<L, TVector>& v, const TScalar& val)
 	{
 		vec<L, AdditionResult<TVector, TScalar>> new_vec(v);
@@ -333,7 +328,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x + y;}
+		requires Addable<TVector, TScalar>
 	vec<L, AdditionResult<TVector, TScalar>> operator+(const TScalar& val, const vec<L, TVector>& v)
 	{
 		vec<L, AdditionResult<TVector, TScalar>> new_vec;
@@ -345,7 +340,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x + y;}
+		requires Addable<T1, T2>
 	vec<L, T1>& operator-=(vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
 		for (size_t i = 0; i < L; ++i)
@@ -355,7 +350,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename T1, typename T2>
-		requires requires (T1 x, T2 y) {x + y;}
+		requires Addable<T1, T2>
 	vec<L, SubtractionResult<T1, T2>> operator-(const vec<L, T1>& v1, const vec<L, T2>& v2)
 	{
 		vec<L, SubtractionResult<T1, T2>> new_vec(v1);
@@ -364,7 +359,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x - y;}
+		requires Subtractable<TVector, TScalar>
 	vec<L, TVector>& operator-=(vec<L, TVector>& v, const TScalar& val)
 	{
 		for (size_t i = 0; i < L; ++i)
@@ -374,7 +369,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x - y;}
+		requires Subtractable<TVector, TScalar>
 	vec<L, SubtractionResult<TVector, TScalar>> operator-(const vec<L, TVector>& v, const TScalar& val)
 	{
 		vec<L, TVector> new_vec(v);
@@ -383,7 +378,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x - y;}
+		requires Subtractable<TVector, TScalar>
 	vec<L, SubtractionResult<TVector, TScalar>> operator-(const TScalar& val, const vec<L, TVector>& v)
 	{
 		vec<L, SubtractionResult<TVector, TScalar>> new_vec;
@@ -395,7 +390,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x * y;}
+		requires Multipliable<TVector, TScalar>
 	vec<L, TVector>& operator*=(vec<L, TVector>& v, const TScalar& val)
 	{
 		for (size_t i = 0; i < L; ++i)
@@ -405,7 +400,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x * y;}
+		requires Multipliable<TVector, TScalar>
 	vec<L, MultiplicationResult<TVector, TScalar>> operator*(const vec<L, TVector>& v, const TScalar& val)
 	{
 		vec<L, MultiplicationResult<TVector, TScalar>> new_vec(v);
@@ -414,7 +409,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x * y;}
+		requires Multipliable<TVector, TScalar>
 	vec<L, MultiplicationResult<TVector, TScalar>> operator*(const TScalar& val, const vec<L, TVector>& v)
 	{
 		vec<L, MultiplicationResult<TVector, TScalar>> new_vec;
@@ -439,7 +434,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x / y;}
+		requires Dividable<TVector, TScalar>
 	vec<L, DivisionResult<TVector, TScalar>> operator/(const vec<L, TVector>& v, const TScalar& val)
 	{
 		if (val == 0)
@@ -451,7 +446,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename TVector, typename TScalar>
-		requires requires (TVector x, TScalar y) {x / y;}
+		requires Dividable<TVector, TScalar>
 	vec<L, DivisionResult<TVector, TScalar>> operator/(const TScalar& val, const vec<L, TVector>& v)
 	{
 		vec<L, DivisionResult<TVector, TScalar>> new_vec;
@@ -463,6 +458,7 @@ namespace linalg
 	}
 
 	template<size_t L, typename T>
+		requires Insertable<T, std::ostream&>
 	std::ostream& operator<<(std::ostream& os, const linalg::vec<L, T>& v)
 	{
 		if (v.length == 0)
