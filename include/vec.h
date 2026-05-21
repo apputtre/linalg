@@ -185,6 +185,24 @@ namespace linalg
 			return *this;
 		}
 
+		decltype(std::sqrt(T {})) mag()
+		{
+			T acc = 0;
+
+			for (size_t i = 0; i < L; ++i)
+				acc += (*this)[i] * (*this)[i];
+
+			return std::sqrt(acc);
+		}
+
+		vec<L, decltype(T {} / std::sqrt(T {}))> norm()
+		{
+			if ((*this) == 0)
+				return (*this);
+
+			return (*this) / this->mag();
+		}
+
 	private:
 		void set(const T& val, size_t idx)
 		{
@@ -431,32 +449,6 @@ namespace linalg
 			new_vec[i] = val / v[i];
 
 		return new_vec;
-	}
-
-	template<size_t L, typename T>
-	T mag(const vec<L, T>& v)
-	{
-		T acc = 0;
-
-		for (size_t i = 0; i < L; ++i)
-			acc += std::pow(v[i], 2);
-
-		T mag = std::sqrt(acc);
-
-		return mag;
-	}
-
-	template<size_t L, typename T>
-	vec<L, T> norm(const vec<L, T>& v)
-	{
-		T m = mag(v);
-
-		if (m == 0)
-			return v;
-
-		vec<L, T> ret = v / m;
-
-		return ret;
 	}
 
 	template<size_t L, typename T>

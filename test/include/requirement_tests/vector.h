@@ -375,3 +375,25 @@ SUITE("Vector mag") // [S.1]
         assertEq(v.mag(), std::sqrt((double) 14));
     }
 }
+
+SUITE("Vector norm") // [S.2]
+{
+    TEST("Test 1")
+    {
+        linalg::vec<2, float> v(1, 1);
+
+        auto n = v.norm();
+
+        assert(std::is_same<decltype(n), linalg::vec<2, decltype(float{} / v.mag())>>::value);
+        assertEq(v.norm(), linalg::vec<2, float>(1 / std::sqrt(2.0), 1 / std::sqrt(2.0)));
+    }
+
+    TEST("Test 2")
+    {
+        linalg::vec<3, double> v(0);
+
+        auto n = v.norm();
+
+        assertEq(n, linalg::vec<3, double>(0));
+    }
+}
