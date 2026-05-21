@@ -12,18 +12,18 @@ bool floatCompare(TFloat x, TFloat y)
     if (!(std::endian::native == std::endian::little))
         throw std::runtime_error("Not implemented");
 
+    uint8_t* bx = (uint8_t*) &x;
+    uint8_t* by = (uint8_t*) &y;
     int diff_ulps = 0;
     for (size_t i = 0; i < sizeof(std::declval<TFloat>()); ++i)
     {
-        uint8_t bx, by;
-
-        memcpy(&bx, (uint8_t*) &x + i, 1);
-        memcpy(&by, (uint8_t*) &y + i, 1);
-
-        int diff = (int) bx - (int) by;
+        int diff = (int) *bx - (int) *by;
         diff *= pow(2, i*8);
 
         diff_ulps += diff;
+
+        bx++;
+        by++;
     }
 
     if (abs(diff_ulps) <= 1)

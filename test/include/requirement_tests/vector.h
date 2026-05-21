@@ -1,4 +1,8 @@
-#include <functional>
+/*
+Each suite in this file corresponds to a particular requirement listed in the file vector_requirements.txt.
+
+Each requirement in that file has a suite containing at least one test here.
+*/
 
 #include "yUnit.h"
 #include "vec.h"
@@ -346,5 +350,28 @@ SUITE("Vector scalar division") // [A.6]
 
             assertEq(v, linalg::vec<3, float>(0.5, 1.25, 1.5));
         }
+    }
+}
+
+SUITE("Vector mag") // [S.1]
+{
+    TEST("Test 1")
+    {
+        linalg::vec<2, float> v(1, 1);
+
+        auto m = v.mag();
+
+        assert(std::is_same<decltype(m), decltype(std::sqrt(float {}))>::value);
+        assertEq(v.mag(), std::sqrt(2.0f));
+    }
+
+    TEST("Test 2")
+    {
+        linalg::vec<3, double> v(1, 2, 3);
+
+        auto m = v.mag();
+
+        assert(std::is_same<decltype(m), decltype(std::sqrt(double {}))>::value);
+        assertEq(v.mag(), std::sqrt((double) 14));
     }
 }

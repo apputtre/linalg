@@ -78,3 +78,16 @@ The result of the expression v * x is a vector<L, T3> v2, where:
 The result of the expression v / x is a vector<L, T3> v2, where:
     - T3 is the type of the value of the expression a / b, where a is of type T1 and b is of type T2, and
     - For i in [0, L), v2[i] = v1[i] / x
+
+[S] Special Operations
+
+[S.1] Let v be a vector<L, T1>, where T1 is an integral or floating-point value.
+
+The expression v.mag() yields a scalar value x of type T2 representing the magnitude of v. The type T2 is the type
+returned by the standard library square root function when called on an operand of type T1.
+
+[S.2] Norm
+
+[S.3] Dot
+
+[S.4] Cross

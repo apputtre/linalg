@@ -6,7 +6,7 @@
 
 #include "TestEnvironment.h"
 #include "utils.h"
-#include "requirements/Vector.h"
+#include "requirement_tests/Vector.h"
 
 using namespace linalg;
 
