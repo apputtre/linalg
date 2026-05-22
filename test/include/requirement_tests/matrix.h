@@ -167,3 +167,34 @@ SUITE("Matrix data layout") // [DL.2]
         assertEq((*(char*) &m + 5), 'f');
     }
 }
+
+SUITE("Matrix comparison") // [CMP.1]
+{
+    TEST("Test 1")
+    {
+        linalg::mat<2, 2, int> m1 {
+            {11, 12},
+            {21, 22}
+        };
+        linalg::mat<2, 2, float> m2 {
+            {11, 12},
+            {21, 22}
+        };
+
+        assertEq(m1, m2);
+    }
+
+    TEST("Test 2")
+    {
+        linalg::mat<2, 2, int> m1 {
+            {11, 12},
+            {21, 22}
+        };
+        linalg::mat<2, 2, float> m2 {
+            {11.5, 12},
+            {21, 22}
+        };
+
+        assertNeq(m1, m2);
+    }
+}

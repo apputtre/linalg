@@ -87,4 +87,13 @@ on.
 
 [CMP] Comparison
 
+[CMP.1] Matrix comparison
+
+A matrix<R, C, T1> m1 is considered equal to a matrix<R, C, T2> v2 if each element in m1 is equal to the corresponding
+element in T2.
+
+[CMP.2] Matrix scalar comparison
+
+A matrix<R, C, T1> m is considered equal to a scalar value x of type T2 if each value in m is equal to x.
+
 [A] Arithmetic
