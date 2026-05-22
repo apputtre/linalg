@@ -203,11 +203,29 @@ namespace linalg
 		return true;
 	}
 
+	template<size_t Rows, size_t Cols, typename TMatrix, typename TScalar>
+	bool operator==(const mat<Rows, Cols, TMatrix>& m, const TScalar& scalar)
+		requires EqualityComparable<TMatrix, TScalar>
+	{
+		for (size_t r = 0; r < Rows; ++r)
+			for (size_t c = 0; c < Cols; ++c)
+				if (m[r][c] != scalar)
+						return false;
+		return true;
+	}
+
 	template<size_t Rows, size_t Cols, typename T1, typename T2>
 	bool operator!=(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
 		requires EqualityComparable<T1, T2>
 	{
 		return !(m1 == m2);
+	}
+
+	template<size_t Rows, size_t Cols, typename TMatrix, typename TScalar>
+	bool operator!=(const mat<Rows, Cols, TMatrix>& m, const TScalar& scalar)
+		requires EqualityComparable<TMatrix, TScalar>
+	{
+		return !(m == scalar);
 	}
 
 	template<size_t Rows, size_t Cols, typename T1, typename T2>
