@@ -50,6 +50,7 @@ A vector<L, T1> v can be assigned to a scalar value x of type T2 if:
 
 After the assignment, each element of v is equal to x, after applying any necessary conversions.
 
+
 [DL] Data Layout
 
 [DL.1] Size of a vector
@@ -71,6 +72,7 @@ A vector<L, T1> v1 is considered equal to a vector<L, T2> v2 if for i in [0, L),
 [CMP.2] Vector scalar comparison
 
 A vector<L, T1> v is considered equal to a scalar value x of type T2 if for i in [0, L), v[i] = x.
+
 
 [A] Arithmetic
 
