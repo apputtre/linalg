@@ -70,6 +70,32 @@ namespace linalg
 			return (*const_cast<mat*>(this))[idx];
 		}
 
+		submat<T, Cols> row(size_t idx)
+		{
+			if (idx >= num_rows)
+				throw std::runtime_error("Index out of bounds");
+			
+			return submat<T, Cols>(&elems[0 + idx * Cols], 1);
+		}
+
+		const submat<T, Cols> row(size_t idx) const
+		{
+			return (*const_cast<mat*>(this))[idx];
+		}
+
+		submat<T, Rows> col(size_t idx)
+		{
+			if (idx >= num_rows)
+				throw std::runtime_error("Index out of bounds");
+			
+			return submat<T, Rows>(&elems[0 + idx], Cols);
+		}
+
+		const submat<T, Rows> col(size_t idx) const
+		{
+			return const_cast<mat*>(this)->col(idx);
+		}
+
 		template<typename TOther>
 		mat<Rows, Cols, AdditionResult<T, TOther>>& operator+=(const mat<Rows, Cols, TOther>& m)
 		{
