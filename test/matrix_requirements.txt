@@ -134,7 +134,15 @@ The result of the expression m - x is a matrix<R, C, T3> m2, where:
     - T3 is the type of the value of the expression x - y, where x is of type T1 and y is of type T2, and
     - For r in [0, C) and c in [0, R], m2[r][c] = m[r][c] - x.
 
-[A.5] Matrix scalar multiplication
+[A.5] Matrix multiplication
+
+Let m1 be a matrix<R1, C1, T1> and m2 be a matrix<R2, C2, T2>.
+
+The result of the expression m1 * m2 is a matrix<R1, C2, T3> m3, where:
+    - T3 is the type of the value of the expression x * y, where x is of type T1 and y is of type T2, and
+    - For r in [0, C) and c in [0, R], m3[r][c] = m1[r].dot(m2[c]).
+
+[A.6] Matrix scalar multiplication
 
 Let m be a matrix<R, C, T1> and x be a scalar value of type T2.
 
@@ -142,7 +150,7 @@ The result of the expression m * x is a matrix<R, C, T3> m2, where:
     - T3 is the type of the value of the expression x * y, where x is of type T1 and y is of type T2, and
     - For r in [0, C) and c in [0, R], m2[r][c] = m[r][c] * x.
 
-[A.6] Matrix scalar division
+[A.7] Matrix scalar division
 
 Let v1 be a vector<L, T1> and x be a scalar value of type T2.
 
