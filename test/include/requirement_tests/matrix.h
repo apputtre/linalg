@@ -262,7 +262,7 @@ SUITE("Matrix addition") // [A.1]
     }
 }
 
-SUITE("Matrix scalar addition")
+SUITE("Matrix scalar addition") // [A.2]
 {
     FIXTURE()
     {
