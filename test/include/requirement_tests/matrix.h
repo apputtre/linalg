@@ -304,3 +304,92 @@ SUITE("Matrix scalar addition") // [A.2]
         }
     }
 }
+
+SUITE("Matrix subtraction") // [A.3]
+{
+    FIXTURE()
+    {
+        linalg::mat<2, 2, float> m1;
+        linalg::mat<2, 2, int> m2;
+
+        SETUP()
+        {
+            m1 = {
+                {1, 2},
+                {3, 4}
+            };
+
+            m2 = {
+                {2, 4},
+                {6, 8}
+            };
+        }
+
+        FTEST("Test 1")
+        {
+            auto m3 = m1 - m2;
+
+            assert(std::is_same<decltype(m3), linalg::mat<2, 2, float>>::value);
+
+            assertEq(m3, linalg::mat<2, 2, float>
+            {
+                {-1, -2},
+                {-3, -4}
+            });
+        }
+
+        FTEST("Test 2")
+        {
+            m1 -= m2;
+
+            assertEq(m1, linalg::mat<2, 2, float>
+            {
+                {-1, -2},
+                {-3, -4}
+            });
+        }
+    }
+}
+
+SUITE("Matrix scalar subtraction") // [A.4]
+{
+    FIXTURE()
+    {
+        linalg::mat<2, 2, float> m1;
+        int x;
+
+        SETUP()
+        {
+            m1 = {
+                {1.5, 2},
+                {3, 4.5}
+            };
+
+            x = 1;
+        }
+
+        FTEST("Test 1")
+        {
+            auto m2 = m1 - x;
+
+            assert(std::is_same<decltype(m2), linalg::mat<2, 2, float>>::value);
+
+            assertEq(m2, linalg::mat<2, 2, float>
+            {
+                {0.5, 1},
+                {2, 3.5}
+            });
+        }
+
+        FTEST("Test 2")
+        {
+            m1 -= x;
+
+            assertEq(m1, linalg::mat<2, 2, float>
+            {
+                {0.5, 1},
+                {2, 3.5}
+            });
+        }
+    }
+}
