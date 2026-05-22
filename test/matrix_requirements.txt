@@ -85,15 +85,74 @@ The elements of a matrix are laid out in row-major order. The first R elements s
 allocated to the matrix hold the elements in the first row, the next R elements the elements in the second row, and so
 on.
 
+
 [CMP] Comparison
 
 [CMP.1] Matrix comparison
 
 A matrix<R, C, T1> m1 is considered equal to a matrix<R, C, T2> v2 if each element in m1 is equal to the corresponding
-element in T2.
+element in T2, and unequal otherwise.
+
 
 [CMP.2] Matrix scalar comparison
 
-A matrix<R, C, T1> m is considered equal to a scalar value x of type T2 if each value in m is equal to x.
+A matrix<R, C, T1> m is considered equal to a scalar value x of type T2 if each value in m is equal to x, and unequal
+otherwise.
+
 
 [A] Arithmetic
+
+[A.1] Matrix addition
+
+Let m1 be a matrix<R, C, T1> and m2 be a matrix<R, C, T2>.
+
+The result of the expression m1 + m2 is a matrix<R, C, T3> m3, where:
+    - T3 is the type of the value of the expression x + y, where x is of type T1 and y is of type T2, and
+    - For r in [0, C) and c in [0, R], m3[r][c] = m1[r][c] + m2[r][c].
+
+[A.2] Matrix scalar addition
+
+Let m be a matrix<R, C, T1> and x be a scalar value of type T2.
+
+The result of the expression m + x is a matrix<R, C, T3> m2, where:
+    - T3 is the type of the value of the expression a + b, where a is of type T1 and b is of type T2, and
+    - For r in [0, C) and c in [0, R], m2[r][c] = m[r][c] + x.
+
+[A.3] Matrix subtraction
+
+Let m1 be a matrix<R, C, T1> and m2 be a matrix<R, C, T2>.
+
+The result of the expression m1 - m2 is a matrix<R, C, T3> m3, where:
+    - T3 is the type of the value of the expression x - y, where x is of type T1 and y is of type T2, and
+    - For r in [0, C) and c in [0, R], m3[r][c] = m1[r][c] - m2[r][c].
+
+[A.4] Matrix scalar subtraction
+
+Let m be a matrix<R, C, T1> and x be a scalar value of type T2.
+
+The result of the expression m - x is a matrix<R, C, T3> m2, where:
+    - T3 is the type of the value of the expression x - y, where x is of type T1 and y is of type T2, and
+    - For r in [0, C) and c in [0, R], m2[r][c] = m[r][c] - x.
+
+[A.5] Matrix scalar multiplication
+
+Let m be a matrix<R, C, T1> and x be a scalar value of type T2.
+
+The result of the expression m * x is a matrix<R, C, T3> m2, where:
+    - T3 is the type of the value of the expression x * y, where x is of type T1 and y is of type T2, and
+    - For r in [0, C) and c in [0, R], m2[r][c] = m[r][c] * x.
+
+[A.6] Matrix scalar division
+
+Let v1 be a vector<L, T1> and x be a scalar value of type T2.
+
+The result of the expression v / x is a vector<L, T3> v2, where:
+    - T3 is the type of the value of the expression a / b, where a is of type T1 and b is of type T2, and
+    - For i in [0, L), v2[i] = v1[i] / x
+
+
+[S] Special Operations
+
+Transpose
+
+Invert
