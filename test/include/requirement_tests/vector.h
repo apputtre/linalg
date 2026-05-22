@@ -94,6 +94,20 @@ SUITE("Vector assignment") // [DA.2]
     }
 }
 
+SUITE("Vector scalar assignment") // [DA.3}]
+{
+    TEST("Test 1")
+    {
+        linalg::vec<3, float> v(0);
+
+        v = 1;
+
+        assertEq(v[0], 1);
+        assertEq(v[1], 1);
+        assertEq(v[2], 1);
+    }
+}
+
 SUITE("Size of a vector") // [DL.1]
 {
     TEST("Test 1")

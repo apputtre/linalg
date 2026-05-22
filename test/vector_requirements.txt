@@ -42,6 +42,13 @@ A vector<L, T1> can be assigned to another vector<L, T2> if:
 After the assignment, each element in the first vector has the value of the corresponding element in the second vector
 after applying any necessary conversions.
 
+[DA.3] Vector scalar assignment
+
+A vector<L, T1> v can be assigned to a scalar value x of type T2 if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+After the assignment, each element of v is equal to x, after applying any necessary conversions.
 
 [DL] Data Layout
 
