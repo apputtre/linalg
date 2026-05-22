@@ -1,1 +1,79 @@
 Matrix Requirements
+
+Let matrix<R, C, T> be shorthand for a matrix with R rows, C columns, and with elements of type T.
+
+[C] Construction
+
+[C.1] Matrix list construction
+
+A matrix<R, C, T1> may be constructed from R lists of C values of type T2 if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+The first list passed to the constructor specifies the values in the first row of the matrix, the second specifies the
+values in the second row, and so on.
+
+[C.2] Matrix construction from matrix
+
+A matrix<R, C, T1> m1 may be constructed from another matrix<R, C, T2> m2 if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+Each element in m1 is equal to the corresponding value from m2, after applying any necessary conversions.
+
+[C.3] Matrix construction from scalar
+
+A matrix<R, C, T1> may be constructed from a scalar value of type T2 if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+The values along the main diagonal of the resulting matrix are equal to the scalar value passed to the construction,
+after applying any necessary conversions.
+
+
+[DA] Data Access
+
+[DA.1] Individual element access
+
+Individual elements of a matrix can be read from and written to by indexing them by their row and column.
+
+The first row has index 0, the second index 1, and so on.
+
+The first column has index 0, the second index 1, and so on.
+
+[DA.2] Row and column access
+
+[DA.2.1] An entire row or column of a matrix can be read from and written to by indexing it by its row or column index,
+respectively.
+
+[DA.2.2] Rows and columns obey the same rules as vectors when it comes to assignment, comparison, arithmetic, and
+special vector operations.
+
+[DA.2.3] Any operations which modify the elements of a row or column modify the corresponding elements of the matrix it
+belongs to.
+
+
+[DA.3] Matrix assignment
+
+A matrix<R, C, T1> can be assigned to another matrix<R, C, T2> if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+After the assignment, each element in the first matrix has the value of the corresponding element in the second matrix,
+after applying any necessary conversions.
+
+[DA.4] Matrix scalar assignment
+
+A matrix<R, C, T1> can be assigned to another matrix<R, C, T2> if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
+
+After the assignment, each element in the first matrix has the value of the corresponding element in the second matrix, 
+after applying any necessary conversions.
+
+
+[DL] Data Layout
+
+[CMP] Comparison
+
+[A] Arithmetic
