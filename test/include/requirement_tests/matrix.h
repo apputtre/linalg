@@ -117,3 +117,21 @@ SUITE("Matrix assignment") // [DA.3]
         assertEq(m1[1][1], 7);
     }
 }
+
+SUITE("Matrix scalar assignment") // [DA.4]
+{
+    TEST("Test 1")
+    {
+        linalg::mat<2, 2, double> m {
+            {11, 12},
+            {21, 22}
+        };
+
+        m = -1;
+
+        assertEq(m[0][0], -1);
+        assertEq(m[0][1], -1);
+        assertEq(m[0][0], -1);
+        assertEq(m[1][1], -1);
+    }
+}
