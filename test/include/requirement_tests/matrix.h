@@ -148,3 +148,22 @@ SUITE("Size of a matrix") // [DL.1]
         assertEq(sizeof(m), sizeof(float) * 2 * 2);
     }
 }
+
+SUITE("Matrix data layout") // [DL.2]
+{
+    TEST("Test 1")
+    {
+        linalg::mat<3, 2, char> m {
+            {'a', 'b'},
+            {'c', 'd'},
+            {'e', 'f'}
+        };
+
+        assertEq((*(char*) &m + 0), 'a');
+        assertEq((*(char*) &m + 1), 'b');
+        assertEq((*(char*) &m + 2), 'c');
+        assertEq((*(char*) &m + 3), 'd');
+        assertEq((*(char*) &m + 4), 'e');
+        assertEq((*(char*) &m + 5), 'f');
+    }
+}
