@@ -198,3 +198,49 @@ SUITE("Matrix comparison") // [CMP.1]
         assertNeq(m1, m2);
     }
 }
+
+SUITE("Matrix addition") // [A.1]
+{
+    FIXTURE()
+    {
+        linalg::mat<2, 2, float> m1;
+        linalg::mat<2, 2, int> m2;
+
+        SETUP()
+        {
+            m1 = {
+                {1, 2},
+                {3, 4}
+            };
+
+            m2 = {
+                {2, 4},
+                {6, 8}
+            };
+        }
+
+        FTEST("Test 1")
+        {
+            auto m3 = m1 + m2;
+
+            assert(std::is_same<decltype(m3), linalg::mat<2, 2, float>>::value);
+
+            assertEq(m3, linalg::mat<2, 2, float>
+            {
+                {3, 6},
+                {9, 12}
+            });
+        }
+
+        FTEST("Test 2")
+        {
+            m1 += m2;
+
+            assertEq(m1, linalg::mat<2, 2, float>
+            {
+                {3, 6},
+                {9, 12}
+            });
+        }
+    }
+}
