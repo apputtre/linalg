@@ -261,3 +261,46 @@ SUITE("Matrix addition") // [A.1]
         }
     }
 }
+
+SUITE("Matrix scalar addition")
+{
+    FIXTURE()
+    {
+        linalg::mat<2, 2, float> m1;
+        int x;
+
+        SETUP()
+        {
+            m1 = {
+                {1.5, 2},
+                {3, 4.5}
+            };
+
+            x = 1;
+        }
+
+        FTEST("Test 1")
+        {
+            auto m2 = m1 + x;
+
+            assert(std::is_same<decltype(m2), linalg::mat<2, 2, float>>::value);
+
+            assertEq(m2, linalg::mat<2, 2, float>
+            {
+                {2.5, 3},
+                {4, 5.5}
+            });
+        }
+
+        FTEST("Test 2")
+        {
+            m1 += x;
+
+            assertEq(m1, linalg::mat<2, 2, float>
+            {
+                {2.5, 3},
+                {4, 5.5}
+            });
+        }
+    }
+}
