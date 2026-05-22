@@ -2,6 +2,7 @@ Matrix Requirements
 
 Let matrix<R, C, T> be shorthand for a matrix with R rows, C columns, and with elements of type T.
 
+
 [C] Construction
 
 [C.1] Matrix list construction
@@ -73,6 +74,16 @@ after applying any necessary conversions.
 
 
 [DL] Data Layout
+
+[DL.1] Size of a matrix
+
+If s is the size of type T in bytes, then a matrix<R, C, T> takes up s * R * C bytes in memory.
+
+[DL.2] Matrix data layout
+
+The elements of a matrix are laid out in row-major order. The first R elements starting from the first address
+allocated to the matrix hold the elements in the first row, the next R elements the elements in the second row, and so
+on.
 
 [CMP] Comparison
 

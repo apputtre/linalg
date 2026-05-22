@@ -135,3 +135,16 @@ SUITE("Matrix scalar assignment") // [DA.4]
         assertEq(m[1][1], -1);
     }
 }
+
+SUITE("Size of a matrix") // [DL.1]
+{
+    TEST("Test 1")
+    {
+        linalg::mat<2, 2, float> m {
+            {11, 12},
+            {21, 22}
+        };
+
+        assertEq(sizeof(m), sizeof(float) * 2 * 2);
+    }
+}
