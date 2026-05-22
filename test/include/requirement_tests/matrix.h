@@ -393,3 +393,74 @@ SUITE("Matrix scalar subtraction") // [A.4]
         }
     }
 }
+
+SUITE("Matrix multiplication") // [A.5]
+{
+    TEST("Test 1")
+    {
+        linalg::mat<3, 2, float> m1 {
+            {1, 2},
+            {3, 4},
+            {5, 6}
+        };
+
+        linalg::mat<2, 3, double> m2 {
+            {7, 8, 9},
+            {10, 11, 12}
+        };
+
+        auto m3 = m1 * m2;
+
+        assert(std::is_same<decltype(m3), linalg::mat<3, 3, double>>::value);
+
+        assertEq(m3, linalg::mat<3, 3, double>
+        {
+            {27, 30, 33},
+            {61, 68, 75},
+            {95, 106, 117}
+        });
+    }
+}
+
+SUITE("Matrix scalar multiplication") // [A.6]
+{
+    FIXTURE()
+    {
+        linalg::mat<2, 2, float> m1;
+        int x;
+
+        SETUP()
+        {
+            m1 = {
+                {1.5, 2},
+                {3, 4.5}
+            };
+
+            x = 2;
+        }
+
+        FTEST("Test 1")
+        {
+            auto m2 = m1 * x;
+
+            assert(std::is_same<decltype(m2), linalg::mat<2, 2, float>>::value);
+
+            assertEq(m2, linalg::mat<2, 2, float>
+            {
+                {3, 4},
+                {6, 9}
+            });
+        }
+
+        FTEST("Test 2")
+        {
+            m1 *= x;
+
+            assertEq(m1, linalg::mat<2, 2, float>
+            {
+                {3, 4},
+                {6, 9}
+            });
+        }
+    }
+}
