@@ -465,7 +465,7 @@ SUITE("Matrix scalar multiplication") // [A.6]
     }
 }
 
-SUITE("Matrix scalar division") // [A.6]
+SUITE("Matrix scalar division") // [A.7]
 {
     FIXTURE()
     {
