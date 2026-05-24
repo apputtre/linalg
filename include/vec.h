@@ -13,8 +13,11 @@ namespace linalg
 {
 	using namespace impl;
 
+	template<size_t L, typename T, typename TStorageImpl>
+	struct vec_ops {};
+
 	template<size_t L, typename T> requires (L > 0)
-	struct vec_base_storage
+	struct vec_base_storage : public vec_ops<L, T, vec_base_storage<L, T>>
 	{
 		T x {};
 		T y {};
@@ -44,7 +47,7 @@ namespace linalg
 	};
 
 	template<typename T>
-	struct vec_base_storage<1, T>
+	struct vec_base_storage<1, T> : public vec_ops<1, T, vec_base_storage<1, T>>
 	{
 		T x {};
 
@@ -61,7 +64,7 @@ namespace linalg
 	};
 
 	template<typename T>
-	struct vec_base_storage<2, T>
+	struct vec_base_storage<2, T> : public vec_ops<2, T, vec_base_storage<2, T>>
 	{
 		T x {};
 		T y {};
@@ -81,7 +84,7 @@ namespace linalg
 	};
 
 	template<typename T>
-	struct vec_base_storage<3, T>
+	struct vec_base_storage<3, T> : public vec_ops<3, T, vec_base_storage<3, T>>
 	{
 		T x {};
 		T y {};
