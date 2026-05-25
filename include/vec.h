@@ -13,14 +13,6 @@ namespace linalg
 {
 	using namespace impl;
 
-	/*
-	template<typename T>
-	concept is_vec_type = requires(T t)
-	{
-		t.norm();
-	};
-	*/
-
 	template<size_t L, typename T> requires (L > 0)
 	struct vec;
 
@@ -288,46 +280,6 @@ namespace linalg
 	{
 		return !(v1 == v2);
 	}
-
-	/*
-	template<size_t L, typename TVector, typename TScalar, typename TStorage>
-		requires EqualityComparable<TVector, TScalar> && (!is_vec_type<TScalar>::value)
-	bool operator==(const vec_ops<L, TVector, TStorage>& v, const TScalar& scalar)
-	{
-		for (size_t i = 0; i < v.length; ++i)
-			if (v[i] != scalar)
-				return false;
-
-		return true;
-	}
-	*/
-
-	/*
-	template<size_t L, typename TVector, typename TScalar, typename TStorage>
-		requires EqualityComparable<TVector, TScalar>
-	bool operator!=(const vec_ops<L, TVector, TStorage>& v, const TScalar& scalar)
-	{
-		return !(v == scalar);
-	}
-	*/
-
-	/*
-	template<size_t L, typename TVector, typename TScalar, typename TStorage>
-		requires EqualityComparable<TVector, TScalar> && (!is_vec_type<TScalar>::value)
-	bool operator==(const TScalar& scalar, const vec_ops<L, TVector, TStorage>& v)
-	{
-		return (v == scalar);
-	}
-		*/
-
-	/*
-	template<size_t L, typename TVector, typename TScalar, typename TStorage>
-		requires EqualityComparable<TVector, TScalar>
-	bool operator!=(const TScalar& scalar, const vec_ops<L, TVector, TStorage>& v)
-	{
-		return !(v == scalar);
-	}
-	*/
 
 	template<size_t L, typename T>
 		requires Negatable<T>
