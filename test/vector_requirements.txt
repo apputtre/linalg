@@ -156,3 +156,10 @@ Let v1 be a vector<3, T1> and v2 be a vector<3, T2>.
 
 The expression v1.cross(v2) yields a vector<3, T3> representing the cross product of v1 and v2. The type T3 is the type
 of the value of the expression T1 * T2.
+
+[S.5] Vector test against zero
+
+Let v be a vector<L, T>.
+
+The expression v.zero() yields a boolean value that is true when all elements of v are equal to the default value of T
+and false otherwise.

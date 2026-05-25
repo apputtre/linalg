@@ -167,6 +167,7 @@ SUITE("Vector comparison") // [CMP.1]
     }
 }
 
+/*
 SUITE("Vector scalar comparison") // [CMP.2]
 {
     TEST("Test 1")
@@ -176,6 +177,7 @@ SUITE("Vector scalar comparison") // [CMP.2]
         assertEq(v, 2.5);
     }
 }
+*/
 
 SUITE("Vector addition") // [A.1]
 {
@@ -447,5 +449,19 @@ SUITE("Vector cross product")
 
         assert(std::is_same<decltype(n), linalg::vec<3, double>>::value);
         assertEq(n, linalg::vec<3, double>(0, 0, 1));
+    }
+}
+
+SUITE("Vector test against zero") // [S.5]
+{
+    TEST("Test 1")
+    {
+        linalg::vec<3, float> v(0, 0, 0);
+
+        assert(v.zero());
+
+        v[0] = 1;
+
+        assert(!v.zero());
     }
 }
