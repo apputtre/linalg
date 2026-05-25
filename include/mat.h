@@ -154,6 +154,16 @@ namespace linalg
 			return *this;
 		}
 
+		mat& t()
+		{
+			return *this;
+		}
+
+		mat& inv()
+		{
+			return *this;
+		}
+
 		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
 		{
 			os << "{";

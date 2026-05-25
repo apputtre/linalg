@@ -499,3 +499,40 @@ SUITE("Matrix scalar division") // [A.7]
         }
     }
 }
+
+SUITE("Matrix transposition") // [S.1]
+{
+    TEST("Test 1")
+    {
+        linalg::mat<2, 2, int> m
+        {
+            {11, 12},
+            {21, 22}
+        };
+
+        auto transposed = m.t();
+
+        assertEq(transposed, linalg::mat<2, 2, int> {
+            {11, 21},
+            {12, 22}
+        });
+    }
+}
+
+SUITE("Matrix inversion") // [S.2]
+{
+    TEST("Test 1")
+    {
+        linalg::mat<2, 2, double> m  {
+            {11, 12},
+            {21, 22}
+        };
+
+        auto inverted = m.inv();
+
+        assertEq(inverted, linalg::mat<2, 2, float> {
+            {-2.2, 1.2},
+            {2.1, -1.1}
+        });
+    }
+}
