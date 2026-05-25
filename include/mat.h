@@ -154,9 +154,15 @@ namespace linalg
 			return *this;
 		}
 
-		mat& t()
+		mat t()
 		{
-			return *this;
+			mat<Cols, Rows, T> transposed;
+
+			for (size_t r = 0; r < Rows; ++r)
+				for (size_t c = 0; c < Cols; ++c)
+					transposed[c][r] = (*this)[r][c];
+
+			return transposed;
 		}
 
 		mat& inv()
