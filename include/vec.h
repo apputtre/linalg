@@ -215,6 +215,40 @@ namespace linalg
 		}
 	};
 
+	template<size_t L, typename T>
+	struct vec_non_owning : vec_ops<L, T, vec_non_owning<L, T>>
+	{
+		T* data;
+		const size_t stride;
+
+		vec_non_owning(T* data, size_t stride)
+			: data{data}, stride{stride}
+		{}
+
+		/*
+		submat& operator=(const submat& other)
+		{
+			for (size_t i = 0; i < extents[0]; ++i)
+				(*this)(i) = other(i);
+			
+			return *this;
+		}
+		*/
+
+		T& operator[](size_t idx)
+		{
+			if (idx > L)
+				throw std::runtime_error("Index out of bounds");
+			
+			return data[idx * stride];
+		}
+
+		T& operator[](size_t idx) const
+		{
+			return (*const_cast<vec_non_owning<L, T>>(this))[idx];
+		}
+	};
+
 	template<size_t L, typename T> requires (L > 0)
 	struct vec : public vec_owning<L, T>
 	{
