@@ -82,20 +82,29 @@ SUITE("Row and column access") // [DA.2]
         assertEq(col_1[1], 21);
         assertEq(col_2[0], 12);
         assertEq(col_2[1], 22);
+
+        row_1 = -1;
+
+        assertEq(m[0][0], -1);
+        assertEq(m[0][1], -1);
     }
 
-    TEST("Test 2") // [DA.2.3]
+    TEST("Test 2") // [DA.2.2]
     {
-        linalg::mat<2, 2, float> m{
+        linalg::mat<2, 2, int> m {
             {11, 12},
             {21, 22}
         };
 
-        m[0][0] = -1;
-        m[1][1] = -2;
+        m[0] += m[1];
 
-        assertEq(m[0][0], -1);
-        assertEq(m[1][1], -2);
+        assertEq(m[0][0], 32);
+        assertEq(m[0][1], 34);
+
+        auto v = m[1] + linalg::vec<2, int>(5, 10); 
+
+        assertEq(v[0], 26);
+        assertEq(v[1], 32);
     }
 }
 

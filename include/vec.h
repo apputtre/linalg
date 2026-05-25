@@ -16,6 +16,9 @@ namespace linalg
 	template<size_t L, typename T> requires (L > 0)
 	struct vec;
 
+	template<size_t L, typename T> requires (L > 0)
+	struct submat;
+
 	template<size_t L, typename T, typename TStorageImpl>
 	struct vec_ops;
 
@@ -27,6 +30,9 @@ namespace linalg
 
 	template<size_t L, typename TElem>
 	struct is_vec_type<vec<L, TElem>> : std::true_type {};
+
+	template<size_t L, typename TElem>
+	struct is_vec_type<submat<L, TElem>> : std::true_type {};
 
 	template<size_t L, typename T, typename TStorageImpl>
 	struct vec_ops
@@ -62,12 +68,75 @@ namespace linalg
 			return *this;
 		}
 
-		vec_ops& operator=(const value_type& scalar)
+		vec_ops& operator=(const T& scalar)
 		{
 			for (size_t i = 0; i < length; ++i)
 				(*this)[i] = scalar;
 			
 			return *this;
+		}
+
+		template<typename TOther, typename TStorage>
+			requires Addable<T, TOther>
+		vec_ops& operator+=(const vec_ops<L, TOther, TStorage>& v)
+		{
+			for (size_t i = 0; i < L; ++i)
+				(*this)[i] += v[i];
+
+			return (*this);
+		}
+
+		template<typename TScalar>
+			requires Addable<T, TScalar> && (!is_vec_type<TScalar>::value)
+		vec_ops& operator+=(const TScalar& val)
+		{
+			for (size_t i = 0; i < L; ++i)
+				(*this)[i] += val;
+			
+			return (*this);
+		}
+
+		template<typename TOther, typename TStorage>
+			requires Subtractable<T, TOther>
+		vec_ops& operator-=(const vec_ops<L, TOther, TStorage>& v2)
+		{
+			for (size_t i = 0; i < L; ++i)
+				(*this)[i] -= v2[i];
+
+			return (*this);
+		}
+
+		template<typename TScalar>
+			requires Subtractable<T, TScalar> && (!is_vec_type<TScalar>::value)
+		vec_ops& operator-=(const TScalar& val)
+		{
+			for (size_t i = 0; i < L; ++i)
+				(*this)[i] -= val;
+			
+			return (*this);
+		}
+
+		template<typename TScalar>
+			requires Multipliable<T, TScalar> && (!is_vec_type<TScalar>::value)
+		vec_ops& operator*=(const TScalar& val)
+		{
+			for (size_t i = 0; i < L; ++i)
+				(*this)[i] *= val;
+			
+			return (*this);
+		}
+
+		template<typename TScalar>
+			requires Dividable<T, TScalar> && (!is_vec_type<TScalar>::value)
+		vec_ops& operator/=(const TScalar& val)
+		{
+			if (val == 0)
+				throw std::logic_error("Division by zero");
+
+			for (size_t i = 0; i < L; ++i)
+				(*this)[i] /= val;
+
+			return (*this);
 		}
 
 		decltype(std::sqrt(T {})) mag()
@@ -89,7 +158,9 @@ namespace linalg
 		}
 
 		template<typename TOther, typename TStorageOther>
-			requires (Multipliable<T, TOther>) &&(Addable<MultiplicationResult<T, TOther>, MultiplicationResult<T, TOther>>)
+			requires
+				(Multipliable<T, TOther>) &&
+				(Addable<MultiplicationResult<T, TOther>, MultiplicationResult<T, TOther>>)
 		MultiplicationResult<T, TOther> dot(const vec_ops<L, TOther, TStorageOther>& v)
 		{
 			MultiplicationResult<T, TOther> acc = 0;
@@ -216,7 +287,8 @@ namespace linalg
 	};
 
 	template<size_t L, typename T>
-	struct submat : vec_ops<L, T, submat<L, T>>
+		requires (L > 0)
+	struct submat : public vec_ops<L, T, submat<L, T>>
 	{
 		T* data;
 		const size_t stride;
@@ -225,15 +297,37 @@ namespace linalg
 			: data{data}, stride{stride}
 		{}
 
-		/*
+		submat(const submat& other)
+			: stride {other.stride}
+		{
+			for (size_t i = 0; i < this->length; ++i)
+				(*this)[i] = static_cast<T>(other[i]);
+		}
+
 		submat& operator=(const submat& other)
 		{
-			for (size_t i = 0; i < extents[0]; ++i)
-				(*this)(i) = other(i);
+			for (size_t i = 0; i < this->length; ++i)
+				(*this)[i] = static_cast<T>(other[i]);
 			
 			return *this;
 		}
-		*/
+
+		template<std::convertible_to<T> TOther, typename TStorageOther>
+		submat& operator=(const vec_ops<L, TOther, TStorageOther>& other)
+		{
+			for (size_t i = 0; i < this->length; ++i)
+				(*this)[i] = static_cast<T>(other[i]);
+			
+			return *this;
+		}
+
+		submat& operator=(const T& scalar)
+		{
+			for (size_t i = 0; i < L; ++i)
+				(*this)[i] = scalar;
+			
+			return *this;
+		}
 
 		T& operator[](size_t idx)
 		{
@@ -247,6 +341,7 @@ namespace linalg
 		{
 			return (const_cast<submat<L, T>&>(*this))[idx];
 		}
+
 	};
 
 	template<size_t L, typename T> requires (L > 0)
@@ -324,7 +419,6 @@ namespace linalg
 		}
 	};
 
-
 	template<size_t L, typename T1, typename T2, typename TStorage1, typename TStorage2>
 		requires EqualityComparable<T1, T2>
 	bool operator==(const vec_ops<L, T1, TStorage1>& v1, const vec_ops<L, T2, TStorage2>& v2)
@@ -357,31 +451,11 @@ namespace linalg
 
 	template<size_t L, typename T1, typename T2, typename TStorage1, typename TStorage2>
 		requires Addable<T1, T2>
-	vec_ops<L, T1, TStorage1>& operator+=(vec_ops<L, T1, TStorage1>& v1, const vec_ops<L, T2, TStorage2>& v2)
-	{
-		for (size_t i = 0; i < L; ++i)
-			v1[i] += v2[i];
-
-		return v1;
-	}
-
-	template<size_t L, typename T1, typename T2, typename TStorage1, typename TStorage2>
-		requires Addable<T1, T2>
 	vec<L, AdditionResult<T1, T2>> operator+(const vec_ops<L, T1, TStorage1>& v1, const vec_ops<L, T2, TStorage2>& v2)
 	{
 		vec<L, AdditionResult<T1, T2>> new_vec(v1);
 		new_vec += v2;
 		return new_vec;
-	}
-
-	template<size_t L, typename TVector, typename TScalar, typename TStorage>
-		requires Addable<TVector, TScalar> && (!is_vec_type<TScalar>::value)
-	vec_ops<L, TVector, TStorage>& operator+=(vec_ops<L, TVector, TStorage>& v, const TScalar& val)
-	{
-		for (size_t i = 0; i < L; ++i)
-			v[i] += val;
-		
-		return v;
 	}
 
 	template<size_t L, typename TVector, typename TScalar, typename TStorage>
@@ -407,31 +481,11 @@ namespace linalg
 
 	template<size_t L, typename T1, typename T2, typename TStorage1, typename TStorage2>
 		requires Subtractable<T1, T2>
-	vec_ops<L, T1, TStorage1>& operator-=(vec_ops<L, T1, TStorage1>& v1, const vec_ops<L, T2, TStorage2>& v2)
-	{
-		for (size_t i = 0; i < L; ++i)
-			v1[i] -= v2[i];
-
-		return v1;
-	}
-
-	template<size_t L, typename T1, typename T2, typename TStorage1, typename TStorage2>
-		requires Subtractable<T1, T2>
 	vec<L, SubtractionResult<T1, T2>> operator-(const vec_ops<L, T1, TStorage1>& v1, const vec_ops<L, T2, TStorage2>& v2)
 	{
 		vec<L, SubtractionResult<T1, T2>> new_vec(v1);
 		new_vec -= v2;
 		return new_vec;
-	}
-
-	template<size_t L, typename TVector, typename TScalar, typename TStorage>
-		requires Subtractable<TVector, TScalar> && (!is_vec_type<TScalar>::value)
-	vec_ops<L, TVector, TStorage>& operator-=(vec_ops<L, TVector, TStorage>& v, const TScalar& val)
-	{
-		for (size_t i = 0; i < L; ++i)
-			v[i] -= val;
-		
-		return v;
 	}
 
 	template<size_t L, typename TVector, typename TScalar, typename TStorage>
@@ -457,16 +511,6 @@ namespace linalg
 
 	template<size_t L, typename TVector, typename TScalar, typename TStorage>
 		requires Multipliable<TVector, TScalar> && (!is_vec_type<TScalar>::value)
-	vec_ops<L, TVector, TStorage>& operator*=(vec_ops<L, TVector, TStorage>& v, const TScalar& val)
-	{
-		for (size_t i = 0; i < L; ++i)
-			v[i] *= val;
-		
-		return v;
-	}
-
-	template<size_t L, typename TVector, typename TScalar, typename TStorage>
-		requires Multipliable<TVector, TScalar> && (!is_vec_type<TScalar>::value)
 	vec<L, MultiplicationResult<TVector, TScalar>> operator*(const vec_ops<L, TVector, TStorage>& v, const TScalar& val)
 	{
 		vec<L, MultiplicationResult<TVector, TScalar>> new_vec(v);
@@ -484,19 +528,6 @@ namespace linalg
 			new_vec[i] = val * v[i];
 
 		return new_vec;
-	}
-
-	template<size_t L, typename TVector, typename TScalar, typename TStorage>
-		requires Dividable<TVector, TScalar> && (!is_vec_type<TScalar>::value)
-	vec_ops<L, TVector, TStorage>& operator/=(vec_ops<L, TVector, TStorage>& v1, const TScalar& val)
-	{
-		if (val == 0)
-			throw std::logic_error("Division by zero");
-
-		for (size_t i = 0; i < L; ++i)
-			v1[i] /= val;
-
-		return v1;
 	}
 
 	template<size_t L, typename TVector, typename TScalar, typename TStorage>

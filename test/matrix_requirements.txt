@@ -50,10 +50,6 @@ respectively.
 [DA.2.2] Rows and columns obey the same rules as vectors when it comes to assignment, comparison, arithmetic, and
 special vector operations.
 
-[DA.2.3] Any operations which modify the elements of a row or column modify the corresponding elements of the matrix it
-belongs to.
-
-
 [DA.3] Matrix assignment
 
 A matrix<R, C, T1> can be assigned to another matrix<R, C, T2> if:
