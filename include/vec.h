@@ -216,12 +216,12 @@ namespace linalg
 	};
 
 	template<size_t L, typename T>
-	struct vec_non_owning : vec_ops<L, T, vec_non_owning<L, T>>
+	struct submat : vec_ops<L, T, submat<L, T>>
 	{
 		T* data;
 		const size_t stride;
 
-		vec_non_owning(T* data, size_t stride)
+		submat(T* data, size_t stride)
 			: data{data}, stride{stride}
 		{}
 
@@ -245,7 +245,7 @@ namespace linalg
 
 		T& operator[](size_t idx) const
 		{
-			return (*const_cast<vec_non_owning<L, T>>(this))[idx];
+			return (const_cast<submat<L, T>&>(*this))[idx];
 		}
 	};
 

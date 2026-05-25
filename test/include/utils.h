@@ -4,6 +4,7 @@
 #include <concepts>
 #include <float.h>
 #include <bit>
+#include <cmath>
 
 template<typename TFloat>
     requires std::floating_point<typename std::remove_reference<TFloat>::type>

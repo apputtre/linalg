@@ -2,8 +2,6 @@
 
 #include "yUnit.h"
 
-#include "vec.h"
-
 #include "TestEnvironment.h"
 #include "utils.h"
 #include "requirement_tests/vector.h"
