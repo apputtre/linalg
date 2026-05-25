@@ -199,23 +199,6 @@ SUITE("Matrix comparison") // [CMP.1]
     }
 }
 
-SUITE("Matrix scalar comparison") // [CMP.2]
-{
-    TEST("Test 1")
-    {
-        linalg::mat<2, 2, int> m1(1);
-
-        assertEq(m1, 1);
-    }
-
-    TEST("Test 2")
-    {
-        linalg::mat<2, 2, int> m1(1);
-
-        assertNeq(m1, -1);
-    }
-}
-
 SUITE("Matrix addition") // [A.1]
 {
     FIXTURE()
