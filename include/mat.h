@@ -165,6 +165,15 @@ namespace linalg
 			return transposed;
 		}
 
+		auto det() const
+			requires (Rows == Cols)
+		{
+			if (Rows == 2)
+				return (*this)[0][0] * (*this)[1][1] - (*this)[0][1] * (*this)[1][0];
+			else
+				throw std::runtime_error("Not implemented");
+		}
+
 		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
 		{
 			os << "{";

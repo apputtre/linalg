@@ -10,7 +10,7 @@ namespace linalg
     {
         if (Dim == 2)
         {
-            T det = m[0][0] * m[1][1] - m[0][1] * m[1][0];
+            T det = m.det();
 
             if (det == 0)
             {
