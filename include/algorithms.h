@@ -14,7 +14,7 @@ namespace linalg
 
             if (det == 0)
             {
-                // matrix has no inverse
+                // matrix has no inverse; return a zero matrix to indicate failure
                 return mat<Dim, Dim, T>();
             }
 
@@ -23,9 +23,11 @@ namespace linalg
                 {1 / det * -m[1][0], 1 / det * m[0][0]}
             };
         }
+
         return m;
     }
 
+    // Augments the matrix m with the identity matrix
     template<size_t Dim, typename T>
     linalg::mat<Dim, Dim * 2, T> aug(const linalg::mat<Dim, Dim, T>& m)
     {
@@ -44,6 +46,45 @@ namespace linalg
                         aug[r][c] = 0;
         
         return aug;
+    }
+
+    // Performs Gauss-Jordan elimination to reduce m into row-echelon form
+    template<size_t Rows, size_t Cols, typename T>
+    linalg::mat<Rows, Cols, T> gje(const linalg::mat<Rows, Cols, T>& m)
+    {
+        linalg::mat<Rows, Cols, T> ret = m;
+
+        for (size_t c = 0; c < Cols - 1; ++c)
+        {
+            std::cout << ret << std::endl;
+
+            if (ret[c][c] == 0)
+            {
+                // look for a nonzero pivot
+                for (size_t r = c + 1; r < Rows; ++r)
+                {
+                    if (ret[r][c] != 0)
+                    {
+                        // swap the rows
+                        auto temp = ret[c];
+                        ret[c] = ret[r];
+                        ret[r] = temp;
+                    }
+                }
+
+                // if a nonzero pivot could not be found, skip this column 
+                if (ret[c][c] == 0)
+                    continue;
+            }
+
+            T pivot = ret[c][c];
+
+            // eliminate the elements under the pivot
+            for (size_t r = c + 1; r < Rows; ++r)
+                ret[r] = ret[r] - (ret[c] / pivot) * ret[r][c];
+        }
+
+        return ret;
     }
 }
 
