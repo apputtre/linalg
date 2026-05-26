@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "requirement_tests/vector.h"
 #include "requirement_tests/matrix.h"
+#include "development_tests/matrix_inverse.h"
 
 using namespace linalg;
 

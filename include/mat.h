@@ -165,7 +165,8 @@ namespace linalg
 			return transposed;
 		}
 
-		mat& inv()
+		mat<Rows, Cols, T> inv()
+			requires (Rows == Cols)
 		{
 			return *this;
 		}
@@ -205,7 +206,7 @@ namespace linalg
 			for (size_t c = 0; c < num_cols; ++c)
 				(*this)[idx][c] = row[c];
 		}
-	};
+		};
 
 	template<size_t Rows, size_t Cols, typename T1, typename T2>
 	bool operator==(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)

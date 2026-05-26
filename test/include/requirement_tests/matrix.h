@@ -518,21 +518,3 @@ SUITE("Matrix transposition") // [S.1]
         });
     }
 }
-
-SUITE("Matrix inversion") // [S.2]
-{
-    TEST("Test 1")
-    {
-        linalg::mat<2, 2, double> m  {
-            {11, 12},
-            {21, 22}
-        };
-
-        auto inverted = m.inv();
-
-        assertEq(inverted, linalg::mat<2, 2, float> {
-            {-2.2, 1.2},
-            {2.1, -1.1}
-        });
-    }
-}

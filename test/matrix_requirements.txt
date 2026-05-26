@@ -151,6 +151,11 @@ The result of the expression v / x is a vector<L, T3> v2, where:
 
 [S] Special Operations
 
-Transpose
+[S.1] Matrix transposition
 
-Invert
+Given a matrix<R, C, T> m1, the expression m.t() evaluates to the matrix<C, R, T> m2, which is the transpose of m1.
+
+[S.2] Matrix determinant
+
+Given a matrix<R, C, T1> m, the expression m.det() evaluates to a scalar value x of type T2 which is equal to the
+determinant of m, or 0 if m has no determinant.
