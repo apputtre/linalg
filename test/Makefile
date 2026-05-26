@@ -11,9 +11,9 @@ VPATH = $(BIN_PATH) $(OBJ_PATH) $(SRC_PATH) $(INCLUDE_DIRS)
 CXXFLAGS = -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-parameter -g -std=c++20 $(foreach dir,$(INCLUDE_DIRS),$(patsubst %,-I%,$(dir)))
 CFLAGS = -g $(foreach dir,$(INCLUDE_DIRS),$(patsubst %,-I%,$(dir)))
 LDFLAGS = 
-
-main.exe: main.cpp ../include/* yUnit/test/* yUnit/include/* include/* include/requirement_tests/*
+main.exe: main.cpp ../include/* yUnit/test/* yUnit/include/* include/* include/requirement_tests/* include/development_tests/*
 	mkdir -p $(BIN_PATH)
+
 	$(CXX) $(CXXFLAGS) $(SRC_PATH)/main.cpp -o $(BIN_PATH)/main.exe $(LDFLAGS)
 
 .PHONY: clean

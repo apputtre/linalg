@@ -165,12 +165,6 @@ namespace linalg
 			return transposed;
 		}
 
-		mat<Rows, Cols, T> inv()
-			requires (Rows == Cols)
-		{
-			return *this;
-		}
-
 		friend std::ostream& operator<<(std::ostream& os, const mat<Rows, Cols, T>& m)
 		{
 			os << "{";
