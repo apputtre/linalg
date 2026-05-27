@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "yUnit.h"
+#include "cppUnit.h"
 
 #include "TestEnvironment.h"
 #include "utils.h"
@@ -16,11 +16,11 @@ int main()
 {
     std::cout << "Running tests..." << std::endl;
 
-    std::string summary = yUnit::getSummary();
+    std::string summary = cppUnit::getSummary();
 
-    std::cout << yUnit::getSummary();
+    std::cout << cppUnit::getSummary();
 
-    if (summary == "\n")
+    if (summary == "")
         std::cout << "All tests passed." << std::endl;
 
     return 0;

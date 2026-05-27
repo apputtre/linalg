@@ -4,7 +4,7 @@ Each suite in this file corresponds to a particular requirement listed in the fi
 Each requirement in that file has a suite containing at least one test here.
 */
 
-#include "yUnit.h"
+#include "cppUnit.h"
 
 #include "mat.h"
 
