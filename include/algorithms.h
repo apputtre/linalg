@@ -8,23 +8,9 @@ namespace linalg
     template<size_t Dim, typename T>
     mat<Dim, Dim, T> inv(const mat<Dim, Dim, T>& m)
     {
-        if (Dim == 2)
-        {
-            T det = m.det();
-
-            if (det == 0)
-            {
-                // matrix has no inverse; return a zero matrix to indicate failure
-                return mat<Dim, Dim, T>();
-            }
-
-            return {
-                {1 / det * m[1][1], 1 / det * -m[0][1]},
-                {1 / det * -m[1][0], 1 / det * m[0][0]}
-            };
-        }
-
+        // create the agumented matrix
         mat<Dim, Dim * 2, T> a = aug(m);
+        // get the matrix in row-echelon form
         mat<Dim, Dim * 2, T> u = gje(a);
 
         // use back substitution to find inverse
@@ -39,7 +25,7 @@ namespace linalg
             // make the pivot 1
             u[c] /= pivot;
 
-            for (size_t r = c - 1; r-- > 0;)
+            for (size_t r = c; r-- > 0;)
                 u[r] -= u[c] * u[r][c];
         }
 
