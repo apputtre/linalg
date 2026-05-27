@@ -1,3 +1,6 @@
+#ifndef LINALG_COMMON_H
+#define LINALG_COMMON_H
+
 namespace linalg::impl
 {
 	template<typename T1, typename T2>
@@ -55,3 +58,5 @@ namespace linalg::impl
         t2 << t1;
     };
 }
+
+#endif

@@ -14,7 +14,14 @@ using namespace linalg;
 
 int main()
 {
+    std::cout << "Running tests..." << std::endl;
+
+    std::string summary = yUnit::getSummary();
+
     std::cout << yUnit::getSummary();
+
+    if (summary == "\n")
+        std::cout << "All tests passed." << std::endl;
 
     return 0;
 }

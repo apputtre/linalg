@@ -25,6 +25,7 @@ SUITE("Matrix inverse")
             {3, 4}
         };
 
+
         assertEq(linalg::inv(m), linalg::mat<2, 2, float> {
             {-2, 1},
             {1.5, -0.5}
