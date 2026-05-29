@@ -5,6 +5,7 @@
 
 namespace linalg
 {
+    // inverts a matrix
     template<size_t Dim, typename T>
     mat<Dim, Dim, T> inv(const mat<Dim, Dim, T>& m)
     {
