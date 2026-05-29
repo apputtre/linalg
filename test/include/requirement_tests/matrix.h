@@ -52,9 +52,11 @@ SUITE("Matrix construction from scalar") // [C.3], [DA.1]
     {
         linalg::mat<3, 3, float> m(1);
 
-        assertEq(m[0][0], 1);
-        assertEq(m[1][1], 1);
-        assertEq(m[2][2], 1);
+        assertEq(m, linalg::mat<3, 3, float> {
+            {1, 0, 0},
+            {0, 1, 0},
+            {0, 0, 1}
+        });
     }
 }
 
