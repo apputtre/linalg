@@ -48,15 +48,23 @@ namespace linalg
 					(*this)[r][c] = static_cast<T>(other[r][c]);
 		}
 
-		template<std::convertible_to<T> TOther>
+		template<std::convertible_to<T> TScalar>
 			requires (Rows == Cols)
-		mat(const TOther& val)
+		mat(const TScalar& val)
 		{
 			for (size_t r = 0; r < Rows; ++r)
 				(*this)[r][r] = val;
 		}
 
 		mat() = default;
+
+		template<std::convertible_to<T> TScalar>
+		mat& operator=(const TScalar& val)
+		{
+			std::fill(&elems[0], &elems[num_elements], val);
+
+			return (*this);
+		}
 
 		submat<Cols, T> operator[](size_t idx)
 		{
