@@ -49,9 +49,11 @@ namespace linalg
 		}
 
 		template<std::convertible_to<T> TOther>
+			requires (Rows == Cols)
 		mat(const TOther& val)
 		{
-			std::fill(&elems[0], &elems[num_elements], val);
+			for (size_t r = 0; r < Rows; ++r)
+				(*this)[r][r] = val;
 		}
 
 		mat() = default;
