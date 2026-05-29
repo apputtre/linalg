@@ -99,10 +99,22 @@ namespace linalg
     }
 
     // perform LU factorization
-    template<size_t Rows, size_t Cols, typename T>
-    void luf(const mat<Rows, Cols, T>& m, mat<Rows, Cols, T>& L, mat<Rows, Cols, T>& U)
+    template<size_t Dim, typename T>
+    void luf(const mat<Dim, Dim, T>& m, mat<Dim, Dim, T>& L, mat<Dim, Dim, T>& U)
     {
-        
+        L = mat<Dim, Dim, T>(1);
+        U = m;
+
+        for (size_t i = 0; i < Dim; i++)
+        {
+            T& pivot = U[i][i];
+
+            for (size_t j = i + 1; j < Dim; j++)
+            {
+                L[j][i] = U[j][i] / pivot;
+                U[j] -= L[j][i] * U[i];
+            }
+        }
     }
 }
 

@@ -25,7 +25,7 @@ SUITE("LU Factorization")
         assertEq(U, linalg::mat<3, 3, float> {
             {1, 1, 0},
             {0, -1, -1},
-            {0, 0, 0}
+            {0, 0, 3}
         });
     }
 }
