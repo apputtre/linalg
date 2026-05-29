@@ -97,6 +97,13 @@ namespace linalg
 
         return ret;
     }
+
+    // perform LU factorization
+    template<size_t Rows, size_t Cols, typename T>
+    void luf(const mat<Rows, Cols, T>& m, mat<Rows, Cols, T>& L, mat<Rows, Cols, T>& U)
+    {
+        
+    }
 }
 
 #endif

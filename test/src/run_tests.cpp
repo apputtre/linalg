@@ -9,6 +9,7 @@
 #include "development_tests/matrix_inverse.h"
 #include "development_tests/augmented_matrix.h"
 #include "development_tests/gauss_jordan_elim.h"
+#include "development_tests/LU_factorization.h"
 
 using namespace linalg;
 

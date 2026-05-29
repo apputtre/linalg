@@ -1,7 +1,7 @@
 MAIN_TARGET_NAME = run_tests.exe
 SRC_DIRS = src
 INC_DIRS = include ../include cppUnit/include
-CXXFLAGS = -Wall -Wextra -Werror -g -std=c++20
+CXXFLAGS = -Wno-unused-parameter -Wall -Wextra -Werror -g -std=c++20
 
 BIN_DIR = bin
 OBJ_DIR = obj
