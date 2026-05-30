@@ -77,7 +77,7 @@ namespace linalg
                     if (ret[r][c] != 0)
                     {
                         // swap the rows
-                        auto temp = ret[c];
+                        vec<Cols, T> temp = ret[c];
                         ret[c] = ret[r];
                         ret[r] = temp;
                     }
