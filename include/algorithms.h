@@ -100,14 +100,36 @@ namespace linalg
 
     // perform LU factorization
     template<size_t Dim, typename T>
-    void lu_factor(const mat<Dim, Dim, T>& m, mat<Dim, Dim, T>& L, mat<Dim, Dim, T>& U)
+    void lu_factor(const mat<Dim, Dim, T>& m, mat<Dim, Dim, T>& P, mat<Dim, Dim, T>& L, mat<Dim, Dim, T>& U)
     {
+        P = mat<Dim, Dim, T>(1);
         L = mat<Dim, Dim, T>(1);
         U = m;
 
-        for (size_t i = 0; i < Dim; i++)
+        for (size_t i = 0; i < Dim - 1; ++i)
         {
             T& pivot = U[i][i];
+
+            if (pivot == 0)
+            {
+                // look for a nonzero pivot
+                for (size_t r = i + 1; r < Dim; ++r)
+                {
+                    if (U[r][i] != 0)
+                    {
+                        // swap rows r and i
+                        auto temp = U[i];
+                        U[i] = U[r];
+                        U[r] = temp;
+                        // record the swap in P
+                        temp = P[i];
+                        P[i] = P[r];
+                        P[r] = temp;
+
+                        break;
+                    }
+                }
+            }
 
             for (size_t j = i + 1; j < Dim; j++)
             {

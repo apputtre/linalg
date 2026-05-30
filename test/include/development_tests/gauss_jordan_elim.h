@@ -19,4 +19,19 @@ SUITE("Gauss-Jordan Elimination")
             {0, 0, 0, 0}
         });
     }
+
+    TEST("Test 2")
+    {
+        linalg::mat<3, 3, float> m = {
+            {1, 0, 0},
+            {3, 0, -1},
+            {2, 1, -1}
+        };
+
+        assertEq(linalg::gje(m), linalg::mat<3, 3, float> {
+            {1, 0, 0},
+            {0, 1, -1},
+            {0, 0, -1}
+        });
+    }
 }
