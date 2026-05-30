@@ -502,6 +502,33 @@ SUITE("Matrix scalar division") // [A.7]
     }
 }
 
+SUITE("Matrix vector multiplication") // [A.8]
+{
+    linalg::mat<3, 2, int> m = {
+        {1, 2},
+        {3, 4},
+        {5, 6}
+    };
+
+    TEST("Test 1") // [A.8.1]
+    {
+        linalg::vec<2, int> v = {1, 2};
+
+        auto result = m * v;
+
+        assertEq(result, linalg::vec<3, int> {5, 11, 17});
+    }
+
+    TEST("Test 2") // [A.8.2]
+    {
+        linalg::vec<3, int> v = {1, 2, 3};
+
+        auto result = v * m;
+
+        assertEq(result, linalg::vec<2, int> {22, 28});
+    }
+}
+
 SUITE("Matrix transposition") // [S.1]
 {
     TEST("Test 1")

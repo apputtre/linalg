@@ -331,6 +331,30 @@ namespace linalg
 		return result;
 	}
 
+	template<size_t Rows, size_t Cols, size_t L, typename T1, typename T2>
+		requires (L == Cols)
+	vec<Rows, MultiplicationResult<T1, T2>> operator*(const mat<Rows, Cols, T1>& m, const vec<L, T2>& v)
+	{
+		vec<Rows, MultiplicationResult<T1, T2>> result;
+
+		for (size_t r = 0; r < Rows; ++r)
+			result[r] = v.dot(m.row(r));
+
+		return result;
+	}
+
+	template<size_t Rows, size_t Cols, size_t L, typename T1, typename T2>
+		requires (L == Rows)
+	vec<Cols, MultiplicationResult<T1, T2>> operator*(const vec<L, T1>& v, const mat<Rows, Cols, T2>& m)
+	{
+		vec<Cols, MultiplicationResult<T1, T2>> result;
+
+		for (size_t c = 0; c < Cols; ++c)
+			result[c] = v.dot(m.col(c));
+
+		return result;
+	}
+
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
 	mat<Rows, Cols, SubtractionResult<T, TScalar>> operator*(const mat<Rows, Cols, T>& m, const TScalar& scalar)
