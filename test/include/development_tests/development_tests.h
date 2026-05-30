@@ -5,5 +5,6 @@
 #include "gauss_jordan_elim.h"
 #include "LU_factorization.h"
 #include "matrix_inverse.h"
+#include "solve.h"
 
 #endif
