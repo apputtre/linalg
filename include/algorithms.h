@@ -100,7 +100,7 @@ namespace linalg
 
     // perform LU factorization
     template<size_t Dim, typename T>
-    void luf(const mat<Dim, Dim, T>& m, mat<Dim, Dim, T>& L, mat<Dim, Dim, T>& U)
+    void lu_factor(const mat<Dim, Dim, T>& m, mat<Dim, Dim, T>& L, mat<Dim, Dim, T>& U)
     {
         L = mat<Dim, Dim, T>(1);
         U = m;
