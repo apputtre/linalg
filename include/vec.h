@@ -161,7 +161,7 @@ namespace linalg
 			requires
 				(Multipliable<T, TOther>) &&
 				(Addable<MultiplicationResult<T, TOther>, MultiplicationResult<T, TOther>>)
-		MultiplicationResult<T, TOther> dot(const vec_ops<L, TOther, TStorageOther>& v)
+		MultiplicationResult<T, TOther> dot(const vec_ops<L, TOther, TStorageOther>& v) const
 		{
 			MultiplicationResult<T, TOther> acc = 0;
 
