@@ -108,9 +108,7 @@ namespace linalg
 
         for (size_t i = 0; i < Dim - 1; ++i)
         {
-            T& pivot = U[i][i];
-
-            if (pivot == 0)
+            if (U[i][i] == 0)
             {
                 // look for a nonzero pivot
                 for (size_t r = i + 1; r < Dim; ++r)
@@ -130,6 +128,8 @@ namespace linalg
                     }
                 }
             }
+
+            T& pivot = U[i][i];
 
             for (size_t j = i + 1; j < Dim; j++)
             {
