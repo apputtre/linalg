@@ -107,13 +107,25 @@ namespace linalg
         }
     }
 
-    // Solves a system of Rows equations and Cols variables of the form Ax = b for x, storing the result in x
-    template<size_t Rows, size_t Cols, typename T>
-    bool solve(mat<Rows, Cols, T>& a, vec<Rows, T>& b, vec<Rows, T>& x)
+    // Solves a system of Dim equations and Dim variables of the form LUx = Pb for x, storing the result in x
+    template<size_t Dim, typename T>
+    bool solve(mat<Dim, Dim, T>& p, mat<Dim, Dim, T>& L, mat<Dim, Dim, T>& u, vec<Dim, T>& b, vec<Dim, T>& x)
     {
-        x = vec<Rows, T>();
+        x = vec<Dim, T>();
 
         return false;
+    }
+
+    // Solves a system of Dim equations and Dim variables of the form Ax = b for x, storing the result in x
+    template<size_t Dim, typename T>
+    bool solve(mat<Dim, Dim, T>& a, vec<Dim, T>& b, vec<Dim, T>& x)
+    {
+        mat<Dim, Dim, T> p;
+        mat<Dim, Dim, T> L;
+        mat<Dim, Dim, T> u;
+        plu_factor(p, L, u, a);
+        
+        return solve(p, L, u, b, x);
     }
 }
 
