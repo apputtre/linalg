@@ -11,23 +11,50 @@ namespace linalg
     {
         // create the agumented matrix
         mat<Dim, Dim * 2, T> a = aug(m);
-        // get the matrix in row-echelon form
-        mat<Dim, Dim * 2, T> u = gje(a);
 
-        // use back substitution to find inverse
+        // use forward-substitution get the matrix in row-echelon form
+        for (size_t c = 0; c < Dim - 1; ++c)
+        {
+            if (a[c][c] == 0)
+            {
+                // look for a nonzero pivot
+                for (size_t r = c + 1; r < Dim; ++r)
+                {
+                    if (a[r][c] != 0)
+                    {
+                        // swap the rows
+                        vec<Dim * 2, T> temp = a[c];
+                        a[c] = a[r];
+                        a[r] = temp;
+                    }
+                }
+
+                // if a nonzero pivot could not be found, matrix is singular; return zero matrix to indicate failure
+                if (a[c][c] == 0)
+                    return mat<Dim, Dim, T>();
+            }
+
+            T pivot = a[c][c];
+
+            // eliminate the elements under the pivot
+            for (size_t r = c + 1; r < Dim; ++r)
+                a[r] = a[r] - (a[c] / pivot) * a[r][c];
+        }
+
+        // use back substitution to get u into reduced row-echelon form
         for (size_t c = Dim - 1; c > 0; --c)
         {
-            T pivot = u[c][c];
+            T pivot = a[c][c];
 
             if (pivot == 0)
                 // matrix has no inverse; return a zero matrix to indicate failure
                 return mat<Dim, Dim, T>();
 
             // make the pivot 1
-            u[c] /= pivot;
+            a[c] /= pivot;
 
             for (size_t r = c; r-- > 0;)
-                u[r] -= u[c] * u[r][c];
+                a[r] -= a[c] * a[r][c];
         }
 
         // extract the inverse matrix from u
@@ -35,7 +62,7 @@ namespace linalg
 
         for (size_t r = 0; r < Dim; ++r)
             for (size_t c = 0; c < Dim; ++c)
-                inverted_matrix[r][c] = u[r][c + Dim];
+                inverted_matrix[r][c] = a[r][c + Dim];
 
         return inverted_matrix;
     }
@@ -59,43 +86,6 @@ namespace linalg
                         aug[r][c] = 0;
         
         return aug;
-    }
-
-    // Performs Gauss-Jordan elimination to reduce m into row-echelon form
-    template<size_t Rows, size_t Cols, typename T>
-    linalg::mat<Rows, Cols, T> gje(const linalg::mat<Rows, Cols, T>& m)
-    {
-        linalg::mat<Rows, Cols, T> ret = m;
-
-        for (size_t c = 0; c < Cols - 1 && c < Rows; ++c)
-        {
-            if (ret[c][c] == 0)
-            {
-                // look for a nonzero pivot
-                for (size_t r = c + 1; r < Rows; ++r)
-                {
-                    if (ret[r][c] != 0)
-                    {
-                        // swap the rows
-                        vec<Cols, T> temp = ret[c];
-                        ret[c] = ret[r];
-                        ret[r] = temp;
-                    }
-                }
-
-                // if a nonzero pivot could not be found, skip this column 
-                if (ret[c][c] == 0)
-                    continue;
-            }
-
-            T pivot = ret[c][c];
-
-            // eliminate the elements under the pivot
-            for (size_t r = c + 1; r < Rows; ++r)
-                ret[r] = ret[r] - (ret[c] / pivot) * ret[r][c];
-        }
-
-        return ret;
     }
 
     // perform LU factorization
