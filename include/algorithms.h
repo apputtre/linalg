@@ -65,27 +65,6 @@ namespace linalg
         return true;
     }
 
-    // Augments the matrix m with the identity matrix
-    template<size_t Dim, typename T>
-    linalg::mat<Dim, Dim * 2, T> aug(const linalg::mat<Dim, Dim, T>& m)
-    {
-        mat<Dim, 2 * Dim, T> aug;
-
-        for (size_t r = 0; r < Dim; ++r)
-            for (size_t c = 0; c < 2 * Dim; ++c)
-                if (c < Dim)
-                    // we're in the left half of the augmented matrix; copy from m
-                    aug[r][c] = m[r][c];
-                else
-                    // we're in the right half; set to identity matrix
-                    if (r == c - Dim)
-                        aug[r][c] = 1;
-                    else
-                        aug[r][c] = 0;
-        
-        return aug;
-    }
-
     // perform LU factorization
     template<size_t Dim, typename T>
     void plu_factor(const mat<Dim, Dim, T>& m, mat<Dim, Dim, T>& P, mat<Dim, Dim, T>& L, mat<Dim, Dim, T>& U)
@@ -107,6 +86,7 @@ namespace linalg
                         vec<Dim, T> temp = U[i];
                         U[i] = U[r];
                         U[r] = temp;
+
                         // record the swap in P
                         temp = P[i];
                         P[i] = P[r];
