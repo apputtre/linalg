@@ -118,7 +118,7 @@ namespace linalg
                     if (U[r][i] != 0)
                     {
                         // swap rows r and i
-                        auto temp = U[i];
+                        vec<Dim, T> temp = U[i];
                         U[i] = U[r];
                         U[r] = temp;
                         // record the swap in P
