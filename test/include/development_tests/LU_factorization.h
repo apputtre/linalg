@@ -17,17 +17,19 @@ SUITE("LU Factorization")
         linalg::mat<3, 3, float> U;
         linalg::plu_factor(m, P, L, U);
 
+        assertEq(P, linalg::mat<3, 3, float>(1), "P is not correct");
+
         assertEq(L, linalg::mat<3, 3, float> {
             {1, 0, 0},
             {2, 1, 0},
             {3, 4, 1}
-        });
+        }, "L is not correct");
 
         assertEq(U, linalg::mat<3, 3, float> {
             {1, 1, 0},
             {0, -1, -1},
             {0, 0, 3}
-        });
+        }, "U is not correct");
     }
 
     TEST("Test 2")
@@ -42,6 +44,12 @@ SUITE("LU Factorization")
         linalg::mat<3, 3, float> L;
         linalg::mat<3, 3, float> U;
         linalg::plu_factor(m, P, L, U);
+
+        assertEq(P, linalg::mat<3, 3, float> {
+            {1, 0, 0},
+            {0, 0, 1},
+            {0, 1, 0}
+        }, "P is not correct");
 
         assertEq(L, linalg::mat<3, 3, float> {
             {1, 0, 0},
