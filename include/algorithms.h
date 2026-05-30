@@ -106,6 +106,15 @@ namespace linalg
             }
         }
     }
+
+    // Solves a system of Rows equations and Cols variables of the form Ax = b for x, storing the result in x
+    template<size_t Rows, size_t Cols, typename T>
+    bool solve(mat<Rows, Cols, T>& a, vec<Rows, T>& b, vec<Rows, T>& x)
+    {
+        x = vec<Rows, T>();
+
+        return false;
+    }
 }
 
 #endif

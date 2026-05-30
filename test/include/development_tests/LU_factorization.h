@@ -1,5 +1,6 @@
 #include "cppUnit.h"
 
+#include "algorithms.h"
 #include "mat.h"
 
 SUITE("LU Factorization")
