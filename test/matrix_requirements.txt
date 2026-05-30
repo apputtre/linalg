@@ -150,14 +150,18 @@ The result of the expression v / x is a vector<L, T3> v2, where:
 
 [A.8] Matrix vector multiplication
 
+[A.8.1]
 Let m be a matrix<R, C, T1> and v be a vector<C, T2>.
 
 The result of the expression m * v is a vector<R, T3>, where:
     - T3 is the type of the value of the expression x * y, where x is of type T1 and y is of type T2, and
     - For i in [0, R), v[i] = v.dot(m.row(i))
 
+[A.8.2]
+Let m be a matrix<R, C, T1> and v be a vector<R, T2>.
+
 The result of the expression v * m is a vector<C, T3>, where:
-    - T3 is defined as before, and
+    - T3 is the type of the value of the expression x * y, where x is of type T1 and y is of type T2, and
     - For i in [0, C), v[i] = v.dot(m.col(i))
 
 
