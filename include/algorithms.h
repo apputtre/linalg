@@ -5,66 +5,64 @@
 
 namespace linalg
 {
-    // inverts a matrix
+    // Inverts a matrix. Returns true is m is invertible, false otherwise
     template<size_t Dim, typename T>
-    mat<Dim, Dim, T> inv(const mat<Dim, Dim, T>& m)
+    bool inv(mat<Dim, Dim, T>& m, mat<Dim, Dim, T>& result)
     {
-        // create the agumented matrix
-        mat<Dim, Dim * 2, T> a = aug(m);
+        result = mat<Dim, Dim, T>(1);
 
         // use forward-substitution get the matrix in row-echelon form
-        for (size_t c = 0; c < Dim - 1; ++c)
+        for (size_t c = 0; c < Dim; ++c)
         {
-            if (a[c][c] == 0)
+            if (m[c][c] == 0)
             {
                 // look for a nonzero pivot
                 for (size_t r = c + 1; r < Dim; ++r)
                 {
-                    if (a[r][c] != 0)
+                    if (m[r][c] != 0)
                     {
                         // swap the rows
-                        vec<Dim * 2, T> temp = a[c];
-                        a[c] = a[r];
-                        a[r] = temp;
+                        vec<Dim, T> temp = m[c];
+                        m[c] = m[r];
+                        m[r] = temp;
+
+                        // reflect the swap on the result matrix
+                        temp = result[c];
+                        result[c] = result[r];
+                        result[r] = temp;
                     }
                 }
 
-                // if a nonzero pivot could not be found, matrix is singular; return zero matrix to indicate failure
-                if (a[c][c] == 0)
-                    return mat<Dim, Dim, T>();
+                // if a nonzero pivot could not be found, matrix is singular
+                if (m[c][c] == 0)
+                    return false;
             }
 
-            T pivot = a[c][c];
+            T pivot = m[c][c];
 
             // eliminate the elements under the pivot
             for (size_t r = c + 1; r < Dim; ++r)
-                a[r] = a[r] - (a[c] / pivot) * a[r][c];
+            {
+                T coefficient = m[r][c] / pivot;
+
+                m[r] -= m[c] * coefficient;
+                result[r] -= result[c] * coefficient;
+            }
         }
 
-        // use back substitution to get u into reduced row-echelon form
+        // use back substitution to turn result into m^-1
         for (size_t c = Dim - 1; c > 0; --c)
         {
-            T pivot = a[c][c];
+            T pivot = m[c][c];
 
-            if (pivot == 0)
-                // matrix has no inverse; return a zero matrix to indicate failure
-                return mat<Dim, Dim, T>();
-
-            // make the pivot 1
-            a[c] /= pivot;
+            result[c] /= pivot;
 
             for (size_t r = c; r-- > 0;)
-                a[r] -= a[c] * a[r][c];
+                // we don't care about updating m anymore
+                result[r] -= result[c] * m[r][c];   
         }
 
-        // extract the inverse matrix from u
-        mat<Dim, Dim, T> inverted_matrix;
-
-        for (size_t r = 0; r < Dim; ++r)
-            for (size_t c = 0; c < Dim; ++c)
-                inverted_matrix[r][c] = a[r][c + Dim];
-
-        return inverted_matrix;
+        return true;
     }
 
     // Augments the matrix m with the identity matrix

@@ -12,7 +12,11 @@ SUITE("Matrix inverse")
             {0, 1}
         };
 
-        assertEq(linalg::inv(m), linalg::mat<2, 2, float> {
+        linalg::mat<2, 2, float> m_inv;
+
+        assert(linalg::inv(m, m_inv));
+
+        assertEq(m_inv, linalg::mat<2, 2, float> {
             {1, 0},
             {0, 1}
         });
@@ -25,8 +29,11 @@ SUITE("Matrix inverse")
             {3, 4}
         };
 
+        linalg::mat<2, 2, float> m_inv;
 
-        assertEq(linalg::inv(m), linalg::mat<2, 2, float> {
+        assert(linalg::inv(m, m_inv));
+
+        assertEq(m_inv, linalg::mat<2, 2, float> {
             {-2, 1},
             {1.5, -0.5}
         });
@@ -40,7 +47,11 @@ SUITE("Matrix inverse")
             {0, 0, 3}
         };
 
-        assertEq(linalg::inv(m), linalg::mat<3, 3, float> {
+        linalg::mat<3, 3, float> m_inv;
+
+        assert(linalg::inv(m, m_inv));
+
+        assertEq(m_inv, linalg::mat<3, 3, float> {
             {1, 0, -4.0f/3},
             {0, 0.5, 0},
             {0, 0, 1.0f/3}
@@ -55,6 +66,8 @@ SUITE("Matrix inverse")
             {2, 0, 8}
         };
 
-        assertEq(linalg::inv(m), linalg::mat<3, 3, float>());
+        linalg::mat<3, 3, float> m_inv;
+
+        assert(!linalg::inv(m, m_inv));
     }
 }
