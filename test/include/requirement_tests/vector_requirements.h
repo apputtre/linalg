@@ -6,6 +6,7 @@ Each requirement in that file has a suite containing at least one test here.
 
 #include "cppUnit.h"
 #include "vec.h"
+#include "mat.h"
 
 SUITE("Vector construction from list") // [C.1]
 {
