@@ -46,4 +46,15 @@ SUITE("Matrix inverse")
             {0, 0, 1.0f/3}
         });
     }
+
+    TEST("Singular matrix")
+    {
+        linalg::mat<3, 3, float> m {
+            {1, 0, 4},
+            {0, 2, 0},
+            {2, 0, 8}
+        };
+
+        assertEq(linalg::inv(m), linalg::mat<3, 3, float>());
+    }
 }
