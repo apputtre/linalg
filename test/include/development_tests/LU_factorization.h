@@ -50,9 +50,9 @@ SUITE("LU Factorization")
         }, "L is not correct");
 
         assertEq(U, linalg::mat<3, 3, float> {
-            {1, 1, 0},
-            {0, -1, -1},
-            {0, 0, 3}
+            {1, 0, 0},
+            {0, 1, -1},
+            {0, 0, -1}
         }, "U is not correct");
     }
 }
