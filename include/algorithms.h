@@ -50,7 +50,7 @@ namespace linalg
             }
         }
 
-        // use back substitution to turn result into m^-1
+        // use backward elimination to turn result into m^-1
         for (size_t c = Dim - 1; c > 0; --c)
         {
             T pivot = m[c][c];
@@ -97,6 +97,8 @@ namespace linalg
                 }
             }
 
+            // do forward elimination to reduce U while filling in L
+
             T& pivot = U[i][i];
 
             for (size_t j = i + 1; j < Dim; j++)
@@ -109,23 +111,44 @@ namespace linalg
 
     // Solves a system of Dim equations and Dim variables of the form LUx = Pb for x, storing the result in x
     template<size_t Dim, typename T>
-    bool solve(mat<Dim, Dim, T>& p, mat<Dim, Dim, T>& L, mat<Dim, Dim, T>& u, vec<Dim, T>& b, vec<Dim, T>& x)
+    void solve(const mat<Dim, Dim, T>& p, const mat<Dim, Dim, T>& L, const mat<Dim, Dim, T>& u, const vec<Dim, T>& b, vec<Dim, T>& x)
     {
         x = vec<Dim, T>();
 
-        return false;
+        // we have Lux = Pb
+        // ux = y
+        // Ly = b
+
+        // 1. Permute b
+
+        vec<Dim, T> b_p = p * b;
+
+        // 2. Solve Ly = b for y using forward substitution
+
+        vec<Dim, T> y;
+        y[0] = b_p[0];
+        for (size_t i = 1; i < Dim; ++i)
+            for (size_t j = 0; j < i; ++i)
+                y[i] += y[j] * b_p[j];
+
+        // 3. solve ux = y for x using backward substitution
+
+        x[Dim - 1] = y[Dim - 1];
+        for (size_t i = Dim - 1; i-- > 0;)
+            for (size_t j = Dim; j-- > 0;)
+                x[i] += x[j] * y[j];
     }
 
     // Solves a system of Dim equations and Dim variables of the form Ax = b for x, storing the result in x
     template<size_t Dim, typename T>
-    bool solve(mat<Dim, Dim, T>& a, vec<Dim, T>& b, vec<Dim, T>& x)
+    void solve(mat<Dim, Dim, T>& a, vec<Dim, T>& b, vec<Dim, T>& x)
     {
         mat<Dim, Dim, T> p;
         mat<Dim, Dim, T> L;
         mat<Dim, Dim, T> u;
         plu_factor(p, L, u, a);
-        
-        return solve(p, L, u, b, x);
+
+        solve(p, L, u, b, x);
     }
 }
 

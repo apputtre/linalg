@@ -58,7 +58,7 @@ After the assignment, each element of v is equal to x, after applying any necess
 
 [DA.4] Vector matrix assignment
 
-A vector<L, T1> may be assigned to a matrix<L, 1, T1> or matrix<1, L, T1> if:
+A vector<L, T1> may be assigned to a matrix<L, 1, T2> or matrix<1, L, T2> if:
     - T1 = T2, or
     - T2 is convertible to T1.
 
