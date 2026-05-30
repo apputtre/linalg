@@ -25,6 +25,12 @@ A vector<L, T1> may be constructed from a single value x of type T2 if:
 
 Each element of the resulting vector has the value x, after applying any necessary conversions.
 
+[C.4] Vector construction from matrix
+
+A vector<L, T1> may be constructed from a matrix<L, 1, T2> or matrix<1, L, T2> if:
+    - T1 == T2, or
+    - T2 is convertible to T1.
+
 
 [DA] Data Access
 
@@ -49,6 +55,12 @@ A vector<L, T1> v can be assigned to a scalar value x of type T2 if:
     - T2 is convertible to T1.
 
 After the assignment, each element of v is equal to x, after applying any necessary conversions.
+
+[DA.4] Vector matrix assignment
+
+A vector<L, T1> may be assigned to a matrix<L, 1, T1> or matrix<1, L, T1> if:
+    - T1 = T2, or
+    - T2 is convertible to T1.
 
 
 [DL] Data Layout
