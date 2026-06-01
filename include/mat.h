@@ -106,7 +106,7 @@ namespace linalg
 		}
 
 		template<typename TOther>
-		mat<Rows, Cols, AdditionResult<T, TOther>>& operator+=(const mat<Rows, Cols, TOther>& m)
+		mat<Rows, Cols, t_sum<T, TOther>>& operator+=(const mat<Rows, Cols, TOther>& m)
 		{
 			for (size_t r = 0; r < Rows; ++r)
 				for (size_t c = 0; c < Cols; ++c)
@@ -116,7 +116,7 @@ namespace linalg
 		}
 
 		template<typename TScalar>
-		mat<Rows, Cols, AdditionResult<T, TScalar>>& operator+=(const TScalar& scalar)
+		mat<Rows, Cols, t_sum<T, TScalar>>& operator+=(const TScalar& scalar)
 		{
 			for (T* it = &elems[0]; it < &elems[num_elements]; ++it)
 				*it += scalar;
@@ -125,7 +125,7 @@ namespace linalg
 		}
 
 		template<typename TOther>
-		mat<Rows, Cols, SubtractionResult<T, TOther>>& operator-=(const mat<Rows, Cols, TOther>& m)
+		mat<Rows, Cols, t_difference<T, TOther>>& operator-=(const mat<Rows, Cols, TOther>& m)
 		{
 			for (size_t r = 0; r < Rows; ++r)
 				for (size_t c = 0; c < Cols; ++c)
@@ -135,7 +135,7 @@ namespace linalg
 		}
 
 		template<typename TScalar>
-		mat<Rows, Cols, SubtractionResult<T, TScalar>>& operator-=(const TScalar& scalar)
+		mat<Rows, Cols, t_difference<T, TScalar>>& operator-=(const TScalar& scalar)
 		{
 			for (size_t r = 0; r < Rows; ++r)
 				for (size_t c = 0; c < Cols; ++c)
@@ -145,7 +145,7 @@ namespace linalg
 		}
 
 		template<typename TScalar>
-		mat<Rows, Cols, SubtractionResult<T, TScalar>>& operator*=(const TScalar& scalar)
+		mat<Rows, Cols, t_difference<T, TScalar>>& operator*=(const TScalar& scalar)
 		{
 			for (size_t r = 0; r < Rows; ++r)
 				for (size_t c = 0; c < Cols; ++c)
@@ -155,7 +155,7 @@ namespace linalg
 		}
 
 		template<typename TScalar>
-		mat<Rows, Cols, SubtractionResult<T, TScalar>>& operator/=(const TScalar& scalar)
+		mat<Rows, Cols, t_difference<T, TScalar>>& operator/=(const TScalar& scalar)
 		{
 			for (size_t r = 0; r < Rows; ++r)
 				for (size_t c = 0; c < Cols; ++c)
@@ -223,7 +223,6 @@ namespace linalg
 
 	template<size_t Rows, size_t Cols, typename T1, typename T2>
 	bool operator==(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
-		requires EqualityComparable<T1, T2>
 	{
 		for (size_t r = 0; r < Rows; ++r)
 			for (size_t c = 0; c < Cols; ++c)
@@ -234,7 +233,6 @@ namespace linalg
 
 	template<size_t Rows, size_t Cols, typename TMatrix, typename TScalar>
 	bool operator==(const mat<Rows, Cols, TMatrix>& m, const TScalar& scalar)
-		requires EqualityComparable<TMatrix, TScalar>
 	{
 		for (size_t r = 0; r < Rows; ++r)
 			for (size_t c = 0; c < Cols; ++c)
@@ -245,40 +243,38 @@ namespace linalg
 
 	template<size_t Rows, size_t Cols, typename T1, typename T2>
 	bool operator!=(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
-		requires EqualityComparable<T1, T2>
 	{
 		return !(m1 == m2);
 	}
 
 	template<size_t Rows, size_t Cols, typename TMatrix, typename TScalar>
 	bool operator!=(const mat<Rows, Cols, TMatrix>& m, const TScalar& scalar)
-		requires EqualityComparable<TMatrix, TScalar>
 	{
 		return !(m == scalar);
 	}
 
 	template<size_t Rows, size_t Cols, typename T1, typename T2>
-	mat<Rows, Cols, AdditionResult<T1, T2>> operator+(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
+	mat<Rows, Cols, t_sum<T1, T2>> operator+(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
 	{
-		mat<Rows, Cols, AdditionResult<T1, T2>> result = m1;
+		mat<Rows, Cols, t_sum<T1, T2>> result = m1;
 		result += m2;
 		return result;
 	}
 
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
-	mat<Rows, Cols, AdditionResult<T, TScalar>> operator+(const mat<Rows, Cols, T>& m, const TScalar& scalar)
+	mat<Rows, Cols, t_sum<T, TScalar>> operator+(const mat<Rows, Cols, T>& m, const TScalar& scalar)
 	{
-		mat<Rows, Cols, AdditionResult<T, TScalar>> result = m;
+		mat<Rows, Cols, t_sum<T, TScalar>> result = m;
 		result += scalar;
 		return result;
 	}
 
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
-	mat<Rows, Cols, AdditionResult<TScalar, T>> operator+(const TScalar& scalar, const mat<Rows, Cols, T>& m)
+	mat<Rows, Cols, t_sum<TScalar, T>> operator+(const TScalar& scalar, const mat<Rows, Cols, T>& m)
 	{
-		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
+		mat<Rows, Cols, t_sum<TScalar, T>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
 			for (size_t c = 0; c < result.num_cols; ++c)
@@ -288,27 +284,27 @@ namespace linalg
 	}
 
 	template<size_t Rows, size_t Cols, typename T1, typename T2>
-	mat<Rows, Cols, SubtractionResult<T1, T2>> operator-(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
+	mat<Rows, Cols, t_difference<T1, T2>> operator-(const mat<Rows, Cols, T1>& m1, const mat<Rows, Cols, T2>& m2)
 	{
-		mat<Rows, Cols, SubtractionResult<T1, T2>> result = m1;
+		mat<Rows, Cols, t_difference<T1, T2>> result = m1;
 		result -= m2;
 		return result;
 	}
 
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
-	mat<Rows, Cols, SubtractionResult<T, TScalar>> operator-(const mat<Rows, Cols, T>& m, const TScalar& scalar)
+	mat<Rows, Cols, t_difference<T, TScalar>> operator-(const mat<Rows, Cols, T>& m, const TScalar& scalar)
 	{
-		mat<Rows, Cols, AdditionResult<T, TScalar>> result = m;
+		mat<Rows, Cols, t_difference<T, TScalar>> result = m;
 		result -= scalar;
 		return result;
 	}
 
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
-	mat<Rows, Cols, SubtractionResult<TScalar, T>> operator-(const TScalar& scalar, const mat<Rows, Cols, T>& m)
+	mat<Rows, Cols, t_difference<TScalar, T>> operator-(const TScalar& scalar, const mat<Rows, Cols, T>& m)
 	{
-		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
+		mat<Rows, Cols, t_difference<TScalar, T>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
 			result[r] = scalar - m[r];
@@ -317,9 +313,9 @@ namespace linalg
 	}
 
 	template<size_t Rows1, size_t Cols1, size_t Cols2, typename T1, typename T2>
-	mat<Rows1, Cols2, MultiplicationResult<T1, T2>> operator*(const mat<Rows1, Cols1, T1>& m1, const mat<Cols1, Cols2, T2>& m2)
+	mat<Rows1, Cols2, t_product<T1, T2>> operator*(const mat<Rows1, Cols1, T1>& m1, const mat<Cols1, Cols2, T2>& m2)
 	{
-		mat<Rows1, Cols2, SubtractionResult<T1, T2>> result;
+		mat<Rows1, Cols2, t_product<T1, T2>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
 			for (size_t c = 0; c < result.num_cols; ++c)
@@ -333,9 +329,9 @@ namespace linalg
 
 	template<size_t Rows, size_t Cols, size_t L, typename T1, typename T2>
 		requires (L == Cols)
-	vec<Rows, MultiplicationResult<T1, T2>> operator*(const mat<Rows, Cols, T1>& m, const vec<L, T2>& v)
+	vec<Rows, t_product<T1, T2>> operator*(const mat<Rows, Cols, T1>& m, const vec<L, T2>& v)
 	{
-		vec<Rows, MultiplicationResult<T1, T2>> result;
+		vec<Rows, t_product<T1, T2>> result;
 
 		for (size_t r = 0; r < Rows; ++r)
 			result[r] = v.dot(m.row(r));
@@ -345,9 +341,9 @@ namespace linalg
 
 	template<size_t Rows, size_t Cols, size_t L, typename T1, typename T2>
 		requires (L == Rows)
-	vec<Cols, MultiplicationResult<T1, T2>> operator*(const vec<L, T1>& v, const mat<Rows, Cols, T2>& m)
+	vec<Cols, t_product<T1, T2>> operator*(const vec<L, T1>& v, const mat<Rows, Cols, T2>& m)
 	{
-		vec<Cols, MultiplicationResult<T1, T2>> result;
+		vec<Cols, t_product<T1, T2>> result;
 
 		for (size_t c = 0; c < Cols; ++c)
 			result[c] = v.dot(m.col(c));
@@ -357,18 +353,18 @@ namespace linalg
 
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
-	mat<Rows, Cols, SubtractionResult<T, TScalar>> operator*(const mat<Rows, Cols, T>& m, const TScalar& scalar)
+	mat<Rows, Cols, t_product<T, TScalar>> operator*(const mat<Rows, Cols, T>& m, const TScalar& scalar)
 	{
-		mat<Rows, Cols, AdditionResult<T, TScalar>> result = m;
+		mat<Rows, Cols, t_product<T, TScalar>> result = m;
 		result *= scalar;
 		return result;
 	}
 
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
-	mat<Rows, Cols, SubtractionResult<TScalar, T>> operator*(const TScalar& scalar, const mat<Rows, Cols, T>& m)
+	mat<Rows, Cols, t_product<TScalar, T>> operator*(const TScalar& scalar, const mat<Rows, Cols, T>& m)
 	{
-		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
+		mat<Rows, Cols, t_product<TScalar, T>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
 			for (size_t c = 0; c < result.num_cols; ++c)
@@ -379,18 +375,18 @@ namespace linalg
 
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
-	mat<Rows, Cols, SubtractionResult<T, TScalar>> operator/(const mat<Rows, Cols, T>& m, const TScalar& scalar)
+	mat<Rows, Cols, t_quotient<T, TScalar>> operator/(const mat<Rows, Cols, T>& m, const TScalar& scalar)
 	{
-		mat<Rows, Cols, AdditionResult<T, TScalar>> result = m;
+		mat<Rows, Cols, t_quotient<T, TScalar>> result = m;
 		result /= scalar;
 		return result;
 	}
 
 	template<size_t Rows, size_t Cols, typename T, typename TScalar>
 		requires (!std::is_same<TScalar, mat<Rows, Cols, T>>::value)
-	mat<Rows, Cols, SubtractionResult<TScalar, T>> operator/(const TScalar& scalar, const mat<Rows, Cols, T>& m)
+	mat<Rows, Cols, t_quotient<TScalar, T>> operator/(const TScalar& scalar, const mat<Rows, Cols, T>& m)
 	{
-		mat<Rows, Cols, AdditionResult<TScalar, T>> result;
+		mat<Rows, Cols, t_quotient<TScalar, T>> result;
 
 		for (size_t r = 0; r < result.num_rows; ++r)
 			for (size_t c = 0; c < result.num_cols; ++c)
