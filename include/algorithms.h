@@ -109,34 +109,39 @@ namespace linalg
         }
     }
 
-    // Solves a system of Dim equations and Dim variables of the form LUx = Pb for x, storing the result in x
+    // Solves a system of Dim equations and Dim variables of the form PLUx = b for x, storing the result in x
     template<size_t Dim, typename T>
     void solve(const mat<Dim, Dim, T>& p, const mat<Dim, Dim, T>& L, const mat<Dim, Dim, T>& u, const vec<Dim, T>& b, vec<Dim, T>& x)
     {
         x = vec<Dim, T>();
 
-        // we have Lux = Pb
-        // ux = y
-        // Ly = b
-
-        // 1. Permute b
-
+        // Permute b
         vec<Dim, T> b_p = p * b;
 
-        // 2. Solve Ly = b for y using forward substitution
-
+        // Solve Ly = b for y using forward substitution
         vec<Dim, T> y;
         y[0] = b_p[0];
         for (size_t i = 1; i < Dim; ++i)
-            for (size_t j = 0; j < i; ++i)
-                y[i] += y[j] * b_p[j];
+        {
+            T acc = b_p[i];
 
-        // 3. solve ux = y for x using backward substitution
+            for (size_t j = 0; j < i; ++j)
+                acc -= L[i][j] * y[j];
 
-        x[Dim - 1] = y[Dim - 1];
-        for (size_t i = Dim - 1; i-- > 0;)
-            for (size_t j = Dim; j-- > 0;)
-                x[i] += x[j] * y[j];
+            y[i] = acc;
+        }
+
+        // Solve ux = y for x using backward substitution
+        x[Dim-1] = y[Dim-1] / u[Dim-1][Dim-1];
+        for (size_t i = Dim-1; i-- > 0;)
+        {
+            T acc = y[i];
+
+            for (size_t j = Dim; j-- > i+1;)
+                acc -= u[i][j] * x[j];
+
+            x[i] = acc / u[i][i];
+        }
     }
 
     // Solves a system of Dim equations and Dim variables of the form Ax = b for x, storing the result in x
@@ -146,7 +151,7 @@ namespace linalg
         mat<Dim, Dim, T> p;
         mat<Dim, Dim, T> L;
         mat<Dim, Dim, T> u;
-        plu_factor(p, L, u, a);
+        plu_factor(a, p, L, u);
 
         solve(p, L, u, b, x);
     }
