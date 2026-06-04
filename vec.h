@@ -7,7 +7,7 @@
 #include <concepts>
 #include <cstring>
 
-#include "linalg_common.h"
+#include "impl/linalg_common.h"
 
 namespace linalg
 {

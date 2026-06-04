@@ -1,6 +1,8 @@
 #ifndef LINALG_COMMON_H
 #define LINALG_COMMON_H
 
+#include <ostream>
+
 namespace linalg::impl
 {
 	template<typename T1, typename T2>
