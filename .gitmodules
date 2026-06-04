@@ -1,15 +1,3 @@
-[submodule "xUnitCpp"]
-	path = test/xUnitCpp
-	url = git@github.com:apputtre/xUnitCpp.git
-[submodule "test/xUnitCpp"]
-	path = test/xUnitCpp
-	url = git@github.com:apputtre/xUnitCpp.git
-[submodule "test/yUnit"]
-	path = test/yUnit
-	url = git@github.com:apputtre/yUnit.git
 [submodule "cppUnit"]
-	path = cppUnit
-	url = https://github.com/apputtre/cppUnit
-[submodule "test/cppUnit"]
 	path = test/cppUnit
 	url = https://github.com/apputtre/cppUnit
