@@ -363,6 +363,16 @@ namespace linalg
 				(*this)[i] = other[i];
 		}
 
+		template<typename TStorageOther>
+		vec(const vec_ops<L-1, T, TStorageOther>& other, const T& val)
+		{
+			for (size_t i = 0; i < L-1; ++i)
+				(*this)[i] = other[i];
+
+			(*this)[L-1] = val;
+		}
+
+
 		vec<L, T>& operator=(const vec<L, T>& other)
 		{
 			for (size_t i = 0; i < L; ++i)
