@@ -137,7 +137,7 @@ namespace linalg
 			return (*this);
 		}
 
-		auto mag()
+		auto mag() const
 		{
 			T acc = 0;
 
@@ -147,7 +147,7 @@ namespace linalg
 			return std::sqrt(acc);
 		}
 
-		vec<L, T> norm()
+		vec<L, T> norm() const
 		{
 			if (this->zero())
 				return vec<L, decltype(T {} / std::sqrt(T {}))>(0);
@@ -177,7 +177,7 @@ namespace linalg
 			);
 		}
 
-		bool zero()
+		bool zero() const
 		{
 			T default_val = T{};
 			for (size_t i = 0; i < L; ++i)
