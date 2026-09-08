@@ -278,6 +278,32 @@ namespace linalg
 		}
 	};
 
+	template<typename T>
+	struct vec_owning<4, T> : public vec_ops<4, T, vec_owning<4, T>>
+	{
+		T x {};
+		T y {};
+		T z {};
+		T w {};
+
+		T& operator[](size_t idx) const
+		{
+			switch(idx)
+			{
+				case 0:
+					return const_cast<T&>(x);
+				case 1:
+					return const_cast<T&>(y);
+				case 2:
+					return const_cast<T&>(z);
+				case 3:
+					return const_cast<T&>(w);
+				default:
+					throw std::runtime_error("Index out of bounds");
+			}
+		}
+	};
+
 	template<size_t L, typename T>
 		requires (L > 0)
 	struct submat : public vec_ops<L, T, submat<L, T>>
